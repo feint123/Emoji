@@ -1,7 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "filepart.h"
+#include "imagepart.h"
+#include "toolpart.h"
+
 #include <QMainWindow>
+#include <QSplitter>
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +22,13 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    void initSplitter();
+    void initSubParts();
+    QSplitter *mainSpli;
+    QSplitter *imageSpli;
+    FilePart *fileP;
+    ImagePart *imageP;
+    ToolPart *toolP;
 };
 
 #endif // MAINWINDOW_H
