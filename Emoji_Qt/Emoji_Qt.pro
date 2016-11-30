@@ -16,10 +16,8 @@ SOURCES += main.cpp\
     view/mainwindow.cpp \
     graphic/imagerender.cpp \
     graphic/imagebasicdeal.cpp \
-    graphic/imagebasicdeal.cpp \
     file/imagefilemanager.cpp \
     graphic/emojitext.cpp \
-    view/imagepart.cpp \
     view/imagepart.cpp \
     view/filepart.cpp \
     view/toolpart.cpp
@@ -27,10 +25,8 @@ SOURCES += main.cpp\
 HEADERS  += view/mainwindow.h \
     graphic/imagerender.h \
     graphic/imagebasicdeal.h \
-    graphic/imagebasicdeal.h \
     file/imagefilemanager.h \
     graphic/emojitext.h \
-    view/imagepart.h \
     view/imagepart.h \
     view/filepart.h \
     view/toolpart.h

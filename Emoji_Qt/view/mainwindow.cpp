@@ -35,7 +35,7 @@ void MainWindow::initSplitter()
     this->imageSpli->addWidget(this->fileP);
 
     this->imageSpli->setStretchFactor(0,5);
-    this->imageSpli->setStretchFactor(1,1);
+    this->imageSpli->setStretchFactor(1,2);
 
     this->setCentralWidget(this->mainSpli);
 }
