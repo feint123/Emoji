@@ -5,6 +5,8 @@
 #include <QLabel>
 #include <QScrollArea>
 
+#include <graphic/imagerender.h>
+
 namespace Ui {
 class ImagePart;
 }
@@ -25,7 +27,6 @@ public slots:
     void changeTextFont(const QFont &font);
     void zoomIn();
     void zoomOut();
-    void scaleImage(double factor);
 private:
     Ui::ImagePart *ui;
     QLabel *label;
@@ -33,7 +34,7 @@ private:
     QImage image;
     QScrollArea *scrollArea;
     void setImage(const QImage &image);
-
+    ImageRender render;
     double scaleFactor;
 };
 

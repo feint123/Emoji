@@ -4,6 +4,8 @@
 #include <QImageReader>
 #include <QTextFormat>
 
+#include <graphic/imagebasicdeal.h>
+
 ImagePart::ImagePart(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ImagePart)
@@ -39,6 +41,9 @@ bool ImagePart::loadFile()
     }
     setImage(newImage);
     scrollArea->setAlignment(Qt::AlignCenter);
+
+    scaleFactor=1.0;
+    return true;
 }
 
 void ImagePart::changeTextSize(int size)
@@ -56,24 +61,24 @@ void ImagePart::changeTextFont(const QFont &font)
 
 void ImagePart::zoomIn()
 {
+    render.setImage(image);
 
+    label->setPixmap(QPixmap::fromImage(render.changeRgb(80,50,50)));
+    if (scaleFactor<8)
+        ImageBasicDeal::scaleImage(label,2,&scaleFactor);
 }
 
 void ImagePart::zoomOut()
 {
 
-}
-
-void ImagePart::scaleImage(double factor)
-{
-
+    if(scaleFactor>0.125)
+        ImageBasicDeal::scaleImage(label,0.5,&scaleFactor);
 }
 
 void ImagePart::setImage(const QImage &newImage)
 {
     image=newImage;
     label->setPixmap(QPixmap::fromImage(image));
-
     scrollArea->setVisible(true);
     label->adjustSize();
 }

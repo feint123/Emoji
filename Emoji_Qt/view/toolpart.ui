@@ -448,22 +448,22 @@ padding:6px 4px;
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="zoomOut_2">
+           <widget class="QPushButton" name="zoomOut">
             <property name="focusPolicy">
              <enum>Qt::ClickFocus</enum>
             </property>
             <property name="styleSheet">
-             <string notr="true">#zoomIn{
+             <string notr="true">#zoomOut{
 border-radius:10px;
 width:20px;
 height:20px;
 background-color:white;
 }
-#zoomIn:hover{
+#zoomOut:hover{
 background-color:#4a90e2;
 color:white;
 }
-#zoomIn:pressed{
+#zoomOut:pressed{
 background-color:#3980d1;
 color:white;
 }</string>
@@ -486,18 +486,18 @@ color:white;
              <enum>Qt::ClickFocus</enum>
             </property>
             <property name="styleSheet">
-             <string notr="true">#zoomOut{
+             <string notr="true">#zoomIn{
 
 border-radius:12px;
 width:24px;
 height:24px;
 background-color:white;
 }
-#zoomOut:hover{
+#zoomIn:hover{
 background-color:#d0021b;
 color:white
 }
-#zoomOut:select{
+#zoomIn:select{
 background-color:yellow;
 }</string>
             </property>

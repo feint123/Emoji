@@ -20,6 +20,7 @@ class ToolPart : public QDialog
 public:
     enum ColorPart{RED,GREEN,BLUE};
     explicit ToolPart(QWidget *parent = 0);
+    void startZoom();
     ~ToolPart();
 
     int red() const
@@ -138,15 +139,15 @@ private slots:
 
     void on_fontComboBox_currentFontChanged(const QFont &f);
 
-    void on_zoomOut_2_clicked();
-
     void on_zoomIn_clicked();
+
+    void on_zoomOut_clicked();
 
 private:
     Ui::ToolPart *ui;
     void initImage();
     void initSlider(QSlider *slider);
-
+    double scale;
     int m_red;
     int m_green;
     int m_blue;

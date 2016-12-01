@@ -52,6 +52,9 @@ void MainWindow::initSubParts()
 
     connect(toolP,SIGNAL(fontSizeChanged(int)),imageP,SLOT(changeTextSize(int)));
     connect(toolP,SIGNAL(fontChanged(QFont)),imageP,SLOT(changeTextFont(QFont)));
+
+    connect(toolP,SIGNAL(zoomIn()),imageP,SLOT(zoomIn()));
+    connect(toolP,SIGNAL(zoomOut()),imageP,SLOT(zoomOut()));
 }
 
 void MainWindow::on_actionOpenFile_triggered()
@@ -59,5 +62,7 @@ void MainWindow::on_actionOpenFile_triggered()
     QString imagePath=QFileDialog::getOpenFileName(this,"获取图片","/",tr("图片格式(*.jpg *.jpeg *.png)"));
     this->imageP->setImagePath(imagePath);
     this->imageP->loadFile();
-    setWindowFilePath(imagePath);
+    this->toolP->startZoom();
+    setWindowTitle(imagePath);
+
 }

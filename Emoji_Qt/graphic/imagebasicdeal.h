@@ -2,6 +2,7 @@
 #define IMAGEBASICDEAL_H
 
 #include <QImage>
+#include <QLabel>
 #include <QSize>
 
 
@@ -11,7 +12,7 @@ class ImageBasicDeal
 public:
     ImageBasicDeal();
     static void cutImage(QImage *image,QPoint startPoint,QSize size);
-    static void scaleImage(QImage *image,double scale,bool isZoomOut);
+    static void scaleImage(QLabel *label,double scale,double *currentScale);
 
 };
 

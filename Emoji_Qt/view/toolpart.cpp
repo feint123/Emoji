@@ -8,6 +8,13 @@ ToolPart::ToolPart(QWidget *parent) :
 {
     ui->setupUi(this);
     initImage();
+
+}
+
+void ToolPart::startZoom()
+{
+    ui->zoomIn->setEnabled(true);
+    ui->zoomOut->setEnabled(true);
 }
 
 ToolPart::~ToolPart()
@@ -39,6 +46,9 @@ void ToolPart::initImage()
    initSlider(ui->redSlider);
    initSlider(ui->blueSlider);
    initSlider(ui->greenSlider);
+   scale=1.0;
+   ui->zoomIn->setEnabled(false);
+   ui->zoomOut->setEnabled(false);
 }
 
 void ToolPart::initSlider(QSlider *slider)
@@ -73,12 +83,20 @@ void ToolPart::on_fontComboBox_currentFontChanged(const QFont &f)
     setFont(f);
 }
 
-void ToolPart::on_zoomOut_2_clicked()
-{
-    emit zoomOut();
-}
+
 
 void ToolPart::on_zoomIn_clicked()
 {
+    if (scale<8)
+        scale=scale*2;
+    ui->zoomLab->setText(QString::number(scale*100)+"%");
     emit zoomIn();
+}
+
+void ToolPart::on_zoomOut_clicked()
+{
+    if(scale>0.125)
+        scale=scale/2;
+    ui->zoomLab->setText(QString::number(scale*100)+"%");
+    emit zoomOut();
 }
