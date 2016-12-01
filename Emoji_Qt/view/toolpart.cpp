@@ -11,10 +11,17 @@ ToolPart::ToolPart(QWidget *parent) :
 
 }
 
-void ToolPart::startZoom()
+void ToolPart::restart()
 {
     ui->zoomIn->setEnabled(true);
     ui->zoomOut->setEnabled(true);
+    ui->redPerLab->setText("50%");
+    ui->greenPerLab->setText("50%");
+    ui->bluePerLab->setText("50%");
+    ui->zoomLab->setText("100%");
+    ui->redSlider->setValue(ui->redSlider->maximum()/2);
+    ui->greenSlider->setValue(ui->greenSlider->maximum()/2);
+    ui->blueSlider->setValue(ui->blueSlider->maximum()/2);
 }
 
 ToolPart::~ToolPart()

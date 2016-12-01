@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ToolPart_t {
-    QByteArrayData data[32];
-    char stringdata0[393];
+    QByteArrayData data[36];
+    char stringdata0[455];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,39 +33,44 @@ QT_MOC_LITERAL(0, 0, 8), // "ToolPart"
 QT_MOC_LITERAL(1, 9, 12), // "colorChanged"
 QT_MOC_LITERAL(2, 22, 0), // ""
 QT_MOC_LITERAL(3, 23, 3), // "red"
-QT_MOC_LITERAL(4, 27, 9), // "ColorPart"
-QT_MOC_LITERAL(5, 37, 4), // "part"
-QT_MOC_LITERAL(6, 42, 12), // "placeChanged"
-QT_MOC_LITERAL(7, 55, 5), // "place"
-QT_MOC_LITERAL(8, 61, 15), // "fontSizeChanged"
-QT_MOC_LITERAL(9, 77, 8), // "fontSize"
-QT_MOC_LITERAL(10, 86, 11), // "fontChanged"
-QT_MOC_LITERAL(11, 98, 4), // "font"
-QT_MOC_LITERAL(12, 103, 6), // "setRed"
-QT_MOC_LITERAL(13, 110, 8), // "setGreen"
-QT_MOC_LITERAL(14, 119, 5), // "green"
-QT_MOC_LITERAL(15, 125, 7), // "setBlue"
-QT_MOC_LITERAL(16, 133, 4), // "blue"
-QT_MOC_LITERAL(17, 138, 8), // "setPlace"
-QT_MOC_LITERAL(18, 147, 11), // "setFontSize"
-QT_MOC_LITERAL(19, 159, 7), // "setFont"
-QT_MOC_LITERAL(20, 167, 24), // "on_redSlider_sliderMoved"
-QT_MOC_LITERAL(21, 192, 8), // "position"
-QT_MOC_LITERAL(22, 201, 26), // "on_greenSlider_sliderMoved"
-QT_MOC_LITERAL(23, 228, 25), // "on_blueSlider_sliderMoved"
-QT_MOC_LITERAL(24, 254, 19), // "on_turnGray_toggled"
-QT_MOC_LITERAL(25, 274, 7), // "checked"
-QT_MOC_LITERAL(26, 282, 19), // "on_compress_toggled"
-QT_MOC_LITERAL(27, 302, 23), // "on_autoMoveComb_toggled"
-QT_MOC_LITERAL(28, 326, 24), // "on_sizeSpin_valueChanged"
-QT_MOC_LITERAL(29, 351, 4), // "arg1"
-QT_MOC_LITERAL(30, 356, 34), // "on_fontComboBox_currentFontCh..."
-QT_MOC_LITERAL(31, 391, 1) // "f"
+QT_MOC_LITERAL(4, 27, 19), // "ToolPart::ColorPart"
+QT_MOC_LITERAL(5, 47, 4), // "part"
+QT_MOC_LITERAL(6, 52, 12), // "placeChanged"
+QT_MOC_LITERAL(7, 65, 5), // "place"
+QT_MOC_LITERAL(8, 71, 15), // "fontSizeChanged"
+QT_MOC_LITERAL(9, 87, 8), // "fontSize"
+QT_MOC_LITERAL(10, 96, 11), // "fontChanged"
+QT_MOC_LITERAL(11, 108, 4), // "font"
+QT_MOC_LITERAL(12, 113, 6), // "zoomIn"
+QT_MOC_LITERAL(13, 120, 7), // "zoomOut"
+QT_MOC_LITERAL(14, 128, 6), // "setRed"
+QT_MOC_LITERAL(15, 135, 8), // "setGreen"
+QT_MOC_LITERAL(16, 144, 5), // "green"
+QT_MOC_LITERAL(17, 150, 7), // "setBlue"
+QT_MOC_LITERAL(18, 158, 4), // "blue"
+QT_MOC_LITERAL(19, 163, 8), // "setPlace"
+QT_MOC_LITERAL(20, 172, 11), // "setFontSize"
+QT_MOC_LITERAL(21, 184, 7), // "setFont"
+QT_MOC_LITERAL(22, 192, 24), // "on_redSlider_sliderMoved"
+QT_MOC_LITERAL(23, 217, 8), // "position"
+QT_MOC_LITERAL(24, 226, 26), // "on_greenSlider_sliderMoved"
+QT_MOC_LITERAL(25, 253, 25), // "on_blueSlider_sliderMoved"
+QT_MOC_LITERAL(26, 279, 19), // "on_turnGray_toggled"
+QT_MOC_LITERAL(27, 299, 7), // "checked"
+QT_MOC_LITERAL(28, 307, 19), // "on_compress_toggled"
+QT_MOC_LITERAL(29, 327, 23), // "on_autoMoveComb_toggled"
+QT_MOC_LITERAL(30, 351, 24), // "on_sizeSpin_valueChanged"
+QT_MOC_LITERAL(31, 376, 4), // "arg1"
+QT_MOC_LITERAL(32, 381, 34), // "on_fontComboBox_currentFontCh..."
+QT_MOC_LITERAL(33, 416, 1), // "f"
+QT_MOC_LITERAL(34, 418, 17), // "on_zoomIn_clicked"
+QT_MOC_LITERAL(35, 436, 18) // "on_zoomOut_clicked"
 
     },
-    "ToolPart\0colorChanged\0\0red\0ColorPart\0"
-    "part\0placeChanged\0place\0fontSizeChanged\0"
-    "fontSize\0fontChanged\0font\0setRed\0"
+    "ToolPart\0colorChanged\0\0red\0"
+    "ToolPart::ColorPart\0part\0placeChanged\0"
+    "place\0fontSizeChanged\0fontSize\0"
+    "fontChanged\0font\0zoomIn\0zoomOut\0setRed\0"
     "setGreen\0green\0setBlue\0blue\0setPlace\0"
     "setFontSize\0setFont\0on_redSlider_sliderMoved\0"
     "position\0on_greenSlider_sliderMoved\0"
@@ -73,7 +78,8 @@ QT_MOC_LITERAL(31, 391, 1) // "f"
     "checked\0on_compress_toggled\0"
     "on_autoMoveComb_toggled\0"
     "on_sizeSpin_valueChanged\0arg1\0"
-    "on_fontComboBox_currentFontChanged\0f"
+    "on_fontComboBox_currentFontChanged\0f\0"
+    "on_zoomIn_clicked\0on_zoomOut_clicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -83,61 +89,69 @@ static const uint qt_meta_data_ToolPart[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      18,   14, // methods
-       6,  160, // properties
+      22,   14, // methods
+       6,  184, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       4,       // signalCount
+       6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,  104,    2, 0x06 /* Public */,
-       6,    1,  109,    2, 0x06 /* Public */,
-       8,    1,  112,    2, 0x06 /* Public */,
-      10,    1,  115,    2, 0x06 /* Public */,
+       1,    2,  124,    2, 0x06 /* Public */,
+       6,    1,  129,    2, 0x06 /* Public */,
+       8,    1,  132,    2, 0x06 /* Public */,
+      10,    1,  135,    2, 0x06 /* Public */,
+      12,    0,  138,    2, 0x06 /* Public */,
+      13,    0,  139,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      12,    1,  118,    2, 0x0a /* Public */,
-      13,    1,  121,    2, 0x0a /* Public */,
-      15,    1,  124,    2, 0x0a /* Public */,
-      17,    1,  127,    2, 0x0a /* Public */,
-      18,    1,  130,    2, 0x0a /* Public */,
-      19,    1,  133,    2, 0x0a /* Public */,
-      20,    1,  136,    2, 0x08 /* Private */,
-      22,    1,  139,    2, 0x08 /* Private */,
-      23,    1,  142,    2, 0x08 /* Private */,
-      24,    1,  145,    2, 0x08 /* Private */,
-      26,    1,  148,    2, 0x08 /* Private */,
-      27,    1,  151,    2, 0x08 /* Private */,
-      28,    1,  154,    2, 0x08 /* Private */,
-      30,    1,  157,    2, 0x08 /* Private */,
+      14,    1,  140,    2, 0x0a /* Public */,
+      15,    1,  143,    2, 0x0a /* Public */,
+      17,    1,  146,    2, 0x0a /* Public */,
+      19,    1,  149,    2, 0x0a /* Public */,
+      20,    1,  152,    2, 0x0a /* Public */,
+      21,    1,  155,    2, 0x0a /* Public */,
+      22,    1,  158,    2, 0x08 /* Private */,
+      24,    1,  161,    2, 0x08 /* Private */,
+      25,    1,  164,    2, 0x08 /* Private */,
+      26,    1,  167,    2, 0x08 /* Private */,
+      28,    1,  170,    2, 0x08 /* Private */,
+      29,    1,  173,    2, 0x08 /* Private */,
+      30,    1,  176,    2, 0x08 /* Private */,
+      32,    1,  179,    2, 0x08 /* Private */,
+      34,    0,  182,    2, 0x08 /* Private */,
+      35,    0,  183,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int, 0x80000000 | 4,    3,    5,
     QMetaType::Void, QMetaType::QPoint,    7,
     QMetaType::Void, QMetaType::Int,    9,
     QMetaType::Void, QMetaType::QFont,   11,
+    QMetaType::Void,
+    QMetaType::Void,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int,    3,
-    QMetaType::Void, QMetaType::Int,   14,
     QMetaType::Void, QMetaType::Int,   16,
+    QMetaType::Void, QMetaType::Int,   18,
     QMetaType::Void, QMetaType::QPoint,    7,
     QMetaType::Void, QMetaType::Int,    9,
     QMetaType::Void, QMetaType::QFont,   11,
-    QMetaType::Void, QMetaType::Int,   21,
-    QMetaType::Void, QMetaType::Int,   21,
-    QMetaType::Void, QMetaType::Int,   21,
-    QMetaType::Void, QMetaType::Bool,   25,
-    QMetaType::Void, QMetaType::Bool,   25,
-    QMetaType::Void, QMetaType::Bool,   25,
-    QMetaType::Void, QMetaType::Int,   29,
-    QMetaType::Void, QMetaType::QFont,   31,
+    QMetaType::Void, QMetaType::Int,   23,
+    QMetaType::Void, QMetaType::Int,   23,
+    QMetaType::Void, QMetaType::Int,   23,
+    QMetaType::Void, QMetaType::Bool,   27,
+    QMetaType::Void, QMetaType::Bool,   27,
+    QMetaType::Void, QMetaType::Bool,   27,
+    QMetaType::Void, QMetaType::Int,   31,
+    QMetaType::Void, QMetaType::QFont,   33,
+    QMetaType::Void,
+    QMetaType::Void,
 
  // properties: name, type, flags
        3, QMetaType::Int, 0x00495103,
-      14, QMetaType::Int, 0x00495103,
       16, QMetaType::Int, 0x00495103,
+      18, QMetaType::Int, 0x00495103,
        7, QMetaType::QPoint, 0x00495103,
        9, QMetaType::Int, 0x00495103,
       11, QMetaType::QFont, 0x00495103,
@@ -159,31 +173,35 @@ void ToolPart::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         ToolPart *_t = static_cast<ToolPart *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->colorChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< ColorPart(*)>(_a[2]))); break;
+        case 0: _t->colorChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< ToolPart::ColorPart(*)>(_a[2]))); break;
         case 1: _t->placeChanged((*reinterpret_cast< QPoint(*)>(_a[1]))); break;
         case 2: _t->fontSizeChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 3: _t->fontChanged((*reinterpret_cast< QFont(*)>(_a[1]))); break;
-        case 4: _t->setRed((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 5: _t->setGreen((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 6: _t->setBlue((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 7: _t->setPlace((*reinterpret_cast< QPoint(*)>(_a[1]))); break;
-        case 8: _t->setFontSize((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 9: _t->setFont((*reinterpret_cast< QFont(*)>(_a[1]))); break;
-        case 10: _t->on_redSlider_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 11: _t->on_greenSlider_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 12: _t->on_blueSlider_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 13: _t->on_turnGray_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 14: _t->on_compress_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 15: _t->on_autoMoveComb_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 16: _t->on_sizeSpin_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 17: _t->on_fontComboBox_currentFontChanged((*reinterpret_cast< const QFont(*)>(_a[1]))); break;
+        case 4: _t->zoomIn(); break;
+        case 5: _t->zoomOut(); break;
+        case 6: _t->setRed((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 7: _t->setGreen((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 8: _t->setBlue((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 9: _t->setPlace((*reinterpret_cast< QPoint(*)>(_a[1]))); break;
+        case 10: _t->setFontSize((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 11: _t->setFont((*reinterpret_cast< QFont(*)>(_a[1]))); break;
+        case 12: _t->on_redSlider_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 13: _t->on_greenSlider_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 14: _t->on_blueSlider_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 15: _t->on_turnGray_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 16: _t->on_compress_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 17: _t->on_autoMoveComb_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 18: _t->on_sizeSpin_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 19: _t->on_fontComboBox_currentFontChanged((*reinterpret_cast< const QFont(*)>(_a[1]))); break;
+        case 20: _t->on_zoomIn_clicked(); break;
+        case 21: _t->on_zoomOut_clicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (ToolPart::*_t)(int , ColorPart );
+            typedef void (ToolPart::*_t)(int , ToolPart::ColorPart );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ToolPart::colorChanged)) {
                 *result = 0;
                 return;
@@ -207,6 +225,20 @@ void ToolPart::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
             typedef void (ToolPart::*_t)(QFont );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ToolPart::fontChanged)) {
                 *result = 3;
+                return;
+            }
+        }
+        {
+            typedef void (ToolPart::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ToolPart::zoomIn)) {
+                *result = 4;
+                return;
+            }
+        }
+        {
+            typedef void (ToolPart::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ToolPart::zoomOut)) {
+                *result = 5;
                 return;
             }
         }
@@ -268,13 +300,13 @@ int ToolPart::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 18)
+        if (_id < 22)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 18;
+        _id -= 22;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 18)
+        if (_id < 22)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 18;
+        _id -= 22;
     }
 #ifndef QT_NO_PROPERTIES
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
@@ -297,7 +329,7 @@ int ToolPart::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void ToolPart::colorChanged(int _t1, ColorPart _t2)
+void ToolPart::colorChanged(int _t1, ToolPart::ColorPart _t2)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
@@ -322,5 +354,17 @@ void ToolPart::fontChanged(QFont _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 3, _a);
+}
+
+// SIGNAL 4
+void ToolPart::zoomIn()
+{
+    QMetaObject::activate(this, &staticMetaObject, 4, Q_NULLPTR);
+}
+
+// SIGNAL 5
+void ToolPart::zoomOut()
+{
+    QMetaObject::activate(this, &staticMetaObject, 5, Q_NULLPTR);
 }
 QT_END_MOC_NAMESPACE

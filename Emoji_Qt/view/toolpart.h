@@ -20,7 +20,7 @@ class ToolPart : public QDialog
 public:
     enum ColorPart{RED,GREEN,BLUE};
     explicit ToolPart(QWidget *parent = 0);
-    void startZoom();
+    void restart();
     ~ToolPart();
 
     int red() const
@@ -109,7 +109,7 @@ public slots:
     }
 
 signals:
-    void colorChanged(int red,ColorPart part);
+    void colorChanged(int red,ToolPart::ColorPart part);
 
     void placeChanged(QPoint place);
 

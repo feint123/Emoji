@@ -55,6 +55,8 @@ void MainWindow::initSubParts()
 
     connect(toolP,SIGNAL(zoomIn()),imageP,SLOT(zoomIn()));
     connect(toolP,SIGNAL(zoomOut()),imageP,SLOT(zoomOut()));
+
+    connect(toolP,SIGNAL(colorChanged(int,ToolPart::ColorPart)),imageP,SLOT(changeColor(int,ToolPart::ColorPart)));
 }
 
 void MainWindow::on_actionOpenFile_triggered()
@@ -62,7 +64,7 @@ void MainWindow::on_actionOpenFile_triggered()
     QString imagePath=QFileDialog::getOpenFileName(this,"获取图片","/",tr("图片格式(*.jpg *.jpeg *.png)"));
     this->imageP->setImagePath(imagePath);
     this->imageP->loadFile();
-    this->toolP->startZoom();
+    this->toolP->restart();
     setWindowTitle(imagePath);
 
 }

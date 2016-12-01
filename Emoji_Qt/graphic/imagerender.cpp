@@ -42,9 +42,8 @@ QImage ImageRender::changeRgb(int r, int b, int g)
 
         for(int j=0;j<image.height();j++){
 
-            QColor color=QColor(image.pixel(i,j));
-            if(color.alpha()<255){
-                qDebug()<<color.alpha();
+            QColor color=image.pixelColor(i,j);
+            if(color.alpha()>0){
                 int colorResult=r+b+g;
                 int red=color.red()*r*3/colorResult;
                 int green=color.green()*g*3/colorResult;

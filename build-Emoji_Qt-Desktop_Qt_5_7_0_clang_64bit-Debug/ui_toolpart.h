@@ -50,9 +50,9 @@ public:
     QLabel *imgLab;
     QHBoxLayout *horizontalLayout_3;
     QCheckBox *turnGray;
-    QPushButton *zoomIn;
-    QLabel *zoomLab;
     QPushButton *zoomOut;
+    QLabel *zoomLab;
+    QPushButton *zoomIn;
     QHBoxLayout *horizontalLayout_4;
     QCheckBox *compress;
     QDoubleSpinBox *compressSpin;
@@ -231,50 +231,50 @@ public:
 
         horizontalLayout_3->addWidget(turnGray);
 
-        zoomIn = new QPushButton(frame);
-        zoomIn->setObjectName(QStringLiteral("zoomIn"));
-        zoomIn->setFocusPolicy(Qt::ClickFocus);
-        zoomIn->setStyleSheet(QLatin1String("#zoomIn{\n"
+        zoomOut = new QPushButton(frame);
+        zoomOut->setObjectName(QStringLiteral("zoomOut"));
+        zoomOut->setFocusPolicy(Qt::ClickFocus);
+        zoomOut->setStyleSheet(QLatin1String("#zoomOut{\n"
 "border-radius:10px;\n"
 "width:20px;\n"
 "height:20px;\n"
 "background-color:white;\n"
 "}\n"
-"#zoomIn:hover{\n"
+"#zoomOut:hover{\n"
 "background-color:#4a90e2;\n"
 "color:white;\n"
 "}\n"
-"#zoomIn:pressed{\n"
+"#zoomOut:pressed{\n"
 "background-color:#3980d1;\n"
 "color:white;\n"
 "}"));
 
-        horizontalLayout_3->addWidget(zoomIn);
+        horizontalLayout_3->addWidget(zoomOut);
 
         zoomLab = new QLabel(frame);
         zoomLab->setObjectName(QStringLiteral("zoomLab"));
 
         horizontalLayout_3->addWidget(zoomLab);
 
-        zoomOut = new QPushButton(frame);
-        zoomOut->setObjectName(QStringLiteral("zoomOut"));
-        zoomOut->setFocusPolicy(Qt::ClickFocus);
-        zoomOut->setStyleSheet(QLatin1String("#zoomOut{\n"
+        zoomIn = new QPushButton(frame);
+        zoomIn->setObjectName(QStringLiteral("zoomIn"));
+        zoomIn->setFocusPolicy(Qt::ClickFocus);
+        zoomIn->setStyleSheet(QLatin1String("#zoomIn{\n"
 "\n"
 "border-radius:12px;\n"
 "width:24px;\n"
 "height:24px;\n"
 "background-color:white;\n"
 "}\n"
-"#zoomOut:hover{\n"
+"#zoomIn:hover{\n"
 "background-color:#d0021b;\n"
 "color:white\n"
 "}\n"
-"#zoomOut:select{\n"
+"#zoomIn:select{\n"
 "background-color:yellow;\n"
 "}"));
 
-        horizontalLayout_3->addWidget(zoomOut);
+        horizontalLayout_3->addWidget(zoomIn);
 
         horizontalLayout_3->setStretch(0, 1);
 
@@ -440,9 +440,9 @@ public:
         redPerLab->setText(QApplication::translate("ToolPart", "50%", 0));
         imgLab->setText(QApplication::translate("ToolPart", "\345\233\276\347\211\207", 0));
         turnGray->setText(QApplication::translate("ToolPart", "\350\275\254\347\201\260\345\272\246\345\233\276", 0));
-        zoomIn->setText(QApplication::translate("ToolPart", "\357\274\215", 0));
+        zoomOut->setText(QApplication::translate("ToolPart", "\357\274\215", 0));
         zoomLab->setText(QApplication::translate("ToolPart", "100%", 0));
-        zoomOut->setText(QApplication::translate("ToolPart", "\357\274\213", 0));
+        zoomIn->setText(QApplication::translate("ToolPart", "\357\274\213", 0));
         compress->setText(QApplication::translate("ToolPart", "\345\216\213\347\274\251\345\233\276\347\211\207", 0));
         label_8->setText(QApplication::translate("ToolPart", "\345\255\227\344\275\223\357\274\232", 0));
         label_6->setText(QApplication::translate("ToolPart", "\347\203\255\351\227\250\357\274\232", 0));
