@@ -14,24 +14,37 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QPushButton>
+#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_ImagePart
 {
 public:
-    QPushButton *pushButton;
+    QHBoxLayout *horizontalLayout;
+    QWidget *frame;
+    QHBoxLayout *horizontalLayout_2;
 
     void setupUi(QDialog *ImagePart)
     {
         if (ImagePart->objectName().isEmpty())
             ImagePart->setObjectName(QStringLiteral("ImagePart"));
-        ImagePart->resize(400, 300);
-        pushButton = new QPushButton(ImagePart);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(170, 140, 75, 23));
+        ImagePart->resize(506, 376);
+        ImagePart->setStyleSheet(QStringLiteral(""));
+        horizontalLayout = new QHBoxLayout(ImagePart);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 1, 1);
+        frame = new QWidget(ImagePart);
+        frame->setObjectName(QStringLiteral("frame"));
+        frame->setStyleSheet(QStringLiteral("border:none;border-right:1px solid #ccc;border-bottom:1px solid #ccc;"));
+        horizontalLayout_2 = new QHBoxLayout(frame);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+
+        horizontalLayout->addWidget(frame);
+
 
         retranslateUi(ImagePart);
 
@@ -41,7 +54,6 @@ public:
     void retranslateUi(QDialog *ImagePart)
     {
         ImagePart->setWindowTitle(QApplication::translate("ImagePart", "Dialog", 0));
-        pushButton->setText(QApplication::translate("ImagePart", "PushButton", 0));
     } // retranslateUi
 
 };

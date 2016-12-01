@@ -14,24 +14,37 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QFrame>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QPushButton>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_FilePart
 {
 public:
-    QPushButton *pushButton;
+    QHBoxLayout *horizontalLayout;
+    QFrame *frame;
 
     void setupUi(QDialog *FilePart)
     {
         if (FilePart->objectName().isEmpty())
             FilePart->setObjectName(QStringLiteral("FilePart"));
         FilePart->resize(400, 300);
-        pushButton = new QPushButton(FilePart);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(150, 90, 75, 23));
+        FilePart->setStyleSheet(QStringLiteral(""));
+        horizontalLayout = new QHBoxLayout(FilePart);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 1, 1, 0);
+        frame = new QFrame(FilePart);
+        frame->setObjectName(QStringLiteral("frame"));
+        frame->setStyleSheet(QLatin1String("border:none;\n"
+"border-top:1px solid #ccc;\n"
+"border-right:1px solid #ccc;"));
+        frame->setFrameShape(QFrame::StyledPanel);
+        frame->setFrameShadow(QFrame::Raised);
+
+        horizontalLayout->addWidget(frame);
+
 
         retranslateUi(FilePart);
 
@@ -41,7 +54,6 @@ public:
     void retranslateUi(QDialog *FilePart)
     {
         FilePart->setWindowTitle(QApplication::translate("FilePart", "Dialog", 0));
-        pushButton->setText(QApplication::translate("FilePart", "PushButton", 0));
     } // retranslateUi
 
 };

@@ -38,39 +38,39 @@ public:
     QFrame *frame;
     QHBoxLayout *horizontalLayout;
     QGridLayout *gridLayout_2;
-    QLabel *label_11;
-    QSlider *horizontalSlider_2;
-    QSlider *horizontalSlider;
-    QLabel *label_4;
-    QLabel *label_5;
-    QLabel *label_3;
-    QSlider *horizontalSlider_3;
-    QLabel *label_10;
-    QLabel *label;
+    QLabel *bluePerLab;
+    QSlider *greenSlider;
+    QSlider *redSlider;
+    QLabel *greenLab;
+    QLabel *blueLab;
+    QLabel *redLab;
+    QSlider *blueSlider;
+    QLabel *greenPerLab;
+    QLabel *redPerLab;
     QLabel *imgLab;
     QHBoxLayout *horizontalLayout_3;
-    QCheckBox *checkBox;
+    QCheckBox *turnGray;
     QPushButton *zoomIn;
-    QLabel *label_2;
+    QLabel *zoomLab;
     QPushButton *zoomOut;
     QHBoxLayout *horizontalLayout_4;
-    QCheckBox *checkBox_2;
-    QDoubleSpinBox *doubleSpinBox;
+    QCheckBox *compress;
+    QDoubleSpinBox *compressSpin;
     QFrame *frame_2;
     QHBoxLayout *horizontalLayout_2;
     QGridLayout *gridLayout_3;
-    QComboBox *comboBox_2;
+    QComboBox *placeComb;
     QLabel *label_8;
     QFontComboBox *fontComboBox;
     QLabel *label_6;
     QLabel *label_9;
     QLabel *label_7;
-    QComboBox *comboBox;
+    QComboBox *hotComb;
     QLabel *fontLab;
     QSpacerItem *verticalSpacer;
     QHBoxLayout *horizontalLayout_5;
-    QSpinBox *spinBox;
-    QCheckBox *checkBox_3;
+    QSpinBox *sizeSpin;
+    QCheckBox *autoMoveComb;
 
     void setupUi(QDialog *ToolPart)
     {
@@ -83,21 +83,38 @@ public:
         sizePolicy.setHeightForWidth(ToolPart->sizePolicy().hasHeightForWidth());
         ToolPart->setSizePolicy(sizePolicy);
         QPalette palette;
-        QBrush brush(QColor(238, 238, 238, 255));
+        QBrush brush(QColor(170, 170, 170, 255));
         brush.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Active, QPalette::Button, brush);
-        palette.setBrush(QPalette::Active, QPalette::Base, brush);
-        palette.setBrush(QPalette::Active, QPalette::Window, brush);
-        palette.setBrush(QPalette::Inactive, QPalette::Button, brush);
-        palette.setBrush(QPalette::Inactive, QPalette::Base, brush);
-        palette.setBrush(QPalette::Inactive, QPalette::Window, brush);
-        palette.setBrush(QPalette::Disabled, QPalette::Button, brush);
-        palette.setBrush(QPalette::Disabled, QPalette::Base, brush);
-        palette.setBrush(QPalette::Disabled, QPalette::Window, brush);
+        palette.setBrush(QPalette::Active, QPalette::WindowText, brush);
+        QBrush brush1(QColor(238, 238, 238, 255));
+        brush1.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::Button, brush1);
+        palette.setBrush(QPalette::Active, QPalette::Text, brush);
+        palette.setBrush(QPalette::Active, QPalette::ButtonText, brush);
+        palette.setBrush(QPalette::Active, QPalette::Base, brush1);
+        palette.setBrush(QPalette::Active, QPalette::Window, brush1);
+        QBrush brush2(QColor(0, 0, 0, 255));
+        brush2.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::HighlightedText, brush2);
+        palette.setBrush(QPalette::Inactive, QPalette::WindowText, brush);
+        palette.setBrush(QPalette::Inactive, QPalette::Button, brush1);
+        palette.setBrush(QPalette::Inactive, QPalette::Text, brush);
+        palette.setBrush(QPalette::Inactive, QPalette::ButtonText, brush);
+        palette.setBrush(QPalette::Inactive, QPalette::Base, brush1);
+        palette.setBrush(QPalette::Inactive, QPalette::Window, brush1);
+        palette.setBrush(QPalette::Inactive, QPalette::HighlightedText, brush2);
+        palette.setBrush(QPalette::Disabled, QPalette::WindowText, brush);
+        palette.setBrush(QPalette::Disabled, QPalette::Button, brush1);
+        palette.setBrush(QPalette::Disabled, QPalette::Text, brush);
+        palette.setBrush(QPalette::Disabled, QPalette::ButtonText, brush);
+        palette.setBrush(QPalette::Disabled, QPalette::Base, brush1);
+        palette.setBrush(QPalette::Disabled, QPalette::Window, brush1);
+        palette.setBrush(QPalette::Disabled, QPalette::HighlightedText, brush2);
         ToolPart->setPalette(palette);
         ToolPart->setStyleSheet(QLatin1String("#ToolPart{\n"
 "background:#eee;\n"
-"border-left:1px solid #666;\n"
+"border-left:1px solid #ccc;\n"
+"color:#aaa;\n"
 "}"));
         verticalLayout = new QVBoxLayout(ToolPart);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
@@ -121,81 +138,81 @@ public:
         gridLayout_2->setHorizontalSpacing(2);
         gridLayout_2->setVerticalSpacing(16);
         gridLayout_2->setContentsMargins(-1, -1, -1, 12);
-        label_11 = new QLabel(frame);
-        label_11->setObjectName(QStringLiteral("label_11"));
+        bluePerLab = new QLabel(frame);
+        bluePerLab->setObjectName(QStringLiteral("bluePerLab"));
         QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Preferred);
         sizePolicy2.setHorizontalStretch(0);
         sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(label_11->sizePolicy().hasHeightForWidth());
-        label_11->setSizePolicy(sizePolicy2);
+        sizePolicy2.setHeightForWidth(bluePerLab->sizePolicy().hasHeightForWidth());
+        bluePerLab->setSizePolicy(sizePolicy2);
 
-        gridLayout_2->addWidget(label_11, 4, 2, 1, 1);
+        gridLayout_2->addWidget(bluePerLab, 4, 2, 1, 1);
 
-        horizontalSlider_2 = new QSlider(frame);
-        horizontalSlider_2->setObjectName(QStringLiteral("horizontalSlider_2"));
-        horizontalSlider_2->setOrientation(Qt::Horizontal);
+        greenSlider = new QSlider(frame);
+        greenSlider->setObjectName(QStringLiteral("greenSlider"));
+        greenSlider->setOrientation(Qt::Horizontal);
 
-        gridLayout_2->addWidget(horizontalSlider_2, 3, 1, 1, 1);
+        gridLayout_2->addWidget(greenSlider, 3, 1, 1, 1);
 
-        horizontalSlider = new QSlider(frame);
-        horizontalSlider->setObjectName(QStringLiteral("horizontalSlider"));
-        horizontalSlider->setOrientation(Qt::Horizontal);
+        redSlider = new QSlider(frame);
+        redSlider->setObjectName(QStringLiteral("redSlider"));
+        redSlider->setOrientation(Qt::Horizontal);
 
-        gridLayout_2->addWidget(horizontalSlider, 2, 1, 1, 1);
+        gridLayout_2->addWidget(redSlider, 2, 1, 1, 1);
 
-        label_4 = new QLabel(frame);
-        label_4->setObjectName(QStringLiteral("label_4"));
-        sizePolicy2.setHeightForWidth(label_4->sizePolicy().hasHeightForWidth());
-        label_4->setSizePolicy(sizePolicy2);
+        greenLab = new QLabel(frame);
+        greenLab->setObjectName(QStringLiteral("greenLab"));
+        sizePolicy2.setHeightForWidth(greenLab->sizePolicy().hasHeightForWidth());
+        greenLab->setSizePolicy(sizePolicy2);
 
-        gridLayout_2->addWidget(label_4, 3, 0, 1, 1);
+        gridLayout_2->addWidget(greenLab, 3, 0, 1, 1);
 
-        label_5 = new QLabel(frame);
-        label_5->setObjectName(QStringLiteral("label_5"));
-        sizePolicy2.setHeightForWidth(label_5->sizePolicy().hasHeightForWidth());
-        label_5->setSizePolicy(sizePolicy2);
+        blueLab = new QLabel(frame);
+        blueLab->setObjectName(QStringLiteral("blueLab"));
+        sizePolicy2.setHeightForWidth(blueLab->sizePolicy().hasHeightForWidth());
+        blueLab->setSizePolicy(sizePolicy2);
 
-        gridLayout_2->addWidget(label_5, 4, 0, 1, 1);
+        gridLayout_2->addWidget(blueLab, 4, 0, 1, 1);
 
-        label_3 = new QLabel(frame);
-        label_3->setObjectName(QStringLiteral("label_3"));
-        sizePolicy2.setHeightForWidth(label_3->sizePolicy().hasHeightForWidth());
-        label_3->setSizePolicy(sizePolicy2);
+        redLab = new QLabel(frame);
+        redLab->setObjectName(QStringLiteral("redLab"));
+        sizePolicy2.setHeightForWidth(redLab->sizePolicy().hasHeightForWidth());
+        redLab->setSizePolicy(sizePolicy2);
 
-        gridLayout_2->addWidget(label_3, 2, 0, 1, 1);
+        gridLayout_2->addWidget(redLab, 2, 0, 1, 1);
 
-        horizontalSlider_3 = new QSlider(frame);
-        horizontalSlider_3->setObjectName(QStringLiteral("horizontalSlider_3"));
-        horizontalSlider_3->setOrientation(Qt::Horizontal);
+        blueSlider = new QSlider(frame);
+        blueSlider->setObjectName(QStringLiteral("blueSlider"));
+        blueSlider->setOrientation(Qt::Horizontal);
 
-        gridLayout_2->addWidget(horizontalSlider_3, 4, 1, 1, 1);
+        gridLayout_2->addWidget(blueSlider, 4, 1, 1, 1);
 
-        label_10 = new QLabel(frame);
-        label_10->setObjectName(QStringLiteral("label_10"));
+        greenPerLab = new QLabel(frame);
+        greenPerLab->setObjectName(QStringLiteral("greenPerLab"));
 
-        gridLayout_2->addWidget(label_10, 3, 2, 1, 1);
+        gridLayout_2->addWidget(greenPerLab, 3, 2, 1, 1);
 
-        label = new QLabel(frame);
-        label->setObjectName(QStringLiteral("label"));
-        label->setStyleSheet(QStringLiteral(""));
+        redPerLab = new QLabel(frame);
+        redPerLab->setObjectName(QStringLiteral("redPerLab"));
+        redPerLab->setStyleSheet(QStringLiteral(""));
 
-        gridLayout_2->addWidget(label, 2, 2, 1, 1);
+        gridLayout_2->addWidget(redPerLab, 2, 2, 1, 1);
 
         imgLab = new QLabel(frame);
         imgLab->setObjectName(QStringLiteral("imgLab"));
         sizePolicy.setHeightForWidth(imgLab->sizePolicy().hasHeightForWidth());
         imgLab->setSizePolicy(sizePolicy);
         QPalette palette1;
-        QBrush brush1(QColor(76, 76, 76, 255));
-        brush1.setStyle(Qt::SolidPattern);
-        palette1.setBrush(QPalette::Active, QPalette::Text, brush1);
-        palette1.setBrush(QPalette::Inactive, QPalette::Text, brush1);
-        QBrush brush2(QColor(255, 255, 255, 127));
-        brush2.setStyle(Qt::SolidPattern);
-        palette1.setBrush(QPalette::Disabled, QPalette::Text, brush2);
+        QBrush brush3(QColor(76, 76, 76, 255));
+        brush3.setStyle(Qt::SolidPattern);
+        palette1.setBrush(QPalette::Active, QPalette::Text, brush3);
+        palette1.setBrush(QPalette::Inactive, QPalette::Text, brush3);
+        QBrush brush4(QColor(255, 255, 255, 127));
+        brush4.setStyle(Qt::SolidPattern);
+        palette1.setBrush(QPalette::Disabled, QPalette::Text, brush4);
         imgLab->setPalette(palette1);
         imgLab->setStyleSheet(QLatin1String("#imgLab{\n"
-"border:1px solid #666;\n"
+"border:1px solid #ccc;\n"
 "border-top:none;\n"
 "border-left:none;\n"
 "border-right:none;\n"
@@ -209,10 +226,10 @@ public:
         horizontalLayout_3->setSpacing(5);
         horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
         horizontalLayout_3->setSizeConstraint(QLayout::SetFixedSize);
-        checkBox = new QCheckBox(frame);
-        checkBox->setObjectName(QStringLiteral("checkBox"));
+        turnGray = new QCheckBox(frame);
+        turnGray->setObjectName(QStringLiteral("turnGray"));
 
-        horizontalLayout_3->addWidget(checkBox);
+        horizontalLayout_3->addWidget(turnGray);
 
         zoomIn = new QPushButton(frame);
         zoomIn->setObjectName(QStringLiteral("zoomIn"));
@@ -234,10 +251,10 @@ public:
 
         horizontalLayout_3->addWidget(zoomIn);
 
-        label_2 = new QLabel(frame);
-        label_2->setObjectName(QStringLiteral("label_2"));
+        zoomLab = new QLabel(frame);
+        zoomLab->setObjectName(QStringLiteral("zoomLab"));
 
-        horizontalLayout_3->addWidget(label_2);
+        horizontalLayout_3->addWidget(zoomLab);
 
         zoomOut = new QPushButton(frame);
         zoomOut->setObjectName(QStringLiteral("zoomOut"));
@@ -266,22 +283,22 @@ public:
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
         horizontalLayout_4->setSizeConstraint(QLayout::SetFixedSize);
-        checkBox_2 = new QCheckBox(frame);
-        checkBox_2->setObjectName(QStringLiteral("checkBox_2"));
+        compress = new QCheckBox(frame);
+        compress->setObjectName(QStringLiteral("compress"));
 
-        horizontalLayout_4->addWidget(checkBox_2);
+        horizontalLayout_4->addWidget(compress);
 
-        doubleSpinBox = new QDoubleSpinBox(frame);
-        doubleSpinBox->setObjectName(QStringLiteral("doubleSpinBox"));
+        compressSpin = new QDoubleSpinBox(frame);
+        compressSpin->setObjectName(QStringLiteral("compressSpin"));
         QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy3.setHorizontalStretch(0);
         sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(doubleSpinBox->sizePolicy().hasHeightForWidth());
-        doubleSpinBox->setSizePolicy(sizePolicy3);
-        doubleSpinBox->setMinimumSize(QSize(80, 0));
-        doubleSpinBox->setFocusPolicy(Qt::ClickFocus);
+        sizePolicy3.setHeightForWidth(compressSpin->sizePolicy().hasHeightForWidth());
+        compressSpin->setSizePolicy(sizePolicy3);
+        compressSpin->setMinimumSize(QSize(80, 0));
+        compressSpin->setFocusPolicy(Qt::ClickFocus);
 
-        horizontalLayout_4->addWidget(doubleSpinBox);
+        horizontalLayout_4->addWidget(compressSpin);
 
 
         gridLayout_2->addLayout(horizontalLayout_4, 5, 0, 1, 3);
@@ -307,12 +324,12 @@ public:
         gridLayout_3->setHorizontalSpacing(2);
         gridLayout_3->setVerticalSpacing(16);
         gridLayout_3->setContentsMargins(-1, -1, -1, 12);
-        comboBox_2 = new QComboBox(frame_2);
-        comboBox_2->setObjectName(QStringLiteral("comboBox_2"));
-        sizePolicy3.setHeightForWidth(comboBox_2->sizePolicy().hasHeightForWidth());
-        comboBox_2->setSizePolicy(sizePolicy3);
+        placeComb = new QComboBox(frame_2);
+        placeComb->setObjectName(QStringLiteral("placeComb"));
+        sizePolicy3.setHeightForWidth(placeComb->sizePolicy().hasHeightForWidth());
+        placeComb->setSizePolicy(sizePolicy3);
 
-        gridLayout_3->addWidget(comboBox_2, 5, 1, 1, 2);
+        gridLayout_3->addWidget(placeComb, 5, 1, 1, 2);
 
         label_8 = new QLabel(frame_2);
         label_8->setObjectName(QStringLiteral("label_8"));
@@ -351,20 +368,20 @@ public:
 
         gridLayout_3->addWidget(label_7, 3, 0, 1, 1);
 
-        comboBox = new QComboBox(frame_2);
-        comboBox->setObjectName(QStringLiteral("comboBox"));
-        sizePolicy3.setHeightForWidth(comboBox->sizePolicy().hasHeightForWidth());
-        comboBox->setSizePolicy(sizePolicy3);
-        comboBox->setFrame(true);
+        hotComb = new QComboBox(frame_2);
+        hotComb->setObjectName(QStringLiteral("hotComb"));
+        sizePolicy3.setHeightForWidth(hotComb->sizePolicy().hasHeightForWidth());
+        hotComb->setSizePolicy(sizePolicy3);
+        hotComb->setFrame(true);
 
-        gridLayout_3->addWidget(comboBox, 2, 1, 1, 2);
+        gridLayout_3->addWidget(hotComb, 2, 1, 1, 2);
 
         fontLab = new QLabel(frame_2);
         fontLab->setObjectName(QStringLiteral("fontLab"));
         sizePolicy.setHeightForWidth(fontLab->sizePolicy().hasHeightForWidth());
         fontLab->setSizePolicy(sizePolicy);
         fontLab->setStyleSheet(QLatin1String("#fontLab{\n"
-"border:1px solid #666;\n"
+"border:1px solid #ccc;\n"
 "border-top:none;\n"
 "border-left:none;\n"
 "border-right:none;\n"
@@ -381,20 +398,20 @@ public:
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
         horizontalLayout_5->setSizeConstraint(QLayout::SetFixedSize);
-        spinBox = new QSpinBox(frame_2);
-        spinBox->setObjectName(QStringLiteral("spinBox"));
-        sizePolicy3.setHeightForWidth(spinBox->sizePolicy().hasHeightForWidth());
-        spinBox->setSizePolicy(sizePolicy3);
-        spinBox->setMinimumSize(QSize(80, 0));
-        spinBox->setFocusPolicy(Qt::ClickFocus);
+        sizeSpin = new QSpinBox(frame_2);
+        sizeSpin->setObjectName(QStringLiteral("sizeSpin"));
+        sizePolicy3.setHeightForWidth(sizeSpin->sizePolicy().hasHeightForWidth());
+        sizeSpin->setSizePolicy(sizePolicy3);
+        sizeSpin->setMinimumSize(QSize(80, 0));
+        sizeSpin->setFocusPolicy(Qt::ClickFocus);
 
-        horizontalLayout_5->addWidget(spinBox);
+        horizontalLayout_5->addWidget(sizeSpin);
 
-        checkBox_3 = new QCheckBox(frame_2);
-        checkBox_3->setObjectName(QStringLiteral("checkBox_3"));
-        checkBox_3->setStyleSheet(QStringLiteral("margin-left:16px"));
+        autoMoveComb = new QCheckBox(frame_2);
+        autoMoveComb->setObjectName(QStringLiteral("autoMoveComb"));
+        autoMoveComb->setStyleSheet(QStringLiteral("margin-left:16px"));
 
-        horizontalLayout_5->addWidget(checkBox_3);
+        horizontalLayout_5->addWidget(autoMoveComb);
 
 
         gridLayout_3->addLayout(horizontalLayout_5, 3, 1, 1, 2);
@@ -415,24 +432,24 @@ public:
     void retranslateUi(QDialog *ToolPart)
     {
         ToolPart->setWindowTitle(QApplication::translate("ToolPart", "Dialog", 0));
-        label_11->setText(QApplication::translate("ToolPart", "100%", 0));
-        label_4->setText(QApplication::translate("ToolPart", "\347\273\277\350\211\262\357\274\232", 0));
-        label_5->setText(QApplication::translate("ToolPart", "\350\223\235\350\211\262\357\274\232", 0));
-        label_3->setText(QApplication::translate("ToolPart", "\347\272\242\350\211\262\357\274\232", 0));
-        label_10->setText(QApplication::translate("ToolPart", "100%", 0));
-        label->setText(QApplication::translate("ToolPart", "100%", 0));
+        bluePerLab->setText(QApplication::translate("ToolPart", "50%", 0));
+        greenLab->setText(QApplication::translate("ToolPart", "\347\273\277\350\211\262\357\274\232", 0));
+        blueLab->setText(QApplication::translate("ToolPart", "\350\223\235\350\211\262\357\274\232", 0));
+        redLab->setText(QApplication::translate("ToolPart", "\347\272\242\350\211\262\357\274\232", 0));
+        greenPerLab->setText(QApplication::translate("ToolPart", "50%", 0));
+        redPerLab->setText(QApplication::translate("ToolPart", "50%", 0));
         imgLab->setText(QApplication::translate("ToolPart", "\345\233\276\347\211\207", 0));
-        checkBox->setText(QApplication::translate("ToolPart", "\350\275\254\347\201\260\345\272\246\345\233\276", 0));
+        turnGray->setText(QApplication::translate("ToolPart", "\350\275\254\347\201\260\345\272\246\345\233\276", 0));
         zoomIn->setText(QApplication::translate("ToolPart", "\357\274\215", 0));
-        label_2->setText(QApplication::translate("ToolPart", "100%", 0));
+        zoomLab->setText(QApplication::translate("ToolPart", "100%", 0));
         zoomOut->setText(QApplication::translate("ToolPart", "\357\274\213", 0));
-        checkBox_2->setText(QApplication::translate("ToolPart", "\345\216\213\347\274\251\345\233\276\347\211\207", 0));
+        compress->setText(QApplication::translate("ToolPart", "\345\216\213\347\274\251\345\233\276\347\211\207", 0));
         label_8->setText(QApplication::translate("ToolPart", "\345\255\227\344\275\223\357\274\232", 0));
         label_6->setText(QApplication::translate("ToolPart", "\347\203\255\351\227\250\357\274\232", 0));
         label_9->setText(QApplication::translate("ToolPart", "\344\275\215\347\275\256\357\274\232", 0));
         label_7->setText(QApplication::translate("ToolPart", "\345\244\247\345\260\217\357\274\232", 0));
         fontLab->setText(QApplication::translate("ToolPart", "\346\226\207\345\255\227", 0));
-        checkBox_3->setText(QApplication::translate("ToolPart", "\350\207\252\347\224\261\347\247\273\345\212\250", 0));
+        autoMoveComb->setText(QApplication::translate("ToolPart", "\350\207\252\347\224\261\347\247\273\345\212\250", 0));
     } // retranslateUi
 
 };

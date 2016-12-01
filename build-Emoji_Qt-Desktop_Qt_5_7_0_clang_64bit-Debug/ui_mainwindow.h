@@ -25,6 +25,10 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+    QAction *actionOpenFile;
+    QAction *actionOpenDir;
+    QAction *actionOut;
+    QAction *actionSave;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menu;
@@ -37,13 +41,21 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(536, 363);
+        MainWindow->resize(752, 492);
+        actionOpenFile = new QAction(MainWindow);
+        actionOpenFile->setObjectName(QStringLiteral("actionOpenFile"));
+        actionOpenDir = new QAction(MainWindow);
+        actionOpenDir->setObjectName(QStringLiteral("actionOpenDir"));
+        actionOut = new QAction(MainWindow);
+        actionOut->setObjectName(QStringLiteral("actionOut"));
+        actionSave = new QAction(MainWindow);
+        actionSave->setObjectName(QStringLiteral("actionSave"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 536, 23));
+        menuBar->setGeometry(QRect(0, 0, 752, 22));
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
         menu_2 = new QMenu(menuBar);
@@ -61,6 +73,11 @@ public:
         menuBar->addAction(menu_2->menuAction());
         menuBar->addAction(menu_4->menuAction());
         menuBar->addAction(menu_3->menuAction());
+        menu->addAction(actionOpenFile);
+        menu->addAction(actionOpenDir);
+        menu->addSeparator();
+        menu->addAction(actionOut);
+        menu->addAction(actionSave);
 
         retranslateUi(MainWindow);
 
@@ -70,6 +87,14 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
+        actionOpenFile->setText(QApplication::translate("MainWindow", "\346\211\223\345\274\200\346\226\207\344\273\266", 0));
+        actionOpenFile->setShortcut(QApplication::translate("MainWindow", "Meta+O", 0));
+        actionOpenDir->setText(QApplication::translate("MainWindow", "\346\211\223\345\274\200\346\226\207\344\273\266\345\244\271", 0));
+        actionOpenDir->setShortcut(QApplication::translate("MainWindow", "Ctrl+Alt+O", 0));
+        actionOut->setText(QApplication::translate("MainWindow", "\345\257\274\345\207\272", 0));
+        actionOut->setShortcut(QApplication::translate("MainWindow", "Alt+S", 0));
+        actionSave->setText(QApplication::translate("MainWindow", "\344\277\235\345\255\230", 0));
+        actionSave->setShortcut(QApplication::translate("MainWindow", "Meta+S", 0));
         menu->setTitle(QApplication::translate("MainWindow", "\346\226\207\344\273\266", 0));
         menu_2->setTitle(QApplication::translate("MainWindow", "\345\267\245\345\205\267", 0));
         menu_3->setTitle(QApplication::translate("MainWindow", "\345\270\256\345\212\251", 0));

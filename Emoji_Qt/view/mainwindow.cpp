@@ -3,6 +3,8 @@
 
 #include <QPushButton>
 #include <QSplitter>
+#include <QDebug>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -17,6 +19,8 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
 
 void MainWindow::initSplitter()
 {
@@ -45,4 +49,15 @@ void MainWindow::initSubParts()
     this->toolP=new ToolPart(this);
     this->imageP=new ImagePart(this);
     this->fileP=new FilePart(this);
+
+    connect(toolP,SIGNAL(fontSizeChanged(int)),imageP,SLOT(changeTextSize(int)));
+    connect(toolP,SIGNAL(fontChanged(QFont)),imageP,SLOT(changeTextFont(QFont)));
+}
+
+void MainWindow::on_actionOpenFile_triggered()
+{
+    QString imagePath=QFileDialog::getOpenFileName(this,"获取图片","/",tr("图片格式(*.jpg *.jpeg *.png)"));
+    this->imageP->setImagePath(imagePath);
+    this->imageP->loadFile();
+    setWindowFilePath(imagePath);
 }
