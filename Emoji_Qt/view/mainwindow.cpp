@@ -50,8 +50,8 @@ void MainWindow::initSubParts()
     this->imageP=new ImagePart(this);
     this->fileP=new FilePart(this);
 
-    connect(toolP,SIGNAL(fontSizeChanged(int)),imageP,SLOT(changeTextSize(int)));
-    connect(toolP,SIGNAL(fontChanged(QFont)),imageP,SLOT(changeTextFont(QFont)));
+    connect(toolP,SIGNAL(fontSizeChanged(int)),imageP->getEmojiLabel(),SLOT(setFontSize(int)));
+    connect(toolP,SIGNAL(fontChanged(QFont)),imageP->getEmojiLabel(),SLOT(setFont(QFont)));
 
     connect(toolP,SIGNAL(zoomIn()),imageP,SLOT(zoomIn()));
     connect(toolP,SIGNAL(zoomOut()),imageP,SLOT(zoomOut()));

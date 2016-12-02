@@ -1,6 +1,7 @@
 #ifndef IMAGEPART_H
 #define IMAGEPART_H
 
+#include "emojilabel.h"
 #include "toolpart.h"
 
 #include <QDialog>
@@ -25,20 +26,14 @@ public:
     bool loadFile();
     QString getImagePath() const;
     void setImagePath(const QString &value);
-
+    EmojiLabel* getEmojiLabel();
 public slots:
-    void changeTextSize(int size);
-    void changeTextFont(const QFont &font);
     void zoomIn();
     void zoomOut();
     void changeColor(int colorPart,ToolPart::ColorPart part);
 private:
-    void mousePressEvent(QMouseEvent *event);
-    bool havePressHisText(QMouseEvent *event);
-    void focusText(EmojiText *text);
-    void createText();
     Ui::ImagePart *ui;
-    QLabel *label;
+    EmojiLabel *label;
     QString imagePath;
     QImage image;
     QScrollArea *scrollArea;

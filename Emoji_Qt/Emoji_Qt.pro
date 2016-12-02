@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     graphic/emojitext.cpp \
     view/imagepart.cpp \
     view/filepart.cpp \
-    view/toolpart.cpp
+    view/toolpart.cpp \
+    view/emojilabel.cpp
 
 HEADERS  += view/mainwindow.h \
     graphic/imagerender.h \
@@ -29,7 +30,8 @@ HEADERS  += view/mainwindow.h \
     graphic/emojitext.h \
     view/imagepart.h \
     view/filepart.h \
-    view/toolpart.h
+    view/toolpart.h \
+    view/emojilabel.h
 
 FORMS    += mainwindow.ui \
     imagepart.ui \

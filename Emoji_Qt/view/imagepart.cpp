@@ -4,6 +4,7 @@
 #include <QImageReader>
 #include <QTextFormat>
 #include <QDebug>
+#include <QPainter>
 
 #include <graphic/imagebasicdeal.h>
 
@@ -12,7 +13,7 @@ ImagePart::ImagePart(QWidget *parent) :
     ui(new Ui::ImagePart)
 {
     ui->setupUi(this);
-    this->label=new QLabel();
+    this->label=new EmojiLabel();
     this->scrollArea=new QScrollArea();
     label->setBackgroundRole(QPalette::Base);
     label->setSizePolicy(QSizePolicy::Ignored,QSizePolicy::Ignored);
@@ -47,18 +48,6 @@ bool ImagePart::loadFile()
     return true;
 }
 
-void ImagePart::changeTextSize(int size)
-{
-    QFont font=label->font();
-    font.setPointSize(size);
-    this->label->setFont(font);
-
-}
-
-void ImagePart::changeTextFont(const QFont &font)
-{
-    this->label->setFont(font);
-}
 
 void ImagePart::zoomIn()
 {
@@ -91,34 +80,6 @@ void ImagePart::changeColor(int colorPart, ToolPart::ColorPart part)
     label->setPixmap(QPixmap::fromImage(render.changeRgb(r,g,b)));
 }
 
-void ImagePart::mousePressEvent(QMouseEvent *event)
-{
-    if(!havePressHisText(event))
-    {
-        createText();
-    }
-}
-
-bool ImagePart::havePressHisText(QMouseEvent *event)
-{
-    bool isInHis=false;
-    foreach(EmojiText* text,textList)
-    {
-        if(event->x>text->getX()&&event->x<(text->getX+text->getWidth())&&
-                event->y>text->getY()&&event->y<(text->getY+text->getHeight()))
-        {
-            isInHis=true;
-            focusText(text);
-            break;
-        }
-    }
-    return isInHis;
-}
-
-void ImagePart::focusText(EmojiText *text)
-{
-
-}
 
 void ImagePart::setImage(const QImage &newImage)
 {
@@ -126,6 +87,7 @@ void ImagePart::setImage(const QImage &newImage)
     label->setPixmap(QPixmap::fromImage(image));
     scrollArea->setVisible(true);
     label->adjustSize();
+    label->setPaintState(EmojiLabel::PaintState::LOADIMAGE);
 }
 
 QString ImagePart::getImagePath() const
@@ -136,6 +98,11 @@ QString ImagePart::getImagePath() const
 void ImagePart::setImagePath(const QString &value)
 {
     imagePath = value;
+}
+
+EmojiLabel *ImagePart::getEmojiLabel()
+{
+    return this->label;
 }
 
 
