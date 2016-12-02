@@ -38,7 +38,7 @@ public:
         horizontalLayout->setContentsMargins(0, 0, 1, 1);
         frame = new QWidget(ImagePart);
         frame->setObjectName(QStringLiteral("frame"));
-        frame->setStyleSheet(QStringLiteral("border:none;border-right:1px solid #ccc;border-bottom:1px solid #ccc;"));
+        frame->setStyleSheet(QStringLiteral("QWidget{border:0px solid #ccc;border-right:1px solid #ccc;border-bottom:1px solid #ccc;}"));
         horizontalLayout_2 = new QHBoxLayout(frame);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
         horizontalLayout_2->setContentsMargins(0, 0, 0, 0);

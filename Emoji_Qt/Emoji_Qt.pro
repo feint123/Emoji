@@ -21,7 +21,9 @@ SOURCES += main.cpp\
     view/imagepart.cpp \
     view/filepart.cpp \
     view/toolpart.cpp \
-    view/emojilabel.cpp
+    view/emojilabel.cpp \
+    file/configmanager.cpp \
+    view/colorlabel.cpp
 
 HEADERS  += view/mainwindow.h \
     graphic/imagerender.h \
@@ -31,7 +33,9 @@ HEADERS  += view/mainwindow.h \
     view/imagepart.h \
     view/filepart.h \
     view/toolpart.h \
-    view/emojilabel.h
+    view/emojilabel.h \
+    file/configmanager.h \
+    view/colorlabel.h
 
 FORMS    += mainwindow.ui \
     imagepart.ui \

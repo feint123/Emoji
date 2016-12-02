@@ -14,9 +14,9 @@ class ToolPart : public QDialog
     Q_PROPERTY(int red READ red WRITE setRed NOTIFY colorChanged)
     Q_PROPERTY(int green READ green WRITE setGreen NOTIFY colorChanged)
     Q_PROPERTY(int blue READ blue WRITE setBlue NOTIFY colorChanged)
-    Q_PROPERTY(QPoint place READ place WRITE setPlace NOTIFY placeChanged)
     Q_PROPERTY(int fontSize READ fontSize WRITE setFontSize NOTIFY fontSizeChanged)
     Q_PROPERTY(QFont font READ font WRITE setFont NOTIFY fontChanged)
+    Q_PROPERTY(QString emojiString READ emojiString WRITE setEmojiString NOTIFY emojiStringChanged)
 public:
     enum ColorPart{RED,GREEN,BLUE};
     explicit ToolPart(QWidget *parent = 0);
@@ -38,10 +38,6 @@ public:
         return m_blue;
     }
 
-    QPoint place() const
-    {
-        return m_place;
-    }
 
     int fontSize() const
     {
@@ -53,7 +49,20 @@ public:
         return m_font;
     }
 
+
+    QString emojiString() const
+    {
+        return m_emojiString;
+    }
+
+    int placeId() const
+    {
+        return m_placeId;
+    }
+
 public slots:
+
+
     void setRed(int red)
     {
         if (m_red == red)
@@ -81,14 +90,7 @@ public slots:
         emit colorChanged(blue,ColorPart::BLUE);
     }
 
-    void setPlace(QPoint place)
-    {
-        if (m_place == place)
-            return;
 
-        m_place = place;
-        emit placeChanged(place);
-    }
 
     void setFontSize(int fontSize)
     {
@@ -107,6 +109,26 @@ public slots:
         m_font = font;
         emit fontChanged(font);
     }
+    void editEnable();
+
+    void setEmojiString(QString emojiString)
+    {
+        if (m_emojiString == emojiString)
+            return;
+
+        m_emojiString = emojiString;
+        emit emojiStringChanged(emojiString);
+    }
+
+    void setPlaceId(int placeId,bool ver)
+    {
+        if (m_placeId == placeId&&m_ver== ver)
+            return;
+
+        m_placeId = placeId;
+        m_ver=ver;
+        emit placeIdChanged(placeId,ver);
+    }
 
 signals:
     void colorChanged(int red,ToolPart::ColorPart part);
@@ -120,6 +142,10 @@ signals:
     void zoomIn();
 
     void zoomOut();
+
+    void emojiStringChanged(QString emojiString);
+
+    void placeIdChanged(int placeId,bool ver);
 
 private slots:
 
@@ -143,17 +169,32 @@ private slots:
 
     void on_zoomOut_clicked();
 
+    void on_hotComb_currentIndexChanged(const QString &arg1);
+
+
+    void on_verComb_currentIndexChanged(const QString &arg1);
+
+    void on_horiComb_currentIndexChanged(const QString &arg1);
+
+    void on_hotEdit_textChanged(const QString &arg1);
+
 private:
     Ui::ToolPart *ui;
     void initImage();
+    void initText();
+    void restartImage();
+    void restartText();
     void initSlider(QSlider *slider);
+    int transDirctWord(const QString& word);
     double scale;
     int m_red;
     int m_green;
     int m_blue;
-    QPoint m_place;
     int m_fontSize;
+    bool m_ver;
     QFont m_font;
+    QString m_emojiString;
+    int m_placeId;
 };
 
 #endif // TOOLPART_H

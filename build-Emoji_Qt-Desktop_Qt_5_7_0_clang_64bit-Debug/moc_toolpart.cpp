@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ToolPart_t {
-    QByteArrayData data[36];
-    char stringdata0[455];
+    QByteArrayData data[46];
+    char stringdata0[635];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -43,43 +43,59 @@ QT_MOC_LITERAL(10, 96, 11), // "fontChanged"
 QT_MOC_LITERAL(11, 108, 4), // "font"
 QT_MOC_LITERAL(12, 113, 6), // "zoomIn"
 QT_MOC_LITERAL(13, 120, 7), // "zoomOut"
-QT_MOC_LITERAL(14, 128, 6), // "setRed"
-QT_MOC_LITERAL(15, 135, 8), // "setGreen"
-QT_MOC_LITERAL(16, 144, 5), // "green"
-QT_MOC_LITERAL(17, 150, 7), // "setBlue"
-QT_MOC_LITERAL(18, 158, 4), // "blue"
-QT_MOC_LITERAL(19, 163, 8), // "setPlace"
-QT_MOC_LITERAL(20, 172, 11), // "setFontSize"
-QT_MOC_LITERAL(21, 184, 7), // "setFont"
-QT_MOC_LITERAL(22, 192, 24), // "on_redSlider_sliderMoved"
-QT_MOC_LITERAL(23, 217, 8), // "position"
-QT_MOC_LITERAL(24, 226, 26), // "on_greenSlider_sliderMoved"
-QT_MOC_LITERAL(25, 253, 25), // "on_blueSlider_sliderMoved"
-QT_MOC_LITERAL(26, 279, 19), // "on_turnGray_toggled"
-QT_MOC_LITERAL(27, 299, 7), // "checked"
-QT_MOC_LITERAL(28, 307, 19), // "on_compress_toggled"
-QT_MOC_LITERAL(29, 327, 23), // "on_autoMoveComb_toggled"
-QT_MOC_LITERAL(30, 351, 24), // "on_sizeSpin_valueChanged"
-QT_MOC_LITERAL(31, 376, 4), // "arg1"
-QT_MOC_LITERAL(32, 381, 34), // "on_fontComboBox_currentFontCh..."
-QT_MOC_LITERAL(33, 416, 1), // "f"
-QT_MOC_LITERAL(34, 418, 17), // "on_zoomIn_clicked"
-QT_MOC_LITERAL(35, 436, 18) // "on_zoomOut_clicked"
+QT_MOC_LITERAL(14, 128, 18), // "emojiStringChanged"
+QT_MOC_LITERAL(15, 147, 11), // "emojiString"
+QT_MOC_LITERAL(16, 159, 14), // "placeIdChanged"
+QT_MOC_LITERAL(17, 174, 7), // "placeId"
+QT_MOC_LITERAL(18, 182, 3), // "ver"
+QT_MOC_LITERAL(19, 186, 6), // "setRed"
+QT_MOC_LITERAL(20, 193, 8), // "setGreen"
+QT_MOC_LITERAL(21, 202, 5), // "green"
+QT_MOC_LITERAL(22, 208, 7), // "setBlue"
+QT_MOC_LITERAL(23, 216, 4), // "blue"
+QT_MOC_LITERAL(24, 221, 11), // "setFontSize"
+QT_MOC_LITERAL(25, 233, 7), // "setFont"
+QT_MOC_LITERAL(26, 241, 10), // "editEnable"
+QT_MOC_LITERAL(27, 252, 14), // "setEmojiString"
+QT_MOC_LITERAL(28, 267, 10), // "setPlaceId"
+QT_MOC_LITERAL(29, 278, 24), // "on_redSlider_sliderMoved"
+QT_MOC_LITERAL(30, 303, 8), // "position"
+QT_MOC_LITERAL(31, 312, 26), // "on_greenSlider_sliderMoved"
+QT_MOC_LITERAL(32, 339, 25), // "on_blueSlider_sliderMoved"
+QT_MOC_LITERAL(33, 365, 19), // "on_turnGray_toggled"
+QT_MOC_LITERAL(34, 385, 7), // "checked"
+QT_MOC_LITERAL(35, 393, 19), // "on_compress_toggled"
+QT_MOC_LITERAL(36, 413, 23), // "on_autoMoveComb_toggled"
+QT_MOC_LITERAL(37, 437, 24), // "on_sizeSpin_valueChanged"
+QT_MOC_LITERAL(38, 462, 4), // "arg1"
+QT_MOC_LITERAL(39, 467, 34), // "on_fontComboBox_currentFontCh..."
+QT_MOC_LITERAL(40, 502, 1), // "f"
+QT_MOC_LITERAL(41, 504, 17), // "on_zoomIn_clicked"
+QT_MOC_LITERAL(42, 522, 18), // "on_zoomOut_clicked"
+QT_MOC_LITERAL(43, 541, 30), // "on_hotComb_currentIndexChanged"
+QT_MOC_LITERAL(44, 572, 30), // "on_verComb_currentIndexChanged"
+QT_MOC_LITERAL(45, 603, 31) // "on_horiComb_currentIndexChanged"
 
     },
     "ToolPart\0colorChanged\0\0red\0"
     "ToolPart::ColorPart\0part\0placeChanged\0"
     "place\0fontSizeChanged\0fontSize\0"
-    "fontChanged\0font\0zoomIn\0zoomOut\0setRed\0"
-    "setGreen\0green\0setBlue\0blue\0setPlace\0"
-    "setFontSize\0setFont\0on_redSlider_sliderMoved\0"
+    "fontChanged\0font\0zoomIn\0zoomOut\0"
+    "emojiStringChanged\0emojiString\0"
+    "placeIdChanged\0placeId\0ver\0setRed\0"
+    "setGreen\0green\0setBlue\0blue\0setFontSize\0"
+    "setFont\0editEnable\0setEmojiString\0"
+    "setPlaceId\0on_redSlider_sliderMoved\0"
     "position\0on_greenSlider_sliderMoved\0"
     "on_blueSlider_sliderMoved\0on_turnGray_toggled\0"
     "checked\0on_compress_toggled\0"
     "on_autoMoveComb_toggled\0"
     "on_sizeSpin_valueChanged\0arg1\0"
     "on_fontComboBox_currentFontChanged\0f\0"
-    "on_zoomIn_clicked\0on_zoomOut_clicked"
+    "on_zoomIn_clicked\0on_zoomOut_clicked\0"
+    "on_hotComb_currentIndexChanged\0"
+    "on_verComb_currentIndexChanged\0"
+    "on_horiComb_currentIndexChanged"
 };
 #undef QT_MOC_LITERAL
 
@@ -89,38 +105,45 @@ static const uint qt_meta_data_ToolPart[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      22,   14, // methods
-       6,  184, // properties
+      29,   14, // methods
+       6,  242, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       6,       // signalCount
+       8,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,  124,    2, 0x06 /* Public */,
-       6,    1,  129,    2, 0x06 /* Public */,
-       8,    1,  132,    2, 0x06 /* Public */,
-      10,    1,  135,    2, 0x06 /* Public */,
-      12,    0,  138,    2, 0x06 /* Public */,
-      13,    0,  139,    2, 0x06 /* Public */,
+       1,    2,  159,    2, 0x06 /* Public */,
+       6,    1,  164,    2, 0x06 /* Public */,
+       8,    1,  167,    2, 0x06 /* Public */,
+      10,    1,  170,    2, 0x06 /* Public */,
+      12,    0,  173,    2, 0x06 /* Public */,
+      13,    0,  174,    2, 0x06 /* Public */,
+      14,    1,  175,    2, 0x06 /* Public */,
+      16,    2,  178,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      14,    1,  140,    2, 0x0a /* Public */,
-      15,    1,  143,    2, 0x0a /* Public */,
-      17,    1,  146,    2, 0x0a /* Public */,
-      19,    1,  149,    2, 0x0a /* Public */,
-      20,    1,  152,    2, 0x0a /* Public */,
-      21,    1,  155,    2, 0x0a /* Public */,
-      22,    1,  158,    2, 0x08 /* Private */,
-      24,    1,  161,    2, 0x08 /* Private */,
-      25,    1,  164,    2, 0x08 /* Private */,
-      26,    1,  167,    2, 0x08 /* Private */,
-      28,    1,  170,    2, 0x08 /* Private */,
-      29,    1,  173,    2, 0x08 /* Private */,
-      30,    1,  176,    2, 0x08 /* Private */,
-      32,    1,  179,    2, 0x08 /* Private */,
-      34,    0,  182,    2, 0x08 /* Private */,
-      35,    0,  183,    2, 0x08 /* Private */,
+      19,    1,  183,    2, 0x0a /* Public */,
+      20,    1,  186,    2, 0x0a /* Public */,
+      22,    1,  189,    2, 0x0a /* Public */,
+      24,    1,  192,    2, 0x0a /* Public */,
+      25,    1,  195,    2, 0x0a /* Public */,
+      26,    0,  198,    2, 0x0a /* Public */,
+      27,    1,  199,    2, 0x0a /* Public */,
+      28,    2,  202,    2, 0x0a /* Public */,
+      29,    1,  207,    2, 0x08 /* Private */,
+      31,    1,  210,    2, 0x08 /* Private */,
+      32,    1,  213,    2, 0x08 /* Private */,
+      33,    1,  216,    2, 0x08 /* Private */,
+      35,    1,  219,    2, 0x08 /* Private */,
+      36,    1,  222,    2, 0x08 /* Private */,
+      37,    1,  225,    2, 0x08 /* Private */,
+      39,    1,  228,    2, 0x08 /* Private */,
+      41,    0,  231,    2, 0x08 /* Private */,
+      42,    0,  232,    2, 0x08 /* Private */,
+      43,    1,  233,    2, 0x08 /* Private */,
+      44,    1,  236,    2, 0x08 /* Private */,
+      45,    1,  239,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int, 0x80000000 | 4,    3,    5,
@@ -129,40 +152,47 @@ static const uint qt_meta_data_ToolPart[] = {
     QMetaType::Void, QMetaType::QFont,   11,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   15,
+    QMetaType::Void, QMetaType::Int, QMetaType::Bool,   17,   18,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int,    3,
-    QMetaType::Void, QMetaType::Int,   16,
-    QMetaType::Void, QMetaType::Int,   18,
-    QMetaType::Void, QMetaType::QPoint,    7,
+    QMetaType::Void, QMetaType::Int,   21,
+    QMetaType::Void, QMetaType::Int,   23,
     QMetaType::Void, QMetaType::Int,    9,
     QMetaType::Void, QMetaType::QFont,   11,
-    QMetaType::Void, QMetaType::Int,   23,
-    QMetaType::Void, QMetaType::Int,   23,
-    QMetaType::Void, QMetaType::Int,   23,
-    QMetaType::Void, QMetaType::Bool,   27,
-    QMetaType::Void, QMetaType::Bool,   27,
-    QMetaType::Void, QMetaType::Bool,   27,
-    QMetaType::Void, QMetaType::Int,   31,
-    QMetaType::Void, QMetaType::QFont,   33,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   15,
+    QMetaType::Void, QMetaType::Int, QMetaType::Bool,   17,   18,
+    QMetaType::Void, QMetaType::Int,   30,
+    QMetaType::Void, QMetaType::Int,   30,
+    QMetaType::Void, QMetaType::Int,   30,
+    QMetaType::Void, QMetaType::Bool,   34,
+    QMetaType::Void, QMetaType::Bool,   34,
+    QMetaType::Void, QMetaType::Bool,   34,
+    QMetaType::Void, QMetaType::Int,   38,
+    QMetaType::Void, QMetaType::QFont,   40,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   38,
+    QMetaType::Void, QMetaType::QString,   38,
+    QMetaType::Void, QMetaType::QString,   38,
 
  // properties: name, type, flags
        3, QMetaType::Int, 0x00495103,
-      16, QMetaType::Int, 0x00495103,
-      18, QMetaType::Int, 0x00495103,
-       7, QMetaType::QPoint, 0x00495103,
+      21, QMetaType::Int, 0x00495103,
+      23, QMetaType::Int, 0x00495103,
        9, QMetaType::Int, 0x00495103,
       11, QMetaType::QFont, 0x00495103,
+      15, QMetaType::QString, 0x00495103,
 
  // properties: notify_signal_id
        0,
        0,
        0,
-       1,
        2,
        3,
+       6,
 
        0        // eod
 };
@@ -179,22 +209,29 @@ void ToolPart::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 3: _t->fontChanged((*reinterpret_cast< QFont(*)>(_a[1]))); break;
         case 4: _t->zoomIn(); break;
         case 5: _t->zoomOut(); break;
-        case 6: _t->setRed((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 7: _t->setGreen((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 8: _t->setBlue((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 9: _t->setPlace((*reinterpret_cast< QPoint(*)>(_a[1]))); break;
-        case 10: _t->setFontSize((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 11: _t->setFont((*reinterpret_cast< QFont(*)>(_a[1]))); break;
-        case 12: _t->on_redSlider_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 13: _t->on_greenSlider_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 14: _t->on_blueSlider_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 15: _t->on_turnGray_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 16: _t->on_compress_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 17: _t->on_autoMoveComb_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 18: _t->on_sizeSpin_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 19: _t->on_fontComboBox_currentFontChanged((*reinterpret_cast< const QFont(*)>(_a[1]))); break;
-        case 20: _t->on_zoomIn_clicked(); break;
-        case 21: _t->on_zoomOut_clicked(); break;
+        case 6: _t->emojiStringChanged((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 7: _t->placeIdChanged((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 8: _t->setRed((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 9: _t->setGreen((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 10: _t->setBlue((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 11: _t->setFontSize((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 12: _t->setFont((*reinterpret_cast< QFont(*)>(_a[1]))); break;
+        case 13: _t->editEnable(); break;
+        case 14: _t->setEmojiString((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 15: _t->setPlaceId((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 16: _t->on_redSlider_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 17: _t->on_greenSlider_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 18: _t->on_blueSlider_sliderMoved((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 19: _t->on_turnGray_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 20: _t->on_compress_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 21: _t->on_autoMoveComb_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 22: _t->on_sizeSpin_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 23: _t->on_fontComboBox_currentFontChanged((*reinterpret_cast< const QFont(*)>(_a[1]))); break;
+        case 24: _t->on_zoomIn_clicked(); break;
+        case 25: _t->on_zoomOut_clicked(); break;
+        case 26: _t->on_hotComb_currentIndexChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 27: _t->on_verComb_currentIndexChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 28: _t->on_horiComb_currentIndexChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -242,6 +279,20 @@ void ToolPart::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
                 return;
             }
         }
+        {
+            typedef void (ToolPart::*_t)(QString );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ToolPart::emojiStringChanged)) {
+                *result = 6;
+                return;
+            }
+        }
+        {
+            typedef void (ToolPart::*_t)(int , bool );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ToolPart::placeIdChanged)) {
+                *result = 7;
+                return;
+            }
+        }
     }
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty) {
@@ -252,9 +303,9 @@ void ToolPart::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 0: *reinterpret_cast< int*>(_v) = _t->red(); break;
         case 1: *reinterpret_cast< int*>(_v) = _t->green(); break;
         case 2: *reinterpret_cast< int*>(_v) = _t->blue(); break;
-        case 3: *reinterpret_cast< QPoint*>(_v) = _t->place(); break;
-        case 4: *reinterpret_cast< int*>(_v) = _t->fontSize(); break;
-        case 5: *reinterpret_cast< QFont*>(_v) = _t->font(); break;
+        case 3: *reinterpret_cast< int*>(_v) = _t->fontSize(); break;
+        case 4: *reinterpret_cast< QFont*>(_v) = _t->font(); break;
+        case 5: *reinterpret_cast< QString*>(_v) = _t->emojiString(); break;
         default: break;
         }
     } else if (_c == QMetaObject::WriteProperty) {
@@ -265,9 +316,9 @@ void ToolPart::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 0: _t->setRed(*reinterpret_cast< int*>(_v)); break;
         case 1: _t->setGreen(*reinterpret_cast< int*>(_v)); break;
         case 2: _t->setBlue(*reinterpret_cast< int*>(_v)); break;
-        case 3: _t->setPlace(*reinterpret_cast< QPoint*>(_v)); break;
-        case 4: _t->setFontSize(*reinterpret_cast< int*>(_v)); break;
-        case 5: _t->setFont(*reinterpret_cast< QFont*>(_v)); break;
+        case 3: _t->setFontSize(*reinterpret_cast< int*>(_v)); break;
+        case 4: _t->setFont(*reinterpret_cast< QFont*>(_v)); break;
+        case 5: _t->setEmojiString(*reinterpret_cast< QString*>(_v)); break;
         default: break;
         }
     } else if (_c == QMetaObject::ResetProperty) {
@@ -300,13 +351,13 @@ int ToolPart::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 22)
+        if (_id < 29)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 22;
+        _id -= 29;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 22)
+        if (_id < 29)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 22;
+        _id -= 29;
     }
 #ifndef QT_NO_PROPERTIES
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
@@ -366,5 +417,19 @@ void ToolPart::zoomIn()
 void ToolPart::zoomOut()
 {
     QMetaObject::activate(this, &staticMetaObject, 5, Q_NULLPTR);
+}
+
+// SIGNAL 6
+void ToolPart::emojiStringChanged(QString _t1)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 6, _a);
+}
+
+// SIGNAL 7
+void ToolPart::placeIdChanged(int _t1, bool _t2)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    QMetaObject::activate(this, &staticMetaObject, 7, _a);
 }
 QT_END_MOC_NAMESPACE

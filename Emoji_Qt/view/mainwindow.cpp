@@ -57,6 +57,11 @@ void MainWindow::initSubParts()
     connect(toolP,SIGNAL(zoomOut()),imageP,SLOT(zoomOut()));
 
     connect(toolP,SIGNAL(colorChanged(int,ToolPart::ColorPart)),imageP,SLOT(changeColor(int,ToolPart::ColorPart)));
+
+    connect(imageP->getEmojiLabel(),SIGNAL(editEmoji()),toolP,SLOT(editEnable()));
+    connect(toolP,SIGNAL(emojiStringChanged(QString)),imageP->getEmojiLabel(),SLOT(setEmojiText(QString)));
+
+    connect(toolP,SIGNAL(placeIdChanged(int,bool)),imageP->getEmojiLabel(),SLOT(placeText(int,bool)));
 }
 
 void MainWindow::on_actionOpenFile_triggered()

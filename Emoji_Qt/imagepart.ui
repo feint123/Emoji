@@ -32,7 +32,7 @@
    <item>
     <widget class="QWidget" name="frame" native="true">
      <property name="styleSheet">
-      <string notr="true">border:none;border-right:1px solid #ccc;border-bottom:1px solid #ccc;</string>
+      <string notr="true">QWidget{border:0px solid #ccc;border-right:1px solid #ccc;border-bottom:1px solid #ccc;}</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="leftMargin">

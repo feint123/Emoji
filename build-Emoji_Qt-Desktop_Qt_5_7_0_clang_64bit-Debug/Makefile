@@ -56,10 +56,14 @@ SOURCES       = ../Emoji_Qt/main.cpp \
 		../Emoji_Qt/graphic/emojitext.cpp \
 		../Emoji_Qt/view/imagepart.cpp \
 		../Emoji_Qt/view/filepart.cpp \
-		../Emoji_Qt/view/toolpart.cpp moc_mainwindow.cpp \
+		../Emoji_Qt/view/toolpart.cpp \
+		../Emoji_Qt/view/emojilabel.cpp \
+		../Emoji_Qt/file/configmanager.cpp \
+		../Emoji_Qt/view/colorlabel.cpp moc_mainwindow.cpp \
 		moc_imagepart.cpp \
 		moc_filepart.cpp \
-		moc_toolpart.cpp
+		moc_toolpart.cpp \
+		moc_emojilabel.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		imagerender.o \
@@ -69,10 +73,14 @@ OBJECTS       = main.o \
 		imagepart.o \
 		filepart.o \
 		toolpart.o \
+		emojilabel.o \
+		configmanager.o \
+		colorlabel.o \
 		moc_mainwindow.o \
 		moc_imagepart.o \
 		moc_filepart.o \
-		moc_toolpart.o
+		moc_toolpart.o \
+		moc_emojilabel.o
 DIST          = ../../../Qt5.7.0/5.7/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/qdevice.pri \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/features/device_config.prf \
@@ -235,7 +243,10 @@ DIST          = ../../../Qt5.7.0/5.7/clang_64/mkspecs/features/spec_pre.prf \
 		../Emoji_Qt/graphic/emojitext.h \
 		../Emoji_Qt/view/imagepart.h \
 		../Emoji_Qt/view/filepart.h \
-		../Emoji_Qt/view/toolpart.h ../Emoji_Qt/main.cpp \
+		../Emoji_Qt/view/toolpart.h \
+		../Emoji_Qt/view/emojilabel.h \
+		../Emoji_Qt/file/configmanager.h \
+		../Emoji_Qt/view/colorlabel.h ../Emoji_Qt/main.cpp \
 		../Emoji_Qt/view/mainwindow.cpp \
 		../Emoji_Qt/graphic/imagerender.cpp \
 		../Emoji_Qt/graphic/imagebasicdeal.cpp \
@@ -243,7 +254,10 @@ DIST          = ../../../Qt5.7.0/5.7/clang_64/mkspecs/features/spec_pre.prf \
 		../Emoji_Qt/graphic/emojitext.cpp \
 		../Emoji_Qt/view/imagepart.cpp \
 		../Emoji_Qt/view/filepart.cpp \
-		../Emoji_Qt/view/toolpart.cpp
+		../Emoji_Qt/view/toolpart.cpp \
+		../Emoji_Qt/view/emojilabel.cpp \
+		../Emoji_Qt/file/configmanager.cpp \
+		../Emoji_Qt/view/colorlabel.cpp
 QMAKE_TARGET  = Emoji_Qt
 DESTDIR       = 
 TARGET        = Emoji_Qt.app/Contents/MacOS/Emoji_Qt
@@ -604,8 +618,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../Emoji_Qt/view/mainwindow.h ../Emoji_Qt/graphic/imagerender.h ../Emoji_Qt/graphic/imagebasicdeal.h ../Emoji_Qt/file/imagefilemanager.h ../Emoji_Qt/graphic/emojitext.h ../Emoji_Qt/view/imagepart.h ../Emoji_Qt/view/filepart.h ../Emoji_Qt/view/toolpart.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Emoji_Qt/main.cpp ../Emoji_Qt/view/mainwindow.cpp ../Emoji_Qt/graphic/imagerender.cpp ../Emoji_Qt/graphic/imagebasicdeal.cpp ../Emoji_Qt/file/imagefilemanager.cpp ../Emoji_Qt/graphic/emojitext.cpp ../Emoji_Qt/view/imagepart.cpp ../Emoji_Qt/view/filepart.cpp ../Emoji_Qt/view/toolpart.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Emoji_Qt/view/mainwindow.h ../Emoji_Qt/graphic/imagerender.h ../Emoji_Qt/graphic/imagebasicdeal.h ../Emoji_Qt/file/imagefilemanager.h ../Emoji_Qt/graphic/emojitext.h ../Emoji_Qt/view/imagepart.h ../Emoji_Qt/view/filepart.h ../Emoji_Qt/view/toolpart.h ../Emoji_Qt/view/emojilabel.h ../Emoji_Qt/file/configmanager.h ../Emoji_Qt/view/colorlabel.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Emoji_Qt/main.cpp ../Emoji_Qt/view/mainwindow.cpp ../Emoji_Qt/graphic/imagerender.cpp ../Emoji_Qt/graphic/imagebasicdeal.cpp ../Emoji_Qt/file/imagefilemanager.cpp ../Emoji_Qt/graphic/emojitext.cpp ../Emoji_Qt/view/imagepart.cpp ../Emoji_Qt/view/filepart.cpp ../Emoji_Qt/view/toolpart.cpp ../Emoji_Qt/view/emojilabel.cpp ../Emoji_Qt/file/configmanager.cpp ../Emoji_Qt/view/colorlabel.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Emoji_Qt/mainwindow.ui ../Emoji_Qt/imagepart.ui ../Emoji_Qt/view/filepart.ui ../Emoji_Qt/view/toolpart.ui $(DISTDIR)/
 
 
@@ -632,14 +646,32 @@ benchmark: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_imagepart.cpp moc_filepart.cpp moc_toolpart.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_imagepart.cpp moc_filepart.cpp moc_toolpart.cpp moc_emojilabel.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_imagepart.cpp moc_filepart.cpp moc_toolpart.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_imagepart.cpp moc_filepart.cpp moc_toolpart.cpp moc_emojilabel.cpp
 moc_mainwindow.cpp: ../Emoji_Qt/view/filepart.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
 		../Emoji_Qt/view/imagepart.h \
+		../Emoji_Qt/view/emojilabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QPaintEvent \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		../Emoji_Qt/graphic/emojitext.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QColor \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qcolor.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QFont \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qfont.h \
 		../Emoji_Qt/view/toolpart.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QSlider \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
+		../Emoji_Qt/graphic/imagerender.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qimage.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QSplitter \
@@ -648,8 +680,27 @@ moc_mainwindow.cpp: ../Emoji_Qt/view/filepart.h \
 		../../../Qt5.7.0/5.7/clang_64/bin/moc
 	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/Emoji_Qt -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../Emoji_Qt/view/mainwindow.h -o moc_mainwindow.cpp
 
-moc_imagepart.cpp: ../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QDialog \
+moc_imagepart.cpp: ../Emoji_Qt/view/emojilabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QPaintEvent \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		../Emoji_Qt/graphic/emojitext.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QColor \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qcolor.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QFont \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qfont.h \
+		../Emoji_Qt/view/toolpart.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QSlider \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
+		../Emoji_Qt/graphic/imagerender.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qimage.h \
 		../Emoji_Qt/view/imagepart.h \
 		../../../Qt5.7.0/5.7/clang_64/bin/moc
 	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/Emoji_Qt -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../Emoji_Qt/view/imagepart.h -o moc_imagepart.cpp
@@ -662,9 +713,25 @@ moc_filepart.cpp: ../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/
 
 moc_toolpart.cpp: ../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QSlider \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
 		../Emoji_Qt/view/toolpart.h \
 		../../../Qt5.7.0/5.7/clang_64/bin/moc
 	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/Emoji_Qt -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../Emoji_Qt/view/toolpart.h -o moc_toolpart.cpp
+
+moc_emojilabel.cpp: ../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QPaintEvent \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		../Emoji_Qt/graphic/emojitext.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QColor \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qcolor.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QFont \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qfont.h \
+		../Emoji_Qt/view/emojilabel.h \
+		../../../Qt5.7.0/5.7/clang_64/bin/moc
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/Emoji_Qt -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../Emoji_Qt/view/emojilabel.h -o moc_emojilabel.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -684,7 +751,12 @@ ui_filepart.h: ../Emoji_Qt/view/filepart.ui \
 	/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic ../Emoji_Qt/view/filepart.ui -o ui_filepart.h
 
 ui_toolpart.h: ../Emoji_Qt/view/toolpart.ui \
-		../../../Qt5.7.0/5.7/clang_64/bin/uic
+		../../../Qt5.7.0/5.7/clang_64/bin/uic \
+		../Emoji_Qt/view/colorlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h
 	/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic ../Emoji_Qt/view/toolpart.ui -o ui_toolpart.h
 
 compiler_rez_source_make_all:
@@ -704,7 +776,25 @@ main.o: ../Emoji_Qt/main.cpp ../Emoji_Qt/view/mainwindow.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
 		../Emoji_Qt/view/imagepart.h \
+		../Emoji_Qt/view/emojilabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QPaintEvent \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		../Emoji_Qt/graphic/emojitext.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QColor \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qcolor.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QFont \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qfont.h \
 		../Emoji_Qt/view/toolpart.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QSlider \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
+		../Emoji_Qt/graphic/imagerender.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qimage.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QSplitter \
@@ -718,24 +808,50 @@ mainwindow.o: ../Emoji_Qt/view/mainwindow.cpp ../Emoji_Qt/view/mainwindow.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
 		../Emoji_Qt/view/imagepart.h \
+		../Emoji_Qt/view/emojilabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QPaintEvent \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		../Emoji_Qt/graphic/emojitext.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QColor \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qcolor.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QFont \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qfont.h \
 		../Emoji_Qt/view/toolpart.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QSlider \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
+		../Emoji_Qt/graphic/imagerender.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qimage.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QSplitter \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qsplitter.h \
 		ui_mainwindow.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
-		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QFileDialog \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qfiledialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Emoji_Qt/view/mainwindow.cpp
 
 imagerender.o: ../Emoji_Qt/graphic/imagerender.cpp ../Emoji_Qt/graphic/imagerender.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QImage \
-		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qimage.h
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o imagerender.o ../Emoji_Qt/graphic/imagerender.cpp
 
 imagebasicdeal.o: ../Emoji_Qt/graphic/imagebasicdeal.cpp ../Emoji_Qt/graphic/imagebasicdeal.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QImage \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QSize \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qsize.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o imagebasicdeal.o ../Emoji_Qt/graphic/imagebasicdeal.cpp
@@ -751,9 +867,39 @@ emojitext.o: ../Emoji_Qt/graphic/emojitext.cpp ../Emoji_Qt/graphic/emojitext.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o emojitext.o ../Emoji_Qt/graphic/emojitext.cpp
 
 imagepart.o: ../Emoji_Qt/view/imagepart.cpp ../Emoji_Qt/view/imagepart.h \
+		../Emoji_Qt/view/emojilabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QPaintEvent \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		../Emoji_Qt/graphic/emojitext.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QColor \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qcolor.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QFont \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qfont.h \
+		../Emoji_Qt/view/toolpart.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
-		ui_imagepart.h
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QSlider \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
+		../Emoji_Qt/graphic/imagerender.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QImage \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qimage.h \
+		ui_imagepart.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QImageReader \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qimagereader.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QTextFormat \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qtextformat.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../Emoji_Qt/graphic/imagebasicdeal.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QSize \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qsize.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o imagepart.o ../Emoji_Qt/view/imagepart.cpp
 
 filepart.o: ../Emoji_Qt/view/filepart.cpp ../Emoji_Qt/view/filepart.h \
@@ -765,8 +911,46 @@ filepart.o: ../Emoji_Qt/view/filepart.cpp ../Emoji_Qt/view/filepart.h \
 toolpart.o: ../Emoji_Qt/view/toolpart.cpp ../Emoji_Qt/view/toolpart.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
-		ui_toolpart.h
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QSlider \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qslider.h \
+		ui_toolpart.h \
+		../Emoji_Qt/view/colorlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o toolpart.o ../Emoji_Qt/view/toolpart.cpp
+
+emojilabel.o: ../Emoji_Qt/view/emojilabel.cpp ../Emoji_Qt/view/emojilabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QPaintEvent \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		../Emoji_Qt/graphic/emojitext.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QColor \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qcolor.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QFont \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qfont.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdebug.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o emojilabel.o ../Emoji_Qt/view/emojilabel.cpp
+
+configmanager.o: ../Emoji_Qt/file/configmanager.cpp ../Emoji_Qt/file/configmanager.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o configmanager.o ../Emoji_Qt/file/configmanager.cpp
+
+colorlabel.o: ../Emoji_Qt/view/colorlabel.cpp ../Emoji_Qt/view/colorlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QColorDialog \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qcolordialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o colorlabel.o ../Emoji_Qt/view/colorlabel.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
@@ -779,6 +963,9 @@ moc_filepart.o: moc_filepart.cpp
 
 moc_toolpart.o: moc_toolpart.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_toolpart.o moc_toolpart.cpp
+
+moc_emojilabel.o: moc_emojilabel.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_emojilabel.o moc_emojilabel.cpp
 
 ####### Install
 
