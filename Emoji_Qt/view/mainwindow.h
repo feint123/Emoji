@@ -3,12 +3,12 @@
 
 #include "filepart.h"
 #include "imagepart.h"
-#include "../../../CTypeProject/QtProject/feint/pane/toolpart.h"
 
 #include <QMainWindow>
 #include <QSplitter>
 
 #include <pane/normaltoolpane.h>
+#include <pane/toolpart.h>
 
 namespace Ui {
 class MainWindow;

@@ -44,10 +44,15 @@ FORMS    += mainwindow.ui \
 
 
 
-macx|win32: LIBS += -L$$PWD/../../../CTypeProject/QtProject/build-feint-Desktop_Qt_5_7_0_clang_64bit-Debug/ -lfeint
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-feint-Desktop_Qt_5_7_0_MSVC2013_64bit-Debug/release/ -lfeint
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-feint-Desktop_Qt_5_7_0_MSVC2013_64bit-Debug/debug/ -lfeint
+else:macx: LIBS += -L$$PWD/../build-feint-Desktop_Qt_5_7_0_MSVC2013_64bit-Debug/ -lfeint
 
-INCLUDEPATH += $$PWD/../../../CTypeProject/QtProject/feint
-DEPENDPATH += $$PWD/../../../CTypeProject/QtProject/feint
+INCLUDEPATH += $$PWD/../feint
+DEPENDPATH += $$PWD/../feint
 
-win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../../../CTypeProject/QtProject/build-feint-Desktop_Qt_5_7_0_clang_64bit-Debug/feint.lib
-else:macx|win32-g++: PRE_TARGETDEPS += $$PWD/../../../CTypeProject/QtProject/build-feint-Desktop_Qt_5_7_0_clang_64bit-Debug/libfeint.a
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-feint-Desktop_Qt_5_7_0_MSVC2013_64bit-Debug/release/libfeint.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-feint-Desktop_Qt_5_7_0_MSVC2013_64bit-Debug/debug/libfeint.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-feint-Desktop_Qt_5_7_0_MSVC2013_64bit-Debug/release/feint.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-feint-Desktop_Qt_5_7_0_MSVC2013_64bit-Debug/debug/feint.lib
+else:macx: PRE_TARGETDEPS += $$PWD/../build-feint-Desktop_Qt_5_7_0_MSVC2013_64bit-Debug/libfeint.a

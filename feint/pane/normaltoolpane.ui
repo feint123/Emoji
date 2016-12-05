@@ -45,12 +45,25 @@
 	border:1px solid #333;
 	color:#f9f9f9;
 	background:#404244;
-	min-height:24px;
+	min-height:32px;
+	max-height:40px;
+
 }
-</string>
+QToolBoxButton{
+	min-height:30px;
+}
+QToolBox::tab:selected{
+	font-weight:bold
+}</string>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="midLineWidth">
+      <number>1</number>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <property name="tabSpacing">
       <number>0</number>
@@ -61,7 +74,7 @@
         <x>0</x>
         <y>0</y>
         <width>249</width>
-        <height>484</height>
+        <height>466</height>
        </rect>
       </property>
       <attribute name="label">
@@ -101,7 +114,7 @@
             <x>0</x>
             <y>0</y>
             <width>249</width>
-            <height>484</height>
+            <height>466</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -152,9 +165,94 @@ QFrame:focus{
       </layout>
      </widget>
      <widget class="QWidget" name="page">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>249</width>
+        <height>466</height>
+       </rect>
+      </property>
       <attribute name="label">
        <string>字体</string>
       </attribute>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QScrollArea" name="scrollArea_2">
+         <property name="styleSheet">
+          <string notr="true">QScrollArea{border:none;}
+</string>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <widget class="QWidget" name="scrollAreaWidgetContents_2">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>249</width>
+            <height>466</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QFrame" name="frame_2">
+             <property name="styleSheet">
+              <string notr="true">QFrame{
+	background:#262829;
+	border:none;
+}
+QFrame:focus{
+	border:2px solid #59a9fb;
+}</string>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="page_2">
       <property name="geometry">
@@ -162,7 +260,7 @@ QFrame:focus{
         <x>0</x>
         <y>0</y>
         <width>249</width>
-        <height>484</height>
+        <height>466</height>
        </rect>
       </property>
       <attribute name="label">

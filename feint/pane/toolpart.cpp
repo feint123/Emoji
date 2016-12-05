@@ -85,9 +85,9 @@ void ToolPart::initText()
     ui->verComb->addItems(directList);
     ui->horiComb->addItems(directList);
 
-    QStringList hotList;
-    hotList<<"你是不是啥"<<"楼上真傻";
-    ui->hotComb->addItems(hotList);
+//    QStringList hotList;
+//    hotList<<"你是不是啥"<<"楼上真傻";
+//    ui->hotComb->addItems(hotList);
     ui->hotComb->setEnabled(false);
 }
 

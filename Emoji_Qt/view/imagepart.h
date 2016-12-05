@@ -2,13 +2,13 @@
 #define IMAGEPART_H
 
 #include "emojilabel.h"
-#include "../../../CTypeProject/QtProject/feint/pane/toolpart.h"
+
 
 #include <QDialog>
 #include <QLabel>
 #include <QMouseEvent>
 #include <QScrollArea>
-
+#include<pane/toolpart.h>
 #include <graphic/emojitext.h>
 #include <graphic/imagerender.h>
 
