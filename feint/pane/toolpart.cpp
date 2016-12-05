@@ -27,8 +27,24 @@ void ToolPart::editEnable()
     ui->verComb->setEnabled(true);
     ui->horiComb->setEnabled(true);
     ui->sizeSpin->setEnabled(true);
-    ui->colorLab->setEnabled(true);
+    //ui->colorLab->setEnabled(true);
     ui->fontComboBox->setEnabled(true);
+    ui->hotEdit->setEnabled(true);
+    ui->hotEdit->setText("");
+    ui->hotComb->setCurrentIndex(-1);
+    ui->verComb->setCurrentIndex(0);
+    ui->horiComb->setCurrentIndex(0);
+    ui->sizeSpin->setValue(16);
+    ui->fontComboBox->setCurrentIndex(0);
+    ui->hotEdit->setPlaceholderText("请输入搞笑的文字-_-`");
+    ui->horiComb->setFocus();
+}
+
+void ToolPart::updateEdit(EmojiText* text)
+{
+    ui->sizeSpin->setValue(text->getFontSize());
+    ui->hotEdit->setText(text->getEmojiCont());
+    ui->fontComboBox->setCurrentFont(text->getEmojiFont());
 }
 
 
@@ -95,13 +111,9 @@ void ToolPart::restartText()
     ui->verComb->setEnabled(false);
     ui->horiComb->setEnabled(false);
     ui->fontComboBox->setEnabled(false);
-    ui->colorLab->setEnabled(false);
+    //ui->colorLab->setEnabled(false);
     ui->sizeSpin->setEnabled(false);
-    ui->hotComb->setCurrentIndex(0);
-    ui->verComb->setCurrentIndex(0);
-    ui->horiComb->setCurrentIndex(0);
-    ui->sizeSpin->setValue(16);
-    ui->fontComboBox->setCurrentIndex(0);
+    ui->hotEdit->setEnabled(false);
     ui->frame_2->show();
 
 }

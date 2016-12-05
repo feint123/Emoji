@@ -5,8 +5,13 @@
 EmojiLabel::EmojiLabel()
 {
     moveable=false;
-    point.setX(0);
-    point.setY(0);
+}
+
+EmojiLabel::~EmojiLabel()
+{
+    foreach (EmojiText *text, textList) {
+        text=NULL;
+    }
 }
 
 
@@ -15,6 +20,7 @@ void EmojiLabel::paintEvent(QPaintEvent *event)
     switch(paintState){
     case PaintState::LOADIMAGE:
         paintImage();
+        this->textList.clear();
         break;
     case PaintState::EDITTEXT:
         editText();
@@ -26,13 +32,20 @@ void EmojiLabel::mousePressEvent(QMouseEvent *event)
 {
     setPaintState(PaintState::EDITTEXT);
     if(moveable){
-        point.setX(event->x());
-        point.setY(event->y());
-    }else{
-        emit editEmoji();
-        updateText();
-    }
 
+    }else{
+        if(!hasHistoryText(event)){
+            currentText=new EmojiText();
+            textList.append(currentText);
+            updateText();
+            if(textList.size()==1)
+                emit editEmoji();
+            else copyLastEmojiText();
+
+        }else
+            emit currentEmojiTextChanged(currentText);
+    }
+ //   this->clearNullEmoji();
     this->update();
 }
 
@@ -47,18 +60,46 @@ void EmojiLabel::editText()
 {
     paintImage();
     QPainter painter(this);
-    painter.setPen(Qt::black);
-    painter.setFont(this->font);
-    QRect rect=QRect(point.x(),point.y(),textRectWidth,textRectHeight);
-    painter.drawText(rect,text);
+    foreach(EmojiText* currentText,textList){
+        painter.setPen(Qt::black);
+        painter.setFont(getcurrentFont(currentText));
+        QRect rect=QRect(currentText->getX(),currentText->getY(),
+                         currentText->getWidth(),currentText->getHeight());
+        painter.drawText(rect,currentText->getEmojiCont());
+    }
+    focusText();
+}
+
+void EmojiLabel::focusText()
+{
+    QPainter painter(this);
+    painter.setPen(QColor("#70d1f9"));
+    painter.drawRect(currentText->getX()-2,currentText->getY()-2,currentText->getWidth()+4,currentText->getHeight()+4);
+}
+
+bool EmojiLabel::hasHistoryText(QMouseEvent *event)
+{
+    foreach(EmojiText *text,textList)
+    {
+        if((text->getX()<event->x())&&((text->getX()+text->getWidth())>event->x())
+                &&(text->getY()<event->y())&&((text->getY()+text->getHeight())>event->y()))
+        {
+            currentText=text;
+            return true;
+        }
+    }
+    return false;
 }
 
 void EmojiLabel::updateText()
 {
-//    point.setX(this->width()/2-QFontMetrics(font).width(text)/2);
-//    point.setY(this->height()/2-QFontMetrics(font).height()/2);
-    textRectWidth=QFontMetrics(font).width(text);
-    textRectHeight=QFontMetrics(font).height();
+
+    currentText->setWidth(QFontMetrics(getcurrentFont(currentText)).width(currentText->getEmojiCont()));
+    currentText->setHeight(QFontMetrics(getcurrentFont(currentText)).height());
+    if((currentText->getY()+currentText->getHeight())>this->height())
+        currentText->setY(this->height()-currentText->getHeight());
+    if((currentText->getX()+currentText->getWidth())>this->width())
+        currentText->setX(this->width()-currentText->getWidth());
 }
 
 void EmojiLabel::placeVerText(int placeId)
@@ -66,13 +107,13 @@ void EmojiLabel::placeVerText(int placeId)
     switch (placeId) {
     //vertical center
     case 2:
-        point.setY(this->height()/2-QFontMetrics(font).height()/2);
+        currentText->setY(this->height()/2-QFontMetrics(getcurrentFont(currentText)).height()/2);
         break;
     case 1:
-        point.setY(0);
+        currentText->setY(0);
         break;
     case 3:
-        point.setY(this->height()-QFontMetrics(font).height());
+        currentText->setY(this->height()-QFontMetrics(getcurrentFont(currentText)).height());
         break;
     default:
         break;
@@ -85,18 +126,45 @@ void EmojiLabel::placeHorText(int placeId)
     switch (placeId) {
     //vertical center
     case 2:
-        point.setX(this->width()/2-QFontMetrics(font).width(text)/2);
+        currentText->setX(this->width()/2-QFontMetrics(getcurrentFont(currentText)).width(currentText->getEmojiCont())/2);
         break;
     case 1:
-        point.setX(0);
+        currentText->setX(0);
         break;
     case 3:
-        point.setX(this->width()-QFontMetrics(font).width(text));
+        currentText->setX(this->width()-QFontMetrics(getcurrentFont(currentText)).width(currentText->getEmojiCont()));
         break;
     default:
         break;
     }
     update();
+}
+
+void EmojiLabel::clearNullEmoji()
+{
+    int i=0;
+    foreach(EmojiText* text,textList)
+    {
+        if(text->getEmojiCont().length()==0){
+            textList.removeAt(i);
+            text=NULL;
+        }
+        i++;
+    }
+}
+
+void EmojiLabel::copyLastEmojiText()
+{
+    EmojiText* lastText=textList.at(textList.size()-2);
+    currentText->setEmojiFont(lastText->getEmojiFont());
+    currentText->setFontSize(lastText->getFontSize());
+}
+
+QFont EmojiLabel::getcurrentFont(EmojiText* currentText)
+{
+    QFont font=currentText->getEmojiFont();
+    font.setPointSize(currentText->getFontSize());
+    return font;
 }
 
 
@@ -106,38 +174,25 @@ void EmojiLabel::setMoveable(bool value)
     moveable = value;
 }
 
-QString EmojiLabel::getText() const
-{
-    return text;
-}
-
-void EmojiLabel::setText(const QString &value)
-{
-    text = value;
-
-    this->update();
-}
-
 void EmojiLabel::setFontSize(int size)
 {
-    this->fontSize=size;
-    this->font.setPixelSize(fontSize);
+    currentText->setFontSize(size);
     updateText();
     this->update();
 }
 
 void EmojiLabel::setFont(const QFont &font)
 {
-    this->font=font;
+    currentText->setEmojiFont(font);
     updateText();
     this->update();
 }
 
 void EmojiLabel::setEmojiText(QString text)
 {
-    this->text=text;
-     updateText();
-     update();
+    currentText->setEmojiCont(text);
+    updateText();
+    update();
 }
 
 void EmojiLabel::placeText(int placeId, bool ver)

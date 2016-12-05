@@ -2,7 +2,7 @@
 #define IMAGEPART_H
 
 #include "emojilabel.h"
-#include "toolpart.h"
+#include "../../../CTypeProject/QtProject/feint/pane/toolpart.h"
 
 #include <QDialog>
 #include <QLabel>
@@ -31,6 +31,8 @@ public slots:
     void zoomIn();
     void zoomOut();
     void changeColor(int colorPart,ToolPart::ColorPart part);
+private slots:
+    void showTip();
 private:
     Ui::ImagePart *ui;
     EmojiLabel *label;

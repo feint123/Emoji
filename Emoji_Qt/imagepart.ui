@@ -34,7 +34,10 @@
      <property name="styleSheet">
       <string notr="true">QWidget{border:0px solid #ccc;border-right:1px solid #ccc;border-bottom:1px solid #ccc;}</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -47,6 +50,19 @@
       <property name="bottomMargin">
        <number>0</number>
       </property>
+      <item>
+       <widget class="QLabel" name="tipLabel">
+        <property name="styleSheet">
+         <string notr="true">#tipLabel{
+max-height:24px;
+background:#feffbb；
+}</string>
+        </property>
+        <property name="text">
+         <string>请在右侧选择或编辑你所需要的文字</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

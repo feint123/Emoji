@@ -19,6 +19,7 @@ public:
     };
 
     explicit EmojiLabel();
+    ~EmojiLabel();
     PaintState getPaintState() const;
     void setPaintState(const PaintState &value);
 
@@ -28,6 +29,7 @@ public:
 
 signals:
     void editEmoji();
+    void currentEmojiTextChanged(EmojiText* text);
 public slots:
     void setFontSize(int size);
     void setFont(const QFont &);
@@ -40,16 +42,16 @@ private:
     void paintImage();
     void editText();
     void focusText();
-    void hasText();
+    bool hasHistoryText(QMouseEvent *event);
     void updateText();
     void placeVerText(int placeId);
     void placeHorText(int placeId);
-    QString text;
-    QPoint point;
-    int textRectWidth;
-    int textRectHeight;
+    void clearNullEmoji();
+    void copyLastEmojiText();
+    QFont getcurrentFont(EmojiText* currentText);
     PaintState paintState;
-    QList<EmojiText> textList;
+    QList<EmojiText*> textList;
+    EmojiText* currentText;
     bool moveable;
     int fontSize;
     QFont font;

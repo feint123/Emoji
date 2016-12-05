@@ -5,6 +5,7 @@
 #include <QTextFormat>
 #include <QDebug>
 #include <QPainter>
+#include <QTimer>
 
 #include <graphic/imagebasicdeal.h>
 
@@ -23,8 +24,10 @@ ImagePart::ImagePart(QWidget *parent) :
     scrollArea->setWidget(label);
     scrollArea->setVisible(false);
     scrollArea->setStyleSheet("border:none");
+    ui->tipLabel->hide();
 
-    ui->horizontalLayout_2->addWidget(scrollArea);
+    ui->verticalLayout->addWidget(scrollArea);
+    connect(label,SIGNAL(editEmoji()),this,SLOT(showTip()));
 }
 
 ImagePart::~ImagePart()
@@ -80,11 +83,21 @@ void ImagePart::changeColor(int colorPart, ToolPart::ColorPart part)
     label->setPixmap(QPixmap::fromImage(render.changeRgb(r,g,b)));
 }
 
+void ImagePart::showTip()
+{
+    ui->tipLabel->show();
+    QTimer *timer=new QTimer();
+    timer->start(3000);
+    connect(timer,SIGNAL(timeout()),ui->tipLabel,SLOT(hide()));
+}
+
 
 void ImagePart::setImage(const QImage &newImage)
 {
     image=newImage;
+    qDebug()<<"set pixmap start";
     label->setPixmap(QPixmap::fromImage(image));
+    qDebug()<<"set pixmap end";
     scrollArea->setVisible(true);
     label->adjustSize();
     label->setPaintState(EmojiLabel::PaintState::LOADIMAGE);

@@ -33,7 +33,8 @@ void MainWindow::initSplitter()
     this->mainSpli->setStretchFactor(1,1);
 
     this->mainSpli->addWidget(this->imageSpli);
-    this->mainSpli->addWidget(this->toolP);
+//    this->mainSpli->addWidget(this->toolP);
+    this->mainSpli->addWidget(this->normalP);
 
     this->imageSpli->addWidget(this->imageP);
     this->imageSpli->addWidget(this->fileP);
@@ -49,6 +50,7 @@ void MainWindow::initSubParts()
     this->toolP=new ToolPart(this);
     this->imageP=new ImagePart(this);
     this->fileP=new FilePart(this);
+    this->normalP=new NormalToolPane();
 
     connect(toolP,SIGNAL(fontSizeChanged(int)),imageP->getEmojiLabel(),SLOT(setFontSize(int)));
     connect(toolP,SIGNAL(fontChanged(QFont)),imageP->getEmojiLabel(),SLOT(setFont(QFont)));
@@ -62,6 +64,8 @@ void MainWindow::initSubParts()
     connect(toolP,SIGNAL(emojiStringChanged(QString)),imageP->getEmojiLabel(),SLOT(setEmojiText(QString)));
 
     connect(toolP,SIGNAL(placeIdChanged(int,bool)),imageP->getEmojiLabel(),SLOT(placeText(int,bool)));
+
+    connect(imageP->getEmojiLabel(),SIGNAL(currentEmojiTextChanged(EmojiText*)),toolP,SLOT(updateEdit(EmojiText*)));
 }
 
 void MainWindow::on_actionOpenFile_triggered()

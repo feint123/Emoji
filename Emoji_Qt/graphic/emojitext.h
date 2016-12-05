@@ -31,9 +31,13 @@ public:
     QString getEmojiCont() const;
     void setEmojiCont(const QString &value);
 
+    int getFontSize() const;
+    void setFontSize(int value);
+
 private:
     QString emojiCont;
     QFont emojiFont;
+    int fontSize;
     int x;
     int y;
     int width;

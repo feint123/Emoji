@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QSlider>
 
+#include <graphic/emojitext.h>
+
 namespace Ui {
 class ToolPart;
 }
@@ -110,6 +112,7 @@ public slots:
         emit fontChanged(font);
     }
     void editEnable();
+    void updateEdit(EmojiText* text);
 
     void setEmojiString(QString emojiString)
     {
