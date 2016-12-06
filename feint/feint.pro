@@ -13,12 +13,14 @@ CONFIG += staticlib
 SOURCES += feint.cpp \
     graphic/emojitext.cpp \
     pane/toolpart.cpp \
-    pane/normaltoolpane.cpp
+    pane/normaltoolpane.cpp \
+    widget/label/colorlabel.cpp
 
 HEADERS += feint.h \
     graphic/emojitext.h \
     pane/toolpart.h \
-    pane/normaltoolpane.h
+    pane/normaltoolpane.h \
+    widget/label/colorlabel.h
 unix {
     target.path = /usr/lib
     INSTALLS += target

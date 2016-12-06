@@ -16,7 +16,7 @@
   <property name="styleSheet">
    <string notr="true"/>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QHBoxLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -43,17 +43,18 @@
      <property name="styleSheet">
       <string notr="true">QToolBox::tab{
 	border:1px solid #333;
-	color:#f9f9f9;
-	background:#404244;
-	min-height:32px;
-	max-height:40px;
+	color:#ccc;
+	font-size:12px;
+	background:#262829;
+
 
 }
 QToolBoxButton{
-	min-height:30px;
+	min-height:36px;
 }
 QToolBox::tab:selected{
-	font-weight:bold
+	font-weight:bold;
+	color:#fff;
 }</string>
      </property>
      <property name="frameShadow">
@@ -63,18 +64,18 @@ QToolBox::tab:selected{
       <number>1</number>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="tabSpacing">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="color">
+     <widget class="QWidget" name="colorPage">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
         <width>249</width>
-        <height>466</height>
+        <height>448</height>
        </rect>
       </property>
       <attribute name="label">
@@ -114,7 +115,7 @@ QToolBox::tab:selected{
             <x>0</x>
             <y>0</y>
             <width>249</width>
-            <height>466</height>
+            <height>448</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -143,7 +144,7 @@ QToolBox::tab:selected{
              </property>
              <property name="styleSheet">
               <string notr="true">QFrame{
-	background:#262829;
+	background:#404244;
 	border:none;
 }
 QFrame:focus{
@@ -156,6 +157,240 @@ QFrame:focus{
              <property name="frameShadow">
               <enum>QFrame::Raised</enum>
              </property>
+             <layout class="QVBoxLayout" name="verticalLayout_">
+              <property name="spacing">
+               <number>6</number>
+              </property>
+              <property name="leftMargin">
+               <number>4</number>
+              </property>
+              <property name="rightMargin">
+               <number>4</number>
+              </property>
+              <item alignment="Qt::AlignLeft">
+               <widget class="QPushButton" name="pushButton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color:#3c7ec5;padding:0px 4px;</string>
+                </property>
+                <property name="text">
+                 <string>高级</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="hightColor">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">
+QFrame{
+	border-top:1px solid #2a69dd;
+}
+QLabel{
+	color:#377be2;
+	border:none;
+}
+ColorLabel{
+	max-height:20px;
+	border:1px solid #fff;
+}</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_2">
+                 <item>
+                  <widget class="QLabel" name="label">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>文字</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QGridLayout" name="gridLayout_2">
+                   <property name="spacing">
+                    <number>4</number>
+                   </property>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="label_10">
+                     <property name="text">
+                      <string>首页：</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="2">
+                    <widget class="QLabel" name="label_13">
+                     <property name="text">
+                      <string>摘要</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="5" column="2">
+                    <widget class="ColorLabel" name="label_18">
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="2">
+                    <widget class="ColorLabel" name="label_16">
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="5" column="1">
+                    <widget class="ColorLabel" name="label_17">
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="2">
+                    <widget class="QLabel" name="label_5">
+                     <property name="text">
+                      <string>二级菜单</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QLabel" name="label_4">
+                     <property name="text">
+                      <string>一级菜单</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_3">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="text">
+                      <string>菜单：</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="1">
+                    <widget class="ColorLabel" name="label_15">
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="2">
+                    <widget class="ColorLabel" name="label_8">
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="ColorLabel" name="label_6">
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="2">
+                    <widget class="QLabel" name="label_11">
+                     <property name="text">
+                      <string>标签</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="1">
+                    <widget class="QLabel" name="label_9">
+                     <property name="text">
+                      <string>类型</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="1">
+                    <widget class="QLabel" name="label_12">
+                     <property name="text">
+                      <string>标题</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="6" column="1">
+                    <widget class="QLabel" name="label_14">
+                     <property name="text">
+                      <string>其他</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="7" column="1">
+                    <widget class="ColorLabel" name="label_19">
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_2">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>背景</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QGridLayout" name="gridLayout_3">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_7">
+                     <property name="text">
+                      <string>TextLabel</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <spacer name="verticalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
           </layout>
@@ -164,17 +399,17 @@ QFrame:focus{
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page">
+     <widget class="QWidget" name="audioPage">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
         <width>249</width>
-        <height>466</height>
+        <height>448</height>
        </rect>
       </property>
       <attribute name="label">
-       <string>字体</string>
+       <string>声音</string>
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <property name="spacing">
@@ -207,7 +442,7 @@ QFrame:focus{
             <x>0</x>
             <y>0</y>
             <width>249</width>
-            <height>466</height>
+            <height>448</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -233,7 +468,8 @@ QFrame:focus{
             <widget class="QFrame" name="frame_2">
              <property name="styleSheet">
               <string notr="true">QFrame{
-	background:#262829;
+
+	background:#404244;
 	border:none;
 }
 QFrame:focus{
@@ -254,23 +490,30 @@ QFrame:focus{
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="page_2">
+     <widget class="QWidget" name="filePage">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
         <width>249</width>
-        <height>466</height>
+        <height>448</height>
        </rect>
       </property>
       <attribute name="label">
-       <string>Page 2</string>
+       <string>文件</string>
       </attribute>
      </widget>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ColorLabel</class>
+   <extends>QLabel</extends>
+   <header>widget/label/colorlabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
