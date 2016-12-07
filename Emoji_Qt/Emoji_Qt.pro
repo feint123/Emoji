@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT += xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,7 +22,8 @@ SOURCES += main.cpp\
     view/imagepart.cpp \
     view/filepart.cpp \
     view/emojilabel.cpp \
-    file/configmanager.cpp
+    file/configmanager.cpp \
+    view/buttonitem.cpp
 
 HEADERS  += view/mainwindow.h \
     graphic/imagerender.h \
@@ -32,6 +34,7 @@ HEADERS  += view/mainwindow.h \
     view/filepart.h \
     view/emojilabel.h \
     file/configmanager.h \
+    view/buttonitem.h
 
 FORMS    += mainwindow.ui \
     imagepart.ui \

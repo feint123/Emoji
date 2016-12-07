@@ -1,3 +1,4 @@
+#include "buttonitem.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -5,6 +6,8 @@
 #include <QSplitter>
 #include <QDebug>
 #include <QFileDialog>
+
+#include <widget/view/listview.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -35,8 +38,14 @@ void MainWindow::initSplitter()
     this->mainSpli->addWidget(this->imageSpli);
 //    this->mainSpli->addWidget(this->toolP);
     this->mainSpli->addWidget(this->normalP);
-
-    this->imageSpli->addWidget(this->imageP);
+    QList<QVariant> stringL;
+    stringL<<"Heelo"<<"world"<<"welcome";
+    ListView *view=new ListView();
+    view->setData(stringL);
+    ButtonItem *item=new ButtonItem;
+    view->setItem(item);
+    //this->imageSpli->addWidget(this->imageP);
+    this->imageSpli->addWidget(view);
     this->imageSpli->addWidget(this->fileP);
 
     this->imageSpli->setStretchFactor(0,5);

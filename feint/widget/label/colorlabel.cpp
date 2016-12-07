@@ -18,9 +18,7 @@ ColorLabel::ColorLabel(QWidget *parent,QColor defColor)
 void ColorLabel::mousePressEvent(QMouseEvent *)
 {
     QColor color=QColorDialog::getColor(currentColor,this,"选择颜色");
-    qDebug()<<"start setColor";
     setColor(color);
-    qDebug()<<"end setColor";
     emit colorChange(color);
 }
 
@@ -37,4 +35,5 @@ QColor ColorLabel::getCurrentColor() const
 void ColorLabel::setCurrentColor(const QColor &value)
 {
     currentColor = value;
+    setColor(currentColor);
 }

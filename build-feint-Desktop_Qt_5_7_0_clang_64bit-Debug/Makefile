@@ -49,17 +49,33 @@ SOURCES       = ../feint/feint.cpp \
 		../feint/graphic/emojitext.cpp \
 		../feint/pane/toolpart.cpp \
 		../feint/pane/normaltoolpane.cpp \
-		../feint/widget/label/colorlabel.cpp moc_toolpart.cpp \
+		../feint/widget/label/colorlabel.cpp \
+		../feint/util/xml/xmlanalysis.cpp \
+		../feint/domain/setting/textsetting.cpp \
+		../feint/util/xml/settingtextanalysis.cpp \
+		../feint/pane/showpane.cpp \
+		../feint/widget/view/listview.cpp \
+		../feint/widget/view/listitem.cpp moc_toolpart.cpp \
 		moc_normaltoolpane.cpp \
-		moc_colorlabel.cpp
+		moc_colorlabel.cpp \
+		moc_showpane.cpp \
+		moc_listview.cpp
 OBJECTS       = feint.o \
 		emojitext.o \
 		toolpart.o \
 		normaltoolpane.o \
 		colorlabel.o \
+		xmlanalysis.o \
+		textsetting.o \
+		settingtextanalysis.o \
+		showpane.o \
+		listview.o \
+		listitem.o \
 		moc_toolpart.o \
 		moc_normaltoolpane.o \
-		moc_colorlabel.o
+		moc_colorlabel.o \
+		moc_showpane.o \
+		moc_listview.o
 DIST          = ../../../Qt5.7.0/5.7/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/qdevice.pri \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/features/device_config.prf \
@@ -219,11 +235,23 @@ DIST          = ../../../Qt5.7.0/5.7/clang_64/mkspecs/features/spec_pre.prf \
 		../feint/graphic/emojitext.h \
 		../feint/pane/toolpart.h \
 		../feint/pane/normaltoolpane.h \
-		../feint/widget/label/colorlabel.h ../feint/feint.cpp \
+		../feint/widget/label/colorlabel.h \
+		../feint/util/xml/xmlanalysis.h \
+		../feint/domain/setting/textsetting.h \
+		../feint/util/xml/settingtextanalysis.h \
+		../feint/pane/showpane.h \
+		../feint/widget/view/listview.h \
+		../feint/widget/view/listitem.h ../feint/feint.cpp \
 		../feint/graphic/emojitext.cpp \
 		../feint/pane/toolpart.cpp \
 		../feint/pane/normaltoolpane.cpp \
-		../feint/widget/label/colorlabel.cpp
+		../feint/widget/label/colorlabel.cpp \
+		../feint/util/xml/xmlanalysis.cpp \
+		../feint/domain/setting/textsetting.cpp \
+		../feint/util/xml/settingtextanalysis.cpp \
+		../feint/pane/showpane.cpp \
+		../feint/widget/view/listview.cpp \
+		../feint/widget/view/listitem.cpp
 QMAKE_TARGET  = feint
 DESTDIR       = 
 TARGET        = libfeint.a
@@ -234,7 +262,7 @@ first: all
 
 staticlib: $(TARGET)
 
-$(TARGET): ui_toolpart.h ui_normaltoolpane.h $(OBJECTS) $(OBJCOMP) 
+$(TARGET): ui_toolpart.h ui_normaltoolpane.h ui_showpane.h $(OBJECTS) $(OBJCOMP) 
 	-$(DEL_FILE) $(TARGET)
 	$(AR) $(DESTDIR)$(TARGET) $(OBJECTS)
 	$(RANLIB) $(TARGET)
@@ -575,9 +603,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../feint/feint.h ../feint/graphic/emojitext.h ../feint/pane/toolpart.h ../feint/pane/normaltoolpane.h ../feint/widget/label/colorlabel.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../feint/feint.cpp ../feint/graphic/emojitext.cpp ../feint/pane/toolpart.cpp ../feint/pane/normaltoolpane.cpp ../feint/widget/label/colorlabel.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../feint/pane/toolpart.ui ../feint/pane/normaltoolpane.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../feint/feint.h ../feint/graphic/emojitext.h ../feint/pane/toolpart.h ../feint/pane/normaltoolpane.h ../feint/widget/label/colorlabel.h ../feint/util/xml/xmlanalysis.h ../feint/domain/setting/textsetting.h ../feint/util/xml/settingtextanalysis.h ../feint/pane/showpane.h ../feint/widget/view/listview.h ../feint/widget/view/listitem.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../feint/feint.cpp ../feint/graphic/emojitext.cpp ../feint/pane/toolpart.cpp ../feint/pane/normaltoolpane.cpp ../feint/widget/label/colorlabel.cpp ../feint/util/xml/xmlanalysis.cpp ../feint/domain/setting/textsetting.cpp ../feint/util/xml/settingtextanalysis.cpp ../feint/pane/showpane.cpp ../feint/widget/view/listview.cpp ../feint/widget/view/listitem.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../feint/pane/toolpart.ui ../feint/pane/normaltoolpane.ui ../feint/pane/showpane.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -603,9 +631,9 @@ benchmark: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_toolpart.cpp moc_normaltoolpane.cpp moc_colorlabel.cpp
+compiler_moc_header_make_all: moc_toolpart.cpp moc_normaltoolpane.cpp moc_colorlabel.cpp moc_showpane.cpp moc_listview.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_toolpart.cpp moc_normaltoolpane.cpp moc_colorlabel.cpp
+	-$(DEL_FILE) moc_toolpart.cpp moc_normaltoolpane.cpp moc_colorlabel.cpp moc_showpane.cpp moc_listview.cpp
 moc_toolpart.cpp: ../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QSlider \
@@ -619,7 +647,9 @@ moc_toolpart.cpp: ../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/
 		../../../Qt5.7.0/5.7/clang_64/bin/moc
 	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/feint -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../feint/pane/toolpart.h -o moc_toolpart.cpp
 
-moc_normaltoolpane.cpp: ../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+moc_normaltoolpane.cpp: ../../../Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers/QDomDocument \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers/qdom.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
 		../feint/pane/normaltoolpane.h \
 		../../../Qt5.7.0/5.7/clang_64/bin/moc
@@ -635,11 +665,28 @@ moc_colorlabel.cpp: ../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Header
 		../../../Qt5.7.0/5.7/clang_64/bin/moc
 	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/feint -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../feint/widget/label/colorlabel.h -o moc_colorlabel.cpp
 
+moc_showpane.cpp: ../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../feint/pane/showpane.h \
+		../../../Qt5.7.0/5.7/clang_64/bin/moc
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/feint -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../feint/pane/showpane.h -o moc_showpane.cpp
+
+moc_listview.cpp: ../feint/widget/view/listitem.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		../feint/widget/view/listview.h \
+		../../../Qt5.7.0/5.7/clang_64/bin/moc
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/feint -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../feint/widget/view/listview.h -o moc_listview.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_toolpart.h ui_normaltoolpane.h
+compiler_uic_make_all: ui_toolpart.h ui_normaltoolpane.h ui_showpane.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_toolpart.h ui_normaltoolpane.h
+	-$(DEL_FILE) ui_toolpart.h ui_normaltoolpane.h ui_showpane.h
 ui_toolpart.h: ../feint/pane/toolpart.ui \
 		../../../Qt5.7.0/5.7/clang_64/bin/uic
 	/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic ../feint/pane/toolpart.ui -o ui_toolpart.h
@@ -654,6 +701,17 @@ ui_normaltoolpane.h: ../feint/pane/normaltoolpane.ui \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h
 	/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic ../feint/pane/normaltoolpane.ui -o ui_normaltoolpane.h
+
+ui_showpane.h: ../feint/pane/showpane.ui \
+		../../../Qt5.7.0/5.7/clang_64/bin/uic \
+		../feint/widget/label/colorlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QColor \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qcolor.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic ../feint/pane/showpane.ui -o ui_showpane.h
 
 compiler_rez_source_make_all:
 compiler_rez_source_clean:
@@ -693,8 +751,11 @@ toolpart.o: ../feint/pane/toolpart.cpp ../feint/pane/toolpart.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o toolpart.o ../feint/pane/toolpart.cpp
 
 normaltoolpane.o: ../feint/pane/normaltoolpane.cpp ../feint/pane/normaltoolpane.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers/QDomDocument \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers/qdom.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../feint/pane/showpane.h \
 		ui_normaltoolpane.h \
 		../feint/widget/label/colorlabel.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
@@ -702,7 +763,14 @@ normaltoolpane.o: ../feint/pane/normaltoolpane.cpp ../feint/pane/normaltoolpane.
 		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QColor \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qcolor.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
-		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../feint/domain/setting/textsetting.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QHash \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qhash.h \
+		../feint/util/xml/settingtextanalysis.h \
+		../feint/util/xml/xmlanalysis.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QString \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qstring.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o normaltoolpane.o ../feint/pane/normaltoolpane.cpp
 
 colorlabel.o: ../feint/widget/label/colorlabel.cpp ../feint/widget/label/colorlabel.h \
@@ -713,8 +781,67 @@ colorlabel.o: ../feint/widget/label/colorlabel.cpp ../feint/widget/label/colorla
 		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QColorDialog \
-		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qcolordialog.h
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qcolordialog.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdebug.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o colorlabel.o ../feint/widget/label/colorlabel.cpp
+
+xmlanalysis.o: ../feint/util/xml/xmlanalysis.cpp ../feint/util/xml/xmlanalysis.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers/QDomDocument \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers/qdom.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o xmlanalysis.o ../feint/util/xml/xmlanalysis.cpp
+
+textsetting.o: ../feint/domain/setting/textsetting.cpp ../feint/domain/setting/textsetting.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QColor \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qcolor.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QHash \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qhash.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o textsetting.o ../feint/domain/setting/textsetting.cpp
+
+settingtextanalysis.o: ../feint/util/xml/settingtextanalysis.cpp ../feint/util/xml/settingtextanalysis.h \
+		../feint/util/xml/xmlanalysis.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers/QDomDocument \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers/qdom.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QString \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QFile \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qfile.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDebug \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		../feint/domain/setting/textsetting.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QColor \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qcolor.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QHash \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qhash.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o settingtextanalysis.o ../feint/util/xml/settingtextanalysis.cpp
+
+showpane.o: ../feint/pane/showpane.cpp ../feint/pane/showpane.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		ui_showpane.h \
+		../feint/widget/label/colorlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QColor \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qcolor.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o showpane.o ../feint/pane/showpane.cpp
+
+listview.o: ../feint/widget/view/listview.cpp ../feint/widget/view/listview.h \
+		../feint/widget/view/listitem.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o listview.o ../feint/widget/view/listview.cpp
+
+listitem.o: ../feint/widget/view/listitem.cpp ../feint/widget/view/listitem.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o listitem.o ../feint/widget/view/listitem.cpp
 
 moc_toolpart.o: moc_toolpart.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_toolpart.o moc_toolpart.cpp
@@ -724,6 +851,12 @@ moc_normaltoolpane.o: moc_normaltoolpane.cpp
 
 moc_colorlabel.o: moc_colorlabel.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_colorlabel.o moc_colorlabel.cpp
+
+moc_showpane.o: moc_showpane.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_showpane.o moc_showpane.cpp
+
+moc_listview.o: moc_listview.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_listview.o moc_listview.cpp
 
 ####### Install
 

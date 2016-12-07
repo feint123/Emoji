@@ -6,6 +6,9 @@
 #include <QColor>
 #include <QMouseEvent>
 
+namespace Feint {
+class ColorLabel;
+}
 
 class ColorLabel:public QLabel
 {
