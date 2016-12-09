@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ListView_t {
     QByteArrayData data[6];
-    char stringdata0[48];
+    char stringdata0[52];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,11 +34,11 @@ QT_MOC_LITERAL(1, 9, 15), // "selectItemIndex"
 QT_MOC_LITERAL(2, 25, 0), // ""
 QT_MOC_LITERAL(3, 26, 5), // "index"
 QT_MOC_LITERAL(4, 32, 10), // "selectItem"
-QT_MOC_LITERAL(5, 43, 4) // "item"
+QT_MOC_LITERAL(5, 43, 8) // "dataItem"
 
     },
     "ListView\0selectItemIndex\0\0index\0"
-    "selectItem\0item"
+    "selectItem\0dataItem"
 };
 #undef QT_MOC_LITERAL
 
@@ -61,7 +61,7 @@ static const uint qt_meta_data_ListView[] = {
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    3,
-    QMetaType::Void, QMetaType::VoidStar,    5,
+    QMetaType::Void, QMetaType::QVariant,    5,
 
        0        // eod
 };
@@ -73,7 +73,7 @@ void ListView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->selectItemIndex((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: _t->selectItem((*reinterpret_cast< void*(*)>(_a[1]))); break;
+        case 1: _t->selectItem((*reinterpret_cast< QVariant(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -87,7 +87,7 @@ void ListView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
             }
         }
         {
-            typedef void (ListView::*_t)(void * );
+            typedef void (ListView::*_t)(QVariant );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ListView::selectItem)) {
                 *result = 1;
                 return;
@@ -140,7 +140,7 @@ void ListView::selectItemIndex(int _t1)
 }
 
 // SIGNAL 1
-void ListView::selectItem(void * _t1)
+void ListView::selectItem(QVariant _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);

@@ -110,7 +110,7 @@ public:
     {
         if (NormalToolPane->objectName().isEmpty())
             NormalToolPane->setObjectName(QStringLiteral("NormalToolPane"));
-        NormalToolPane->resize(249, 556);
+        NormalToolPane->resize(239, 546);
         NormalToolPane->setStyleSheet(QStringLiteral(""));
         hboxLayout = new QHBoxLayout(NormalToolPane);
         hboxLayout->setObjectName(QStringLiteral("hboxLayout"));
@@ -138,7 +138,7 @@ public:
         toolBox->setMidLineWidth(1);
         colorPage = new QWidget();
         colorPage->setObjectName(QStringLiteral("colorPage"));
-        colorPage->setGeometry(QRect(0, 0, 249, 448));
+        colorPage->setGeometry(QRect(0, 0, 239, 438));
         horizontalLayout_2 = new QHBoxLayout(colorPage);
         horizontalLayout_2->setSpacing(0);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
@@ -151,7 +151,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, -200, 234, 648));
+        scrollAreaWidgetContents->setGeometry(QRect(0, -210, 224, 648));
         scrollAreaWidgetContents->setStyleSheet(QStringLiteral("QWidget{border:none;}"));
         horizontalLayout_3 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_3->setSpacing(0);
@@ -547,7 +547,7 @@ public:
         toolBox->addItem(colorPage, QString::fromUtf8("\351\242\234\350\211\262"));
         audioPage = new QWidget();
         audioPage->setObjectName(QStringLiteral("audioPage"));
-        audioPage->setGeometry(QRect(0, 0, 249, 448));
+        audioPage->setGeometry(QRect(0, 0, 239, 438));
         horizontalLayout_4 = new QHBoxLayout(audioPage);
         horizontalLayout_4->setSpacing(0);
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
@@ -559,7 +559,7 @@ public:
         scrollArea_2->setWidgetResizable(true);
         scrollAreaWidgetContents_2 = new QWidget();
         scrollAreaWidgetContents_2->setObjectName(QStringLiteral("scrollAreaWidgetContents_2"));
-        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 249, 448));
+        scrollAreaWidgetContents_2->setGeometry(QRect(0, 0, 239, 438));
         scrollAreaWidgetContents_2->setStyleSheet(QStringLiteral(""));
         horizontalLayout_5 = new QHBoxLayout(scrollAreaWidgetContents_2);
         horizontalLayout_5->setSpacing(0);
@@ -587,7 +587,7 @@ public:
         toolBox->addItem(audioPage, QString::fromUtf8("\345\243\260\351\237\263"));
         filePage = new QWidget();
         filePage->setObjectName(QStringLiteral("filePage"));
-        filePage->setGeometry(QRect(0, 0, 249, 448));
+        filePage->setGeometry(QRect(0, 0, 239, 438));
         toolBox->addItem(filePage, QString::fromUtf8("\346\226\207\344\273\266"));
 
         hboxLayout->addWidget(toolBox);

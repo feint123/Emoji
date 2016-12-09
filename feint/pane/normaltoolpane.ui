@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>249</width>
-    <height>556</height>
+    <width>239</width>
+    <height>546</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -74,8 +74,8 @@ QToolBox::tab:selected{
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>249</width>
-        <height>448</height>
+        <width>239</width>
+        <height>438</height>
        </rect>
       </property>
       <attribute name="label">
@@ -113,8 +113,8 @@ QToolBox::tab:selected{
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-200</y>
-            <width>234</width>
+            <y>-210</y>
+            <width>224</width>
             <height>648</height>
            </rect>
           </property>
@@ -715,8 +715,8 @@ QPushButton:hover{
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>249</width>
-        <height>448</height>
+        <width>239</width>
+        <height>438</height>
        </rect>
       </property>
       <attribute name="label">
@@ -752,8 +752,8 @@ QPushButton:hover{
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>249</width>
-            <height>448</height>
+            <width>239</width>
+            <height>438</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -806,8 +806,8 @@ QFrame:focus{
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>249</width>
-        <height>448</height>
+        <width>239</width>
+        <height>438</height>
        </rect>
       </property>
       <attribute name="label">

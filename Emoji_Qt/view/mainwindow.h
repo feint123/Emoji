@@ -24,7 +24,7 @@ public:
 
 private slots:
 
-
+    void showCard(QVariant);
     void on_actionOpenFile_triggered();
 
 private:

@@ -1,6 +1,9 @@
 #include "buttonitem.h"
+#include "cardwidget.h"
 
 #include <QPushButton>
+
+#include <domain/card.h>
 
 ButtonItem::ButtonItem()
 {
@@ -9,7 +12,10 @@ ButtonItem::ButtonItem()
 
 void ButtonItem::updateItem(QVariant item)
 {
-    QPushButton *btn=new QPushButton();
-    btn->setText(item.toString());
-    setGraphic(btn);
+
+    CardWidget *cardWidget=new CardWidget();
+
+    Card card = qvariant_cast<Card>(item);
+    cardWidget->createCard(card.getTname(),card.getTip(),card.getDate(),card.getHot());
+    setGraphic(cardWidget);
 }

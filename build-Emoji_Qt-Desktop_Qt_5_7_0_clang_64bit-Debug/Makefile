@@ -58,10 +58,16 @@ SOURCES       = ../Emoji_Qt/main.cpp \
 		../Emoji_Qt/view/filepart.cpp \
 		../Emoji_Qt/view/emojilabel.cpp \
 		../Emoji_Qt/file/configmanager.cpp \
-		../Emoji_Qt/view/buttonitem.cpp moc_mainwindow.cpp \
+		../Emoji_Qt/view/buttonitem.cpp \
+		../Emoji_Qt/domain/card.cpp \
+		../Emoji_Qt/view/cardwidget.cpp \
+		../Emoji_Qt/view/shadowbutton.cpp \
+		../Emoji_Qt/view/cardshow.cpp moc_mainwindow.cpp \
 		moc_imagepart.cpp \
 		moc_filepart.cpp \
-		moc_emojilabel.cpp
+		moc_emojilabel.cpp \
+		moc_cardwidget.cpp \
+		moc_cardshow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		imagerender.o \
@@ -73,11 +79,18 @@ OBJECTS       = main.o \
 		emojilabel.o \
 		configmanager.o \
 		buttonitem.o \
+		card.o \
+		cardwidget.o \
+		shadowbutton.o \
+		cardshow.o \
 		moc_mainwindow.o \
 		moc_imagepart.o \
 		moc_filepart.o \
-		moc_emojilabel.o
-DIST          = ../../../Qt5.7.0/5.7/clang_64/mkspecs/features/spec_pre.prf \
+		moc_emojilabel.o \
+		moc_cardwidget.o \
+		moc_cardshow.o
+DIST          = ../Emoji_Qt/lib/libfeint.a \
+		../../../Qt5.7.0/5.7/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/qdevice.pri \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/features/device_config.prf \
 		../../../Qt5.7.0/5.7/clang_64/mkspecs/common/unix.conf \
@@ -241,7 +254,11 @@ DIST          = ../../../Qt5.7.0/5.7/clang_64/mkspecs/features/spec_pre.prf \
 		../Emoji_Qt/view/filepart.h \
 		../Emoji_Qt/view/emojilabel.h \
 		../Emoji_Qt/file/configmanager.h \
-		../Emoji_Qt/view/buttonitem.h ../Emoji_Qt/main.cpp \
+		../Emoji_Qt/view/buttonitem.h \
+		../Emoji_Qt/domain/card.h \
+		../Emoji_Qt/view/cardwidget.h \
+		../Emoji_Qt/view/shadowbutton.h \
+		../Emoji_Qt/view/cardshow.h ../Emoji_Qt/main.cpp \
 		../Emoji_Qt/view/mainwindow.cpp \
 		../Emoji_Qt/graphic/imagerender.cpp \
 		../Emoji_Qt/graphic/imagebasicdeal.cpp \
@@ -251,7 +268,11 @@ DIST          = ../../../Qt5.7.0/5.7/clang_64/mkspecs/features/spec_pre.prf \
 		../Emoji_Qt/view/filepart.cpp \
 		../Emoji_Qt/view/emojilabel.cpp \
 		../Emoji_Qt/file/configmanager.cpp \
-		../Emoji_Qt/view/buttonitem.cpp
+		../Emoji_Qt/view/buttonitem.cpp \
+		../Emoji_Qt/domain/card.cpp \
+		../Emoji_Qt/view/cardwidget.cpp \
+		../Emoji_Qt/view/shadowbutton.cpp \
+		../Emoji_Qt/view/cardshow.cpp
 QMAKE_TARGET  = Emoji_Qt
 DESTDIR       = 
 TARGET        = Emoji_Qt.app/Contents/MacOS/Emoji_Qt
@@ -260,7 +281,7 @@ TARGET        = Emoji_Qt.app/Contents/MacOS/Emoji_Qt
 first: all
 ####### Build rules
 
-$(TARGET): /Users/feint/Desktop/Emoji/Emoji_Qt/../build-feint-Desktop_Qt_5_7_0_clang_64bit-Debug/libfeint.a ui_mainwindow.h ui_imagepart.h ui_filepart.h $(OBJECTS)  
+$(TARGET): /Users/feint/Desktop/Emoji/Emoji_Qt/../build-feint-Desktop_Qt_5_7_0_clang_64bit-Debug/libfeint.a ui_mainwindow.h ui_imagepart.h ui_filepart.h ui_cardwidget.h ui_cardshow.h $(OBJECTS)  
 	@test -d Emoji_Qt.app/Contents/MacOS/ || mkdir -p Emoji_Qt.app/Contents/MacOS/
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
@@ -614,9 +635,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../Emoji_Qt/view/mainwindow.h ../Emoji_Qt/graphic/imagerender.h ../Emoji_Qt/graphic/imagebasicdeal.h ../Emoji_Qt/file/imagefilemanager.h ../Emoji_Qt/graphic/emojitext.h ../Emoji_Qt/view/imagepart.h ../Emoji_Qt/view/filepart.h ../Emoji_Qt/view/emojilabel.h ../Emoji_Qt/file/configmanager.h ../Emoji_Qt/view/buttonitem.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Emoji_Qt/main.cpp ../Emoji_Qt/view/mainwindow.cpp ../Emoji_Qt/graphic/imagerender.cpp ../Emoji_Qt/graphic/imagebasicdeal.cpp ../Emoji_Qt/file/imagefilemanager.cpp ../Emoji_Qt/graphic/emojitext.cpp ../Emoji_Qt/view/imagepart.cpp ../Emoji_Qt/view/filepart.cpp ../Emoji_Qt/view/emojilabel.cpp ../Emoji_Qt/file/configmanager.cpp ../Emoji_Qt/view/buttonitem.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Emoji_Qt/mainwindow.ui ../Emoji_Qt/imagepart.ui ../Emoji_Qt/view/filepart.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../Emoji_Qt/view/mainwindow.h ../Emoji_Qt/graphic/imagerender.h ../Emoji_Qt/graphic/imagebasicdeal.h ../Emoji_Qt/file/imagefilemanager.h ../Emoji_Qt/graphic/emojitext.h ../Emoji_Qt/view/imagepart.h ../Emoji_Qt/view/filepart.h ../Emoji_Qt/view/emojilabel.h ../Emoji_Qt/file/configmanager.h ../Emoji_Qt/view/buttonitem.h ../Emoji_Qt/domain/card.h ../Emoji_Qt/view/cardwidget.h ../Emoji_Qt/view/shadowbutton.h ../Emoji_Qt/view/cardshow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Emoji_Qt/main.cpp ../Emoji_Qt/view/mainwindow.cpp ../Emoji_Qt/graphic/imagerender.cpp ../Emoji_Qt/graphic/imagebasicdeal.cpp ../Emoji_Qt/file/imagefilemanager.cpp ../Emoji_Qt/graphic/emojitext.cpp ../Emoji_Qt/view/imagepart.cpp ../Emoji_Qt/view/filepart.cpp ../Emoji_Qt/view/emojilabel.cpp ../Emoji_Qt/file/configmanager.cpp ../Emoji_Qt/view/buttonitem.cpp ../Emoji_Qt/domain/card.cpp ../Emoji_Qt/view/cardwidget.cpp ../Emoji_Qt/view/shadowbutton.cpp ../Emoji_Qt/view/cardshow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Emoji_Qt/mainwindow.ui ../Emoji_Qt/imagepart.ui ../Emoji_Qt/view/filepart.ui ../Emoji_Qt/view/cardwidget.ui ../Emoji_Qt/view/cardshow.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -642,9 +663,9 @@ benchmark: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_imagepart.cpp moc_filepart.cpp moc_emojilabel.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_imagepart.cpp moc_filepart.cpp moc_emojilabel.cpp moc_cardwidget.cpp moc_cardshow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_imagepart.cpp moc_filepart.cpp moc_emojilabel.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_imagepart.cpp moc_filepart.cpp moc_emojilabel.cpp moc_cardwidget.cpp moc_cardshow.cpp
 moc_mainwindow.cpp: ../Emoji_Qt/view/filepart.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -726,11 +747,30 @@ moc_emojilabel.cpp: ../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Header
 		../../../Qt5.7.0/5.7/clang_64/bin/moc
 	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/Emoji_Qt -I/Users/feint/Desktop/Emoji/feint -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../Emoji_Qt/view/emojilabel.h -o moc_emojilabel.cpp
 
+moc_cardwidget.cpp: ../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../Emoji_Qt/view/cardwidget.h \
+		../../../Qt5.7.0/5.7/clang_64/bin/moc
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/Emoji_Qt -I/Users/feint/Desktop/Emoji/feint -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../Emoji_Qt/view/cardwidget.h -o moc_cardwidget.cpp
+
+moc_cardshow.cpp: ../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../Emoji_Qt/domain/card.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QVariant \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h \
+		../Emoji_Qt/view/cardshow.h \
+		../../../Qt5.7.0/5.7/clang_64/bin/moc
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/Emoji_Qt -I/Users/feint/Desktop/Emoji/feint -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../Emoji_Qt/view/cardshow.h -o moc_cardshow.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_imagepart.h ui_filepart.h
+compiler_uic_make_all: ui_mainwindow.h ui_imagepart.h ui_filepart.h ui_cardwidget.h ui_cardshow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_imagepart.h ui_filepart.h
+	-$(DEL_FILE) ui_mainwindow.h ui_imagepart.h ui_filepart.h ui_cardwidget.h ui_cardshow.h
 ui_mainwindow.h: ../Emoji_Qt/mainwindow.ui \
 		../../../Qt5.7.0/5.7/clang_64/bin/uic
 	/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic ../Emoji_Qt/mainwindow.ui -o ui_mainwindow.h
@@ -742,6 +782,14 @@ ui_imagepart.h: ../Emoji_Qt/imagepart.ui \
 ui_filepart.h: ../Emoji_Qt/view/filepart.ui \
 		../../../Qt5.7.0/5.7/clang_64/bin/uic
 	/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic ../Emoji_Qt/view/filepart.ui -o ui_filepart.h
+
+ui_cardwidget.h: ../Emoji_Qt/view/cardwidget.ui \
+		../../../Qt5.7.0/5.7/clang_64/bin/uic
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic ../Emoji_Qt/view/cardwidget.ui -o ui_cardwidget.h
+
+ui_cardshow.h: ../Emoji_Qt/view/cardshow.ui \
+		../../../Qt5.7.0/5.7/clang_64/bin/uic
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic ../Emoji_Qt/view/cardshow.ui -o ui_cardshow.h
 
 compiler_rez_source_make_all:
 compiler_rez_source_clean:
@@ -798,6 +846,10 @@ mainwindow.o: ../Emoji_Qt/view/mainwindow.cpp ../Emoji_Qt/view/buttonitem.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../Emoji_Qt/view/cardshow.h \
+		../Emoji_Qt/domain/card.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
 		../Emoji_Qt/view/mainwindow.h \
 		../Emoji_Qt/view/filepart.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QDialog \
@@ -829,9 +881,10 @@ mainwindow.o: ../Emoji_Qt/view/mainwindow.cpp ../Emoji_Qt/view/buttonitem.h \
 		../feint/pane/normaltoolpane.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers/QDomDocument \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtXml.framework/Headers/qdom.h \
-		ui_mainwindow.h \
+		../Emoji_Qt/view/shadowbutton.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		ui_mainwindow.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDebug \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdebug.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QFileDialog \
@@ -937,9 +990,48 @@ buttonitem.o: ../Emoji_Qt/view/buttonitem.cpp ../Emoji_Qt/view/buttonitem.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../Emoji_Qt/view/cardwidget.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
 		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
-		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../Emoji_Qt/domain/card.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o buttonitem.o ../Emoji_Qt/view/buttonitem.cpp
+
+card.o: ../Emoji_Qt/domain/card.cpp ../Emoji_Qt/domain/card.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QVariant \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o card.o ../Emoji_Qt/domain/card.cpp
+
+cardwidget.o: ../Emoji_Qt/view/cardwidget.cpp ../Emoji_Qt/view/cardwidget.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		ui_cardwidget.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsDropShadowEffect \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicseffect.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cardwidget.o ../Emoji_Qt/view/cardwidget.cpp
+
+shadowbutton.o: ../Emoji_Qt/view/shadowbutton.cpp ../Emoji_Qt/view/shadowbutton.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsDropShadowEffect \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicseffect.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o shadowbutton.o ../Emoji_Qt/view/shadowbutton.cpp
+
+cardshow.o: ../Emoji_Qt/view/cardshow.cpp ../Emoji_Qt/view/cardshow.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../Emoji_Qt/domain/card.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QVariant \
+		../../../Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h \
+		ui_cardshow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cardshow.o ../Emoji_Qt/view/cardshow.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
@@ -952,6 +1044,12 @@ moc_filepart.o: moc_filepart.cpp
 
 moc_emojilabel.o: moc_emojilabel.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_emojilabel.o moc_emojilabel.cpp
+
+moc_cardwidget.o: moc_cardwidget.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_cardwidget.o moc_cardwidget.cpp
+
+moc_cardshow.o: moc_cardshow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_cardshow.o moc_cardshow.cpp
 
 ####### Install
 
