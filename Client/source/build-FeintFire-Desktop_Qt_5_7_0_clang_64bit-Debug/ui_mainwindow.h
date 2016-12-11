@@ -53,7 +53,7 @@ public:
         verticalLayout->addLayout(leader);
 
         main = new QHBoxLayout();
-        main->setSpacing(6);
+        main->setSpacing(0);
         main->setObjectName(QStringLiteral("main"));
 
         verticalLayout->addLayout(main);

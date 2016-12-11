@@ -26,6 +26,8 @@ class Ui_FeintMenu
 {
 public:
     QVBoxLayout *verticalLayout;
+    QFrame *basic;
+    QVBoxLayout *verticalLayout_2;
     QFrame *frame;
     QGridLayout *gridLayout;
     QLabel *nameLab;
@@ -47,13 +49,27 @@ public:
         verticalLayout->setSpacing(0);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        frame = new QFrame(FeintMenu);
-        frame->setObjectName(QStringLiteral("frame"));
-        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        basic = new QFrame(FeintMenu);
+        basic->setObjectName(QStringLiteral("basic"));
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Preferred);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(frame->sizePolicy().hasHeightForWidth());
-        frame->setSizePolicy(sizePolicy1);
+        sizePolicy1.setHeightForWidth(basic->sizePolicy().hasHeightForWidth());
+        basic->setSizePolicy(sizePolicy1);
+        basic->setMinimumSize(QSize(250, 0));
+        basic->setFrameShape(QFrame::StyledPanel);
+        basic->setFrameShadow(QFrame::Raised);
+        verticalLayout_2 = new QVBoxLayout(basic);
+        verticalLayout_2->setSpacing(0);
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        frame = new QFrame(basic);
+        frame->setObjectName(QStringLiteral("frame"));
+        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(frame->sizePolicy().hasHeightForWidth());
+        frame->setSizePolicy(sizePolicy2);
         frame->setMinimumSize(QSize(250, 145));
         frame->setStyleSheet(QLatin1String("QFrame{\n"
 "	border:none;\n"
@@ -84,11 +100,11 @@ public:
 
         introLab = new QLabel(frame);
         introLab->setObjectName(QStringLiteral("introLab"));
-        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(introLab->sizePolicy().hasHeightForWidth());
-        introLab->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(introLab->sizePolicy().hasHeightForWidth());
+        introLab->setSizePolicy(sizePolicy3);
         introLab->setStyleSheet(QStringLiteral("color:white;background:rgb();font-size:12pt;"));
         introLab->setIndent(8);
 
@@ -103,7 +119,10 @@ public:
         gridLayout->addWidget(portrait, 0, 0, 1, 1);
 
 
-        verticalLayout->addWidget(frame);
+        verticalLayout_2->addWidget(frame);
+
+
+        verticalLayout->addWidget(basic);
 
 
         retranslateUi(FeintMenu);

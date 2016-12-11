@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.8 -Wall -W -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -stdlib=libc++ -g -std=gnu++11 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.8 -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I../FeintFire -I. -I../feint -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -F/Users/feint/Qt5.7.0/5.7/clang_64/lib
+INCPATH       = -I../FeintFire -I. -I../feint -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -F/Users/feint/Qt5.7.0/5.7/clang_64/lib
 QMAKE         = /Users/feint/Qt5.7.0/5.7/clang_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = FeintFire1.0.0
 DISTDIR = /Users/feint/Desktop/Emoji/Client/source/build-FeintFire-Desktop_Qt_5_7_0_clang_64bit-Debug/.tmp/FeintFire1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 LFLAGS        = -headerpad_max_install_names -stdlib=libc++ -Wl,-syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.8 -Wl,-rpath,/Users/feint/Qt5.7.0/5.7/clang_64/lib
-LIBS          = $(SUBLIBS) -F/Users/feint/Qt5.7.0/5.7/clang_64/lib -L/Users/feint/Desktop/Emoji/Client/source/FeintFire/../../../build-feint-Desktop_Qt_5_7_0_clang_64bit-Debug/ -lfeint -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL 
+LIBS          = $(SUBLIBS) -F/Users/feint/Qt5.7.0/5.7/clang_64/lib -L/Users/feint/Desktop/Emoji/Client/source/FeintFire/../../../build-feint-Desktop_Qt_5_7_0_clang_64bit-Debug/ -lfeint -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework QtNetwork -framework OpenGL -framework AGL 
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
 SED           = sed
@@ -49,10 +49,34 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../FeintFire/main.cpp \
-		../FeintFire/mainwindow.cpp moc_mainwindow.cpp
+		../FeintFire/mainwindow.cpp \
+		../FeintFire/mainpart.cpp \
+		../FeintFire/maincontent.cpp \
+		../FeintFire/domain/articalcard.cpp \
+		../FeintFire/carditem.cpp \
+		../FeintFire/cardcell.cpp \
+		../FeintFire/net/invitationfactory.cpp \
+		../FeintFire/articalarea.cpp moc_mainwindow.cpp \
+		moc_mainpart.cpp \
+		moc_maincontent.cpp \
+		moc_cardcell.cpp \
+		moc_invitationfactory.cpp \
+		moc_articalarea.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
-		moc_mainwindow.o
+		mainpart.o \
+		maincontent.o \
+		articalcard.o \
+		carditem.o \
+		cardcell.o \
+		invitationfactory.o \
+		articalarea.o \
+		moc_mainwindow.o \
+		moc_mainpart.o \
+		moc_maincontent.o \
+		moc_cardcell.o \
+		moc_invitationfactory.o \
+		moc_articalarea.o
 DIST          = /Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/spec_pre.prf \
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/qdevice.pri \
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/device_config.prf \
@@ -185,6 +209,7 @@ DIST          = /Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/spec_pre.prf 
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/qt_config.prf \
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang/qmake.conf \
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/spec_post.prf \
+		../FeintFire/.qmake.stash \
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/exclusive_builds.prf \
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/default_pre.prf \
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/mac/default_pre.prf \
@@ -207,8 +232,22 @@ DIST          = /Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/spec_pre.prf 
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/exceptions.prf \
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/yacc.prf \
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/lex.prf \
-		../FeintFire/FeintFire.pro ../FeintFire/mainwindow.h ../FeintFire/main.cpp \
-		../FeintFire/mainwindow.cpp
+		../FeintFire/FeintFire.pro ../FeintFire/mainwindow.h \
+		../FeintFire/mainpart.h \
+		../FeintFire/maincontent.h \
+		../FeintFire/domain/articalcard.h \
+		../FeintFire/carditem.h \
+		../FeintFire/cardcell.h \
+		../FeintFire/net/invitationfactory.h \
+		../FeintFire/articalarea.h ../FeintFire/main.cpp \
+		../FeintFire/mainwindow.cpp \
+		../FeintFire/mainpart.cpp \
+		../FeintFire/maincontent.cpp \
+		../FeintFire/domain/articalcard.cpp \
+		../FeintFire/carditem.cpp \
+		../FeintFire/cardcell.cpp \
+		../FeintFire/net/invitationfactory.cpp \
+		../FeintFire/articalarea.cpp
 QMAKE_TARGET  = FeintFire
 DESTDIR       = 
 TARGET        = FeintFire.app/Contents/MacOS/FeintFire
@@ -217,7 +256,7 @@ TARGET        = FeintFire.app/Contents/MacOS/FeintFire
 first: all
 ####### Build rules
 
-$(TARGET): /Users/feint/Desktop/Emoji/Client/source/FeintFire/../../../build-feint-Desktop_Qt_5_7_0_clang_64bit-Debug/libfeint.a ui_mainwindow.h $(OBJECTS)  
+$(TARGET): /Users/feint/Desktop/Emoji/Client/source/FeintFire/../../../build-feint-Desktop_Qt_5_7_0_clang_64bit-Debug/libfeint.a ui_mainwindow.h ui_mainpart.h ui_maincontent.h ui_cardcell.h ui_articalarea.h $(OBJECTS)  
 	@test -d FeintFire.app/Contents/MacOS/ || mkdir -p FeintFire.app/Contents/MacOS/
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
@@ -353,6 +392,7 @@ Makefile: ../FeintFire/FeintFire.pro /Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/m
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/qt_config.prf \
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang/qmake.conf \
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/exclusive_builds.prf \
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/default_pre.prf \
 		/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/mac/default_pre.prf \
@@ -378,6 +418,7 @@ Makefile: ../FeintFire/FeintFire.pro /Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/m
 		../FeintFire/FeintFire.pro \
 		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/QtWidgets.prl \
 		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/QtGui.prl \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/QtNetwork.prl \
 		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/QtCore.prl
 	$(QMAKE) -spec macx-clang CONFIG+=debug CONFIG+=x86_64 CONFIG+=qml_debug -o Makefile ../FeintFire/FeintFire.pro
 /Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/spec_pre.prf:
@@ -512,6 +553,7 @@ Makefile: ../FeintFire/FeintFire.pro /Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/m
 /Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/qt_config.prf:
 /Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang/qmake.conf:
 /Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/exclusive_builds.prf:
 /Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/default_pre.prf:
 /Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/features/mac/default_pre.prf:
@@ -537,6 +579,7 @@ Makefile: ../FeintFire/FeintFire.pro /Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/m
 ../FeintFire/FeintFire.pro:
 /Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/QtWidgets.prl:
 /Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/QtGui.prl:
+/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/QtNetwork.prl:
 /Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/QtCore.prl:
 qmake: FORCE
 	@$(QMAKE) -spec macx-clang CONFIG+=debug CONFIG+=x86_64 CONFIG+=qml_debug -o Makefile ../FeintFire/FeintFire.pro
@@ -567,9 +610,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../FeintFire/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../FeintFire/main.cpp ../FeintFire/mainwindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../FeintFire/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../FeintFire/mainwindow.h ../FeintFire/mainpart.h ../FeintFire/maincontent.h ../FeintFire/domain/articalcard.h ../FeintFire/carditem.h ../FeintFire/cardcell.h ../FeintFire/net/invitationfactory.h ../FeintFire/articalarea.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../FeintFire/main.cpp ../FeintFire/mainwindow.cpp ../FeintFire/mainpart.cpp ../FeintFire/maincontent.cpp ../FeintFire/domain/articalcard.cpp ../FeintFire/carditem.cpp ../FeintFire/cardcell.cpp ../FeintFire/net/invitationfactory.cpp ../FeintFire/articalarea.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../FeintFire/mainwindow.ui ../FeintFire/mainpart.ui ../FeintFire/maincontent.ui ../FeintFire/cardcell.ui ../FeintFire/articalarea.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -595,23 +638,140 @@ benchmark: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_mainpart.cpp moc_maincontent.cpp moc_cardcell.cpp moc_invitationfactory.cpp moc_articalarea.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
-moc_mainwindow.cpp: /Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
+	-$(DEL_FILE) moc_mainwindow.cpp moc_mainpart.cpp moc_maincontent.cpp moc_cardcell.cpp moc_invitationfactory.cpp moc_articalarea.cpp
+moc_mainwindow.cpp: ../FeintFire/mainpart.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QTabWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qtabwidget.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../feint/widget/view/listview.h \
+		../feint/widget/view/listitem.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QVariant \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../feint/pane/menu/feintmenu.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QIcon \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qicon.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QToolBox \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qtoolbox.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QUrl \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qurl.h \
+		../feint/widget/button/menubutton.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
 		../FeintFire/mainwindow.h \
 		/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc
-	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/Client/source/FeintFire -I/Users/feint/Desktop/Emoji/Client/source/feint -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../FeintFire/mainwindow.h -o moc_mainwindow.cpp
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/Client/source/FeintFire -I/Users/feint/Desktop/Emoji/Client/source/feint -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../FeintFire/mainwindow.h -o moc_mainwindow.cpp
+
+moc_mainpart.cpp: /Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QTabWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qtabwidget.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../feint/widget/view/listview.h \
+		../feint/widget/view/listitem.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QVariant \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../FeintFire/mainpart.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/Client/source/FeintFire -I/Users/feint/Desktop/Emoji/Client/source/feint -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../FeintFire/mainpart.h -o moc_mainpart.cpp
+
+moc_maincontent.cpp: /Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../feint/widget/view/listview.h \
+		../feint/widget/view/listitem.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QVariant \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../FeintFire/net/invitationfactory.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers/QNetworkReply \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers/qnetworkreply.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QString \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QObject \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../FeintFire/domain/articalcard.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		../FeintFire/maincontent.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/Client/source/FeintFire -I/Users/feint/Desktop/Emoji/Client/source/feint -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../FeintFire/maincontent.h -o moc_maincontent.cpp
+
+moc_cardcell.cpp: /Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../FeintFire/domain/articalcard.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QVariant \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h \
+		../FeintFire/cardcell.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/Client/source/FeintFire -I/Users/feint/Desktop/Emoji/Client/source/feint -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../FeintFire/cardcell.h -o moc_cardcell.cpp
+
+moc_invitationfactory.cpp: /Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers/QNetworkReply \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers/qnetworkreply.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QString \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QObject \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../FeintFire/domain/articalcard.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QVariant \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h \
+		../FeintFire/net/invitationfactory.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/Client/source/FeintFire -I/Users/feint/Desktop/Emoji/Client/source/feint -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../FeintFire/net/invitationfactory.h -o moc_invitationfactory.cpp
+
+moc_articalarea.cpp: /Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../FeintFire/articalarea.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Users/feint/Qt5.7.0/5.7/clang_64/mkspecs/macx-clang -I/Users/feint/Desktop/Emoji/Client/source/FeintFire -I/Users/feint/Desktop/Emoji/Client/source/feint -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers -I/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/usr/local/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.2/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/usr/include -I'/System/Library/Frameworks (framework directory)' -I'/Library/Frameworks (framework directory)' -F/Users/feint/Qt5.7.0/5.7/clang_64/lib ../FeintFire/articalarea.h -o moc_articalarea.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: ui_mainwindow.h ui_mainpart.h ui_maincontent.h ui_cardcell.h ui_articalarea.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
+	-$(DEL_FILE) ui_mainwindow.h ui_mainpart.h ui_maincontent.h ui_cardcell.h ui_articalarea.h
 ui_mainwindow.h: ../FeintFire/mainwindow.ui \
 		/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic
 	/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic ../FeintFire/mainwindow.ui -o ui_mainwindow.h
+
+ui_mainpart.h: ../FeintFire/mainpart.ui \
+		/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic ../FeintFire/mainpart.ui -o ui_mainpart.h
+
+ui_maincontent.h: ../FeintFire/maincontent.ui \
+		/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic ../FeintFire/maincontent.ui -o ui_maincontent.h
+
+ui_cardcell.h: ../FeintFire/cardcell.ui \
+		/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic ../FeintFire/cardcell.ui -o ui_cardcell.h
+
+ui_articalarea.h: ../FeintFire/articalarea.ui \
+		/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic
+	/Users/feint/Qt5.7.0/5.7/clang_64/bin/uic ../FeintFire/articalarea.ui -o ui_articalarea.h
 
 compiler_rez_source_make_all:
 compiler_rez_source_clean:
@@ -626,20 +786,217 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 ####### Compile
 
 main.o: ../FeintFire/main.cpp ../FeintFire/mainwindow.h \
+		../FeintFire/mainpart.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QTabWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qtabwidget.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../feint/widget/view/listview.h \
+		../feint/widget/view/listitem.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QVariant \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
 		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../feint/pane/menu/feintmenu.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QIcon \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qicon.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QToolBox \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qtoolbox.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QUrl \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qurl.h \
+		../feint/widget/button/menubutton.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
 		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../FeintFire/main.cpp
 
-mainwindow.o: ../FeintFire/mainwindow.cpp ../FeintFire/mainwindow.h \
+mainwindow.o: ../FeintFire/mainwindow.cpp ../FeintFire/carditem.h \
+		../feint/widget/view/listitem.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QVariant \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../FeintFire/mainwindow.h \
+		../FeintFire/mainpart.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QTabWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qtabwidget.h \
+		../feint/widget/view/listview.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
 		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
-		ui_mainwindow.h
+		../feint/pane/menu/feintmenu.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QIcon \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qicon.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QToolBox \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qtoolbox.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QUrl \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qurl.h \
+		../feint/widget/button/menubutton.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		ui_mainwindow.h \
+		../feint/pane/leader/searchleader.h \
+		../FeintFire/domain/articalcard.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../FeintFire/mainwindow.cpp
+
+mainpart.o: ../FeintFire/mainpart.cpp ../FeintFire/carditem.h \
+		../feint/widget/view/listitem.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QVariant \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../FeintFire/maincontent.h \
+		../feint/widget/view/listview.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../FeintFire/net/invitationfactory.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers/QNetworkReply \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers/qnetworkreply.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QString \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QObject \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../FeintFire/domain/articalcard.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		../FeintFire/mainpart.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QTabWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qtabwidget.h \
+		ui_mainpart.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDebug \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdebug.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainpart.o ../FeintFire/mainpart.cpp
+
+maincontent.o: ../FeintFire/maincontent.cpp ../FeintFire/carditem.h \
+		../feint/widget/view/listitem.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QVariant \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../FeintFire/maincontent.h \
+		../feint/widget/view/listview.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QBoxLayout \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/QMouseEvent \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../FeintFire/net/invitationfactory.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers/QNetworkReply \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers/qnetworkreply.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QString \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QObject \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../FeintFire/domain/articalcard.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		ui_maincontent.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o maincontent.o ../FeintFire/maincontent.cpp
+
+articalcard.o: ../FeintFire/domain/articalcard.cpp ../FeintFire/domain/articalcard.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QVariant \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o articalcard.o ../FeintFire/domain/articalcard.cpp
+
+carditem.o: ../FeintFire/carditem.cpp ../FeintFire/cardcell.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../FeintFire/domain/articalcard.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QVariant \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h \
+		../FeintFire/carditem.h \
+		../feint/widget/view/listitem.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o carditem.o ../FeintFire/carditem.cpp
+
+cardcell.o: ../FeintFire/cardcell.cpp ../FeintFire/cardcell.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../FeintFire/domain/articalcard.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QVariant \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h \
+		ui_cardcell.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QGraphicsDropShadowEffect \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qgraphicseffect.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDebug \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdebug.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cardcell.o ../FeintFire/cardcell.cpp
+
+invitationfactory.o: ../FeintFire/net/invitationfactory.cpp ../FeintFire/net/invitationfactory.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers/QNetworkReply \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers/qnetworkreply.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QString \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qstring.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QObject \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../FeintFire/domain/articalcard.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDate \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdatetime.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QVariant \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qvariant.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers/QHttpPart \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers/qhttpmultipart.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QJsonDocument \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qjsondocument.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers/QNetworkAccessManager \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers/qnetworkaccessmanager.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers/QNetworkRequest \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtNetwork.framework/Headers/qnetworkrequest.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QDebug \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QJsonObject \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qjsonobject.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/QJsonArray \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtCore.framework/Headers/qjsonarray.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o invitationfactory.o ../FeintFire/net/invitationfactory.cpp
+
+articalarea.o: ../FeintFire/articalarea.cpp ../FeintFire/articalarea.h \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/QWidget \
+		/Users/feint/Qt5.7.0/5.7/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		ui_articalarea.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o articalarea.o ../FeintFire/articalarea.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_mainpart.o: moc_mainpart.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainpart.o moc_mainpart.cpp
+
+moc_maincontent.o: moc_maincontent.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_maincontent.o moc_maincontent.cpp
+
+moc_cardcell.o: moc_cardcell.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_cardcell.o moc_cardcell.cpp
+
+moc_invitationfactory.o: moc_invitationfactory.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_invitationfactory.o moc_invitationfactory.cpp
+
+moc_articalarea.o: moc_articalarea.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_articalarea.o moc_articalarea.cpp
 
 ####### Install
 

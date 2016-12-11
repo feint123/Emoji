@@ -41,7 +41,11 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="main"/>
+     <layout class="QHBoxLayout" name="main">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+     </layout>
     </item>
    </layout>
   </widget>

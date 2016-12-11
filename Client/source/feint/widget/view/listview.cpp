@@ -3,6 +3,7 @@
 #include <QPushButton>
 
 #include <QDebug>
+#include <QPropertyAnimation>
 
 
 ListView::ListView()
@@ -10,6 +11,12 @@ ListView::ListView()
     this->box=new QBoxLayout(QBoxLayout::TopToBottom);
 
     widget=new QWidget();
+
+    QSizePolicy sizeP=widget->sizePolicy();
+    sizeP.setHorizontalPolicy(QSizePolicy::Expanding);
+    widget->setSizePolicy(sizeP);
+
+    this->setSizePolicy(sizeP);
 
     this->setAlignment(Qt::AlignHCenter);
 
@@ -43,6 +50,7 @@ void ListView::setItem(ListItem* item)
         this->itemList.append(item->getGraphic());
         item->getGraphic()->setParent(this);
     }
+    box->setSizeConstraint(QLayout::SetDefaultConstraint);
     widget->setLayout(box);
     this->setWidget(widget);
 }
@@ -72,6 +80,17 @@ void ListView::mousePressEvent(QMouseEvent *event)
            if((x<event->x())&&((x+widget->width())>event->x())
                        &&(y<event->y())&&((y+widget->height())>event->y()))
            {
+
+//               QPropertyAnimation *animation=new QPropertyAnimation(widget, "windowOpacity");
+
+//               animation->setDuration(1000);
+
+//               animation->setKeyValueAt(0,QRect(widget->x(),widget->y(),widget->width(),widget->height()));
+
+//               animation->setKeyValueAt(0.6,QRect(widget->x(),widget->y(),widget->width()*1.2,widget->height()*1.2));
+
+//                animation->setKeyValueAt(1,QRect(widget->x(),widget->y(),widget->width(),widget->height()));
+
 
                emit this->selectItem(this->data.at(itemList.indexOf(widget)));
 

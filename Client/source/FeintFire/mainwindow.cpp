@@ -1,9 +1,14 @@
+#include "carditem.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 #include <pane/menu/feintmenu.h>
 
 #include <pane/leader/searchleader.h>
+
+#include <widget/view/listview.h>
+
+#include <domain/articalcard.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,12 +19,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->leader->addWidget(sLeader);
 
     initMenu();
+    initMainPart();
 
-    ui->main->addStretch();
+
+  //  ui->main->addStretch();
 
     connect(sLeader,SIGNAL(showMenu(bool)),this,SLOT(showMenu(bool)));
-}
 
+}
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -35,6 +42,7 @@ void MainWindow::showMenu(bool showed)
 
 void MainWindow::initMenu()
 {
+
     menu=new FeintMenu();
     menu->addTopItem("个人主页");
     menu->addSubItem(0,"展示",QIcon());
@@ -57,8 +65,24 @@ void MainWindow::initMenu()
     menu->addSubItem(4,"支持",QIcon());
     menu->addSubItem(4,"关于",QIcon());
     menu->addSubItem(4,"使用说明",QIcon());
-
+    menu->finishSub(4);
     ui->main->addWidget(menu);
     menu->hide();
 
 }
+
+void MainWindow::initMainPart()
+{
+    mainPart=new MainPart;
+
+    QStringList tabTitles;
+
+    tabTitles<<"首页"<<"Java"<<"PhP"<<"C语言"<<"JavaScript"<<"Qt"<<"问答";
+
+    mainPart->addTabs(tabTitles);
+
+    ui->main->addWidget(mainPart);
+
+}
+
+

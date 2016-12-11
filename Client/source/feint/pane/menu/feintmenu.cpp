@@ -1,6 +1,7 @@
 #include "feintmenu.h"
 #include "ui_feintmenu.h"
 #include <QDebug>
+#include <QGraphicsDropShadowEffect>
 #include <QPushButton>
 
 FeintMenu::FeintMenu(QWidget *parent,QString color) :
@@ -9,7 +10,12 @@ FeintMenu::FeintMenu(QWidget *parent,QString color) :
 {
     ui->setupUi(this);
 
-
+    QGraphicsDropShadowEffect *ef=new QGraphicsDropShadowEffect(this);
+    ef->setXOffset(2);
+    ef->setYOffset(0);
+    ef->setBlurRadius(5);
+    ef->setColor(QColor("#ccc"));
+    this->setGraphicsEffect(ef);
 
     topItemCount=0;
 
@@ -17,11 +23,11 @@ FeintMenu::FeintMenu(QWidget *parent,QString color) :
     m_boxColor="#368afc";
     m_tabBackgroundColor="#f9f9f9";
     m_boxBackgroundColor=color;
-    setStyleSheet(tr("QWidget{background:%1;}").arg(m_boxBackgroundColor));
+    setStyleSheet(tr("#basic{background:%1;}").arg(m_boxBackgroundColor));
     this->toolBox=new QToolBox;
     baseStyle=tr("QToolBox::tab{border-top:1px solid %1;border-bottom:1px solid %1;color:%1;background:%2;font-size:14pt;}QToolBoxButton{min-height:32px;}");
     setAllColor();
-    this->layout()->addWidget(toolBox);
+    ui->basic->layout()->addWidget(toolBox);
 }
 
 FeintMenu::~FeintMenu()

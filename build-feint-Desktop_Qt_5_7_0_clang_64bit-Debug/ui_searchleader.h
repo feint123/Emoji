@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLineEdit>
@@ -26,6 +27,8 @@ class Ui_SearchLeader
 {
 public:
     QHBoxLayout *horizontalLayout;
+    QFrame *frame;
+    QHBoxLayout *horizontalLayout_2;
     QPushButton *pushButton;
     QSpacerItem *horizontalSpacer;
     QLineEdit *lineEdit;
@@ -48,22 +51,31 @@ public:
         SearchLeader->setStyleSheet(QLatin1String("QPushButton{\n"
 "	border:none;\n"
 "}\n"
-"border-bottom:1px solid #ccc;"));
+""));
         horizontalLayout = new QHBoxLayout(SearchLeader);
-        horizontalLayout->setSpacing(16);
+        horizontalLayout->setSpacing(0);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        horizontalLayout->setContentsMargins(16, 6, 16, 2);
-        pushButton = new QPushButton(SearchLeader);
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        frame = new QFrame(SearchLeader);
+        frame->setObjectName(QStringLiteral("frame"));
+        frame->setStyleSheet(QStringLiteral("background:#fff;"));
+        frame->setFrameShape(QFrame::StyledPanel);
+        frame->setFrameShadow(QFrame::Raised);
+        horizontalLayout_2 = new QHBoxLayout(frame);
+        horizontalLayout_2->setSpacing(0);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(-1, 0, -1, 0);
+        pushButton = new QPushButton(frame);
         pushButton->setObjectName(QStringLiteral("pushButton"));
         pushButton->setFocusPolicy(Qt::ClickFocus);
 
-        horizontalLayout->addWidget(pushButton);
+        horizontalLayout_2->addWidget(pushButton);
 
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout->addItem(horizontalSpacer);
+        horizontalLayout_2->addItem(horizontalSpacer);
 
-        lineEdit = new QLineEdit(SearchLeader);
+        lineEdit = new QLineEdit(frame);
         lineEdit->setObjectName(QStringLiteral("lineEdit"));
         QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
@@ -72,19 +84,22 @@ public:
         lineEdit->setSizePolicy(sizePolicy1);
         lineEdit->setMinimumSize(QSize(250, 28));
         lineEdit->setFocusPolicy(Qt::ClickFocus);
-        lineEdit->setStyleSheet(QStringLiteral("border-radius:5px;"));
+        lineEdit->setStyleSheet(QStringLiteral("border-radius:5px;border:1px solid #368afc;"));
 
-        horizontalLayout->addWidget(lineEdit);
+        horizontalLayout_2->addWidget(lineEdit);
 
         horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        horizontalLayout->addItem(horizontalSpacer_2);
+        horizontalLayout_2->addItem(horizontalSpacer_2);
 
-        pushButton_2 = new QPushButton(SearchLeader);
+        pushButton_2 = new QPushButton(frame);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
         pushButton_2->setFocusPolicy(Qt::ClickFocus);
 
-        horizontalLayout->addWidget(pushButton_2);
+        horizontalLayout_2->addWidget(pushButton_2);
+
+
+        horizontalLayout->addWidget(frame);
 
 
         retranslateUi(SearchLeader);
