@@ -7,6 +7,6 @@ XmlAnalysis::XmlAnalysis()
 
 void *XmlAnalysis::analysis(QDomDocument *doc)
 {
-
+    return NULL;
 }
 

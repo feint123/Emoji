@@ -62,7 +62,7 @@ void ListView::setBackgroundColor(QColor color)
 
 int ListView::firstVisibleItemIndex()
 {
-
+    return 0;
 }
 
 void ListView::setItemSpacing(int space)

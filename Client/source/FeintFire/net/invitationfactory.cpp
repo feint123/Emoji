@@ -1,4 +1,5 @@
 #include "invitationfactory.h"
+#include "networkhelper.h"
 
 #include <QHttpPart>
 #include <QJsonDocument>
@@ -15,23 +16,14 @@ InvitationFactory::InvitationFactory()
 
 void InvitationFactory::requestCard(QString type)
 {
-    QNetworkAccessManager *manager=new QNetworkAccessManager();
-    connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(loadSuccess(QNetworkReply*)));
-    QNetworkRequest request;
-    request.setUrl(QUrl("http://localhost:8080/index/totype/10001"));
-    request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
-    QHttpMultiPart *multi=new QHttpMultiPart();
-    QHttpPart part;
-    QByteArray param=QString("{\"type\":\"%1\"}").arg(type).toUtf8();
-    part.setBody(param);
-    multi->append(part);
-  //  manager->post(request,multi);
-    manager->post(request,param);
+    NetworkHelper *helper=new NetworkHelper();
+    connect(helper,SIGNAL(jsonOk(QJsonDocument)),this,SLOT(loadSuccess(QJsonDocument doc)));
+    helper->getJsonData(tr("http://localhost:8080/index/totype/10001"),
+                       QString("{\"type\":\"%1\"}").arg(type));
 }
 
-void InvitationFactory::loadSuccess(QNetworkReply *reply)
+void InvitationFactory::loadSuccess(QJsonDocument doc)
 {
-    QJsonDocument doc=QJsonDocument::fromJson(reply->readAll());
     QJsonObject all=doc.object();
     QJsonObject data=all["data"].toObject();
     QJsonArray text=data["text"].toArray();

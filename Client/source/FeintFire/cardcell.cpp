@@ -30,12 +30,13 @@ void CardCell::setCard(ArticalCard card)
     qDebug()<<card.getDate();
     ui->dateLab->setText(card.getDate().toString("yyyy-MM-dd"));
     ui->surportLab->setText(QString::number(card.getSupport()));
+
     if(card.getSupported())
-        ui->surportBtn->setText("取消赞");
+        ui->surportBtn->setText("取消赞\n");
     else
-        ui->surportBtn->setText("赞");
+        ui->surportBtn->setText("赞\n");
     if(card.getCollected())
-        ui->collectBtn->setText("取消收藏");
+        ui->collectBtn->setText("取消收藏\n");
     else
-        ui->collectBtn->setText("收藏");
+        ui->collectBtn->setText("收藏\n");
 }

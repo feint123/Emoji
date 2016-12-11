@@ -17,7 +17,7 @@ public:
 signals:
     void cardListLoadSuccess(QList<QVariant>);
 private slots:
-    void loadSuccess(QNetworkReply * reply);
+    void loadSuccess(QJsonDocument doc);
 
 };
 
