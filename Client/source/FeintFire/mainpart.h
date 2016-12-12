@@ -1,6 +1,7 @@
 #ifndef MAINPART_H
 #define MAINPART_H
 
+
 #include <QTabWidget>
 #include <QWidget>
 

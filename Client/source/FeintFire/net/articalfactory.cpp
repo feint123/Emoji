@@ -1,10 +1,8 @@
 #include "articalfactory.h"
 #include "networkhelper.h"
-
 #include <QJsonObject>
-
-#include <domain/artical.h>
-
+#include <QJsonDocument>
+#include <domain/articalinfo.h>
 ArticalFactory::ArticalFactory()
 {
 
@@ -28,17 +26,17 @@ void ArticalFactory::loadAritcalSuccess(QJsonDocument doc)
 {
     QJsonObject root=doc.object();
     QJsonObject data=root["data"].toObject();
-    Artical artical;
-    artical.setTitle(data["title"].toString());
-    artical.setContent(data["content"].toString());
+    Artical *artical=new Artical;
+    artical->setTitle(data["title"].toString());
+    artical->setContent(data["content"].toString());
     QJsonObject infoJ=data["info"].toObject();
     ArticalInfo info;
     info.setName(infoJ["name"].toString());
     info.setCreateTime(QDateTime::fromMSecsSinceEpoch(infoJ["create_time"].toDouble()));
     info.setSupported(infoJ["supported"].toInt());
     info.setCollected(infoJ["collected"].toInt());
-    artical.setInfo(info);
-    emit loadArtical(artical);
+    artical->setInfo(info);
+    emit createArtical(artical);
 }
 
 void ArticalFactory::loadCommentSuccess(QJsonDocument doc)

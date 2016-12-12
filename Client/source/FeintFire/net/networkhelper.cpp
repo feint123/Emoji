@@ -1,7 +1,7 @@
 #include "networkhelper.h"
 
 #include <QHttpPart>
-
+#include <QDebug>
 void NetworkHelper::loadSuccess(QNetworkReply *reply)
 {
     QJsonDocument doc=QJsonDocument::fromJson(reply->readAll());
@@ -15,6 +15,7 @@ NetworkHelper::NetworkHelper()
 
 void NetworkHelper::getJsonData(QString url, QString inputData)
 {
+    qDebug()<<"start request resource";
     QNetworkAccessManager *manager=new QNetworkAccessManager();
     connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(loadSuccess(QNetworkReply*)));
     QNetworkRequest request;

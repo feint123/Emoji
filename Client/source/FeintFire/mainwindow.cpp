@@ -1,4 +1,6 @@
+#include "articalarea.h"
 #include "carditem.h"
+#include "maincontent.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -10,21 +12,21 @@
 
 #include <domain/articalcard.h>
 
+#include <QPropertyAnimation>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    SearchLeader *sLeader=new SearchLeader();
-    ui->leader->addWidget(sLeader);
 
+    initLeader();
     initMenu();
     initMainPart();
 
 
   //  ui->main->addStretch();
 
-    connect(sLeader,SIGNAL(showMenu(bool)),this,SLOT(showMenu(bool)));
 
 }
 MainWindow::~MainWindow()
@@ -39,6 +41,27 @@ void MainWindow::showMenu(bool showed)
     else
         menu->hide();
 }
+
+void MainWindow::back(int)
+{
+    area->hide();
+    mainPart->show();
+    sLeader->show();
+    backL->hide();
+}
+
+void MainWindow::loadArtical(int tid)
+{
+    area=new ArticalArea();
+    this->mainPart->hide();
+    area->load(tid);
+    ui->main->addWidget(area);
+
+    this->sLeader->hide();
+    this->backL->show();
+}
+
+
 
 void MainWindow::initMenu()
 {
@@ -67,13 +90,14 @@ void MainWindow::initMenu()
     menu->addSubItem(4,"使用说明",QIcon());
     menu->finishSub(4);
     ui->main->addWidget(menu);
+    menuRect=menu->geometry();
     menu->hide();
 
 }
 
 void MainWindow::initMainPart()
 {
-    mainPart=new MainPart;
+    mainPart=new MainPart(this);
 
     QStringList tabTitles;
 
@@ -83,6 +107,18 @@ void MainWindow::initMainPart()
 
     ui->main->addWidget(mainPart);
 
+}
+
+void MainWindow::initLeader()
+{
+    sLeader=new SearchLeader();
+    backL=new BackLeader();
+    ui->leader->addWidget(sLeader);
+    ui->leader->addWidget(backL);
+    backL->hide();
+
+    connect(sLeader,SIGNAL(showMenu(bool)),this,SLOT(showMenu(bool)));
+    connect(backL,SIGNAL(back(int)),this,SLOT(back(int)));
 }
 
 

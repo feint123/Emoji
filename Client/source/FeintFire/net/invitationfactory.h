@@ -5,7 +5,7 @@
 #include <QString>
 #include <QObject>
 #include <domain/articalcard.h>
-
+#include <QJsonDocument>
 
 
 class InvitationFactory:public QObject

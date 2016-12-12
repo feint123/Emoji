@@ -18,7 +18,9 @@ FORMS += \
     pane/leader/searchleader.ui \
     pane/normaltoolpane.ui \
     pane/showpane.ui \
-    pane/toolpart.ui
+    pane/toolpart.ui \
+    widget/view/listview.ui \
+    pane/leader/backleader.ui
 
 HEADERS += \
     pane/menu/feintmenu.h \
@@ -34,7 +36,9 @@ HEADERS += \
     widget/label/colorlabel.h \
     widget/view/listitem.h \
     widget/view/listview.h \
-    feint.h
+    feint.h \
+    widget/fscaleframe.h \
+    pane/leader/backleader.h
 
 SOURCES += \
     pane/menu/feintmenu.cpp \
@@ -50,6 +54,7 @@ SOURCES += \
     widget/label/colorlabel.cpp \
     widget/view/listitem.cpp \
     widget/view/listview.cpp \
-    feint.cpp
+    widget/fscaleframe.cpp \
+    pane/leader/backleader.cpp
 
 

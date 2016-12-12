@@ -17,7 +17,7 @@ InvitationFactory::InvitationFactory()
 void InvitationFactory::requestCard(QString type)
 {
     NetworkHelper *helper=new NetworkHelper();
-    connect(helper,SIGNAL(jsonOk(QJsonDocument)),this,SLOT(loadSuccess(QJsonDocument doc)));
+    connect(helper,SIGNAL(jsonOk(QJsonDocument)),this,SLOT(loadSuccess(QJsonDocument)));
     helper->getJsonData(tr("http://localhost:8080/index/totype/10001"),
                        QString("{\"type\":\"%1\"}").arg(type));
 }

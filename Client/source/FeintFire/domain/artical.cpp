@@ -5,6 +5,8 @@ Artical::Artical()
 
 }
 
+
+
 ArticalInfo Artical::getInfo() const
 {
     return info;

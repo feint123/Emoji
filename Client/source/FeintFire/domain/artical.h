@@ -3,10 +3,13 @@
 
 #include "articalinfo.h"
 
+#include <QVariant>
+
 
 
 class Artical
 {
+
 public:
     Artical();
     ArticalInfo getInfo() const;
@@ -24,5 +27,5 @@ private:
     ArticalInfo info;
 
 };
-
+Q_DECLARE_METATYPE(Artical)
 #endif // ARTICAL_H

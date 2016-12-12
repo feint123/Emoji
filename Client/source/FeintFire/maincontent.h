@@ -23,8 +23,13 @@ private:
     Ui::MainContent *ui;
     ListView* initCards();
     InvitationFactory *factory;
+     QList<QVariant> cardList;
 private slots:
     ListView* initCards(QList<QVariant>);
+    void getTid(int id);
+
+signals:
+    void selectTid(int tid);
 };
 
 #endif // MAINCONTENT_H

@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "articalarea.h"
 #include "mainpart.h"
 
 #include <QMainWindow>
@@ -8,6 +9,9 @@
 #include <pane/menu/feintmenu.h>
 
 #include <widget/view/listview.h>
+
+#include <pane/leader/backleader.h>
+#include <pane/leader/searchleader.h>
 
 namespace Ui {
 class MainWindow;
@@ -23,6 +27,9 @@ public:
 
 private slots:
     void showMenu(bool);
+    void back(int);
+public slots:
+    void loadArtical(int);
 
 private:
     Ui::MainWindow *ui;
@@ -30,8 +37,12 @@ private:
     QList<QStringList> menuInfo;
     void initMenu();
     void initMainPart();
-
+    void initLeader();
+    BackLeader *backL;
+    SearchLeader *sLeader;
     MainPart *mainPart;
+    ArticalArea *area;
+    QRect menuRect;
 };
 
 #endif // MAINWINDOW_H

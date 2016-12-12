@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include <domain/artical.h>
+
 namespace Ui {
 class ArticalArea;
 }
@@ -17,7 +19,7 @@ public:
 
 public slots:
     void load(int articalId);
-
+    void loadArtical(Artical*);
 private:
     Ui::ArticalArea *ui;
 };

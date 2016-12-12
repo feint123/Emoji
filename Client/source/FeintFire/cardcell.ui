@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>599</width>
+    <width>720</width>
     <height>168</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -48,7 +48,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>720</width>
+       <width>0</width>
        <height>0</height>
       </size>
      </property>
@@ -140,6 +140,9 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <property name="spacing">
+         <number>8</number>
+        </property>
         <property name="sizeConstraint">
          <enum>QLayout::SetDefaultConstraint</enum>
         </property>

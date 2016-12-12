@@ -11,6 +11,7 @@ MainPart::MainPart(QWidget *parent) :
     ui(new Ui::MainPart)
 {
     ui->setupUi(this);
+
     tabWidget=new QTabWidget;
     ui->horizontalLayout->addWidget(tabWidget);
 
@@ -28,6 +29,7 @@ void MainPart::addTabs(QStringList tabs)
     {
         MainContent *mainC=new MainContent();
         this->tabWidget->addTab(mainC,tabTitle);
+        connect(mainC,SIGNAL(selectTid(int)),this->parent(),SLOT(loadArtical(int)));
     }
 }
 

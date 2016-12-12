@@ -3,13 +3,14 @@
 
 #include <QJsonDocument>
 #include <QObject>
-
+#include <QVariant>
 #include <domain/artical.h>
 
 
 
 class ArticalFactory:public QObject
 {
+    Q_OBJECT
 public:
     ArticalFactory();
     void refreshArtical(long tid);
@@ -19,8 +20,7 @@ private slots:
     void loadAritcalSuccess(QJsonDocument doc);
     void loadCommentSuccess(QJsonDocument doc);
 signals:
-    void loadArtical(Artical);
-    void loadComment(QVariant);
+    void createArtical(Artical*);
 };
 
 #endif // ARTICALFACTORY_H

@@ -5,11 +5,13 @@
 
 #include <domain/articalcard.h>
 
+#include <widget/fscaleframe.h>
+
 namespace Ui {
 class CardCell;
 }
 
-class CardCell : public QWidget
+class CardCell : public FScaleFrame
 {
     Q_OBJECT
 

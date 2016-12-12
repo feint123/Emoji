@@ -3,47 +3,48 @@
 
 #include "listitem.h"
 
-#include <QScrollArea>
 #include <QBoxLayout>
-#include <QVariant>
 #include <QMouseEvent>
+#include <QWidget>
 
+namespace Ui {
+class ListView;
+}
 
-class ListView:public QScrollArea
+class ListView : public QWidget
 {
     Q_OBJECT
 public:
     enum Orien{
-        Horizontal,
-        Vertical
-    };
-    ListView();
-    void setOrientation(Orien orien=ListView::Vertical);
+          Horizontal,
+          Vertical
+      };
+      explicit ListView(QWidget * parent=0);
+      ~ListView();
+      void setOrientation(Orien orien=ListView::Vertical);
 
-    void setData(QList<QVariant> data);
+      void setData(QList<QVariant> data);
 
-    void setItem(ListItem* item);
+      void setItem(ListItem* item);
 
-    void setBackgroundColor(QColor color);
+      void setBackgroundColor(QColor color);
 
-    int firstVisibleItemIndex();
+      int firstVisibleItemIndex();
 
+      void setItemSpacing(int space);
 
+  signals:
+      void selectItemIndex(int index);
 
-    void setItemSpacing(int space);
+      void selectItem(QVariant dataItem);
 
-signals:
-    void selectItemIndex(int index);
-
-    void selectItem(QVariant dataItem);
-private:
-    QList<QVariant> data;
-    QBoxLayout *box;
-    QWidget *widget;
-    QList<QWidget *> itemList;
-    ListItem *item;
-    void mousePressEvent(QMouseEvent *event);
-
+  private:
+      QList<QVariant> data;
+      QBoxLayout *box;
+      QList<QWidget *> itemList;
+      ListItem *item;
+      void mousePressEvent(QMouseEvent *event);
+      Ui::ListView *ui;
 };
 
 #endif // LISTVIEW_H

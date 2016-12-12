@@ -4,18 +4,18 @@
 #include <QGraphicsDropShadowEffect>
 #include <QDebug>
 CardCell::CardCell(QWidget *parent) :
-    QWidget(parent),
+    FScaleFrame(parent),
     ui(new Ui::CardCell)
 {
     ui->setupUi(this);
 
 
-    QGraphicsDropShadowEffect *ef=new QGraphicsDropShadowEffect(this);
-    ef->setXOffset(0);
-    ef->setYOffset(2);
-    ef->setBlurRadius(5);
-    ef->setColor(QColor("#ccc"));
-    this->setGraphicsEffect(ef);
+//    QGraphicsDropShadowEffect *ef=new QGraphicsDropShadowEffect(this);
+//    ef->setXOffset(0);
+//    ef->setYOffset(2);
+//    ef->setBlurRadius(5);
+//    ef->setColor(QColor("#ccc"));
+//    this->setGraphicsEffect(ef);
 }
 
 CardCell::~CardCell()
