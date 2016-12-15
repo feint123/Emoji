@@ -5,7 +5,9 @@
 
 #include <domain/articalcard.h>
 
-#include <widget/fscaleframe.h>
+#include <widget/frame/fscaleframe.h>
+
+
 
 namespace Ui {
 class CardCell;

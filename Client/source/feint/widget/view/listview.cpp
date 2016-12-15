@@ -2,7 +2,7 @@
 #include "ui_listview.h"
 #include <QDebug>
 #include <QPushButton>
-#include <widget/fscaleframe.h>
+
 ListView::ListView(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ListView)

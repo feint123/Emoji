@@ -37,12 +37,13 @@ HEADERS += \
     widget/view/listitem.h \
     widget/view/listview.h \
     feint.h \
-    widget/fscaleframe.h \
     pane/leader/backleader.h \
     pane/markdown/markdown.h \
     pane/markdown/markdownedit.h \
     pane/markdown/markdownhighlighter.h \
-    graphic/screenhelper.h
+    graphic/screenhelper.h \
+    widget/frame/fscaleframe.h \
+    widget/frame/labelframe.h
 
 
 
@@ -60,11 +61,12 @@ SOURCES += \
     widget/label/colorlabel.cpp \
     widget/view/listitem.cpp \
     widget/view/listview.cpp \
-    widget/fscaleframe.cpp \
     pane/leader/backleader.cpp \
     pane/markdown/markdown.cpp \
     pane/markdown/markdownedit.cpp \
     pane/markdown/markdownhighlighter.cpp \
-    graphic/screenhelper.cpp
+    graphic/screenhelper.cpp \
+    widget/frame/fscaleframe.cpp \
+    widget/frame/labelframe.cpp
 
 

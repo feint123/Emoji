@@ -3,7 +3,7 @@
 
 #include <QPushButton>
 
-#include <widget/fscaleframe.h>
+
 
 
 

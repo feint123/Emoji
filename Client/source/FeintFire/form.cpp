@@ -8,6 +8,8 @@
 
 #include <pane/markdown/markdownedit.h>
 
+#include <fileload/articaluploaddialog.h>
+
 Form::Form(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Form)
@@ -27,9 +29,19 @@ Form::Form(QWidget *parent) :
 //    CardItem *item=new CardItem;
 //    listView->setItem(item);
 //    ui->horizontalLayout->addWidget(listView);
-    MarkDownEdit *edit=new MarkDownEdit(this);
 
-    ui->horizontalLayout->addWidget(edit);
+
+
+//    MarkDownEdit *edit=new MarkDownEdit(this);
+
+//    ui->horizontalLayout->addWidget(edit);
+
+
+    QStringList typeList;
+    typeList<<"Java"<<"PhP"<<"Javascript"<<"C"<<"C++"<<"问答";
+    ArticalUploadDialog *upload=new ArticalUploadDialog();
+    upload->setTypeList(typeList);
+    upload->show();
 
 }
 
