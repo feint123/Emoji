@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     net/networkhelper.cpp \
     domain/artical.cpp \
     domain/articalinfo.cpp \
-    form.cpp
+    form.cpp \
+    fileload/articaluploaddialog.cpp
 
 HEADERS  += mainwindow.h \
     mainpart.h \
@@ -39,14 +40,16 @@ HEADERS  += mainwindow.h \
     net/networkhelper.h \
     domain/artical.h \
     domain/articalinfo.h \
-    form.h
+    form.h \
+    fileload/articaluploaddialog.h
 
 FORMS    += mainwindow.ui \
     mainpart.ui \
     maincontent.ui \
     cardcell.ui \
     articalarea.ui \
-    form.ui
+    form.ui \
+    fileload/articaluploaddialog.ui
 
 
 macx: LIBS += -L$$PWD/../../../build-feint-Desktop_Qt_5_7_0_clang_64bit-Debug/ -lfeint
@@ -58,3 +61,14 @@ macx: PRE_TARGETDEPS += $$PWD/../../../build-feint-Desktop_Qt_5_7_0_clang_64bit-
 
 RESOURCES += \
     resource.qrc
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-feint-Desktop_Qt_5_7_0_MSVC2013_64bit-Debug/release/ -lfeint
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-feint-Desktop_Qt_5_7_0_MSVC2013_64bit-Debug/debug/ -lfeint
+
+INCLUDEPATH += $$PWD/../feint
+DEPENDPATH += $$PWD/../feint
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-feint-Desktop_Qt_5_7_0_MSVC2013_64bit-Debug/release/libfeint.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-feint-Desktop_Qt_5_7_0_MSVC2013_64bit-Debug/debug/libfeint.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-feint-Desktop_Qt_5_7_0_MSVC2013_64bit-Debug/release/feint.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-feint-Desktop_Qt_5_7_0_MSVC2013_64bit-Debug/debug/feint.lib
