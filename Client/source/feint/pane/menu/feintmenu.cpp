@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QGraphicsDropShadowEffect>
 #include <QPushButton>
+#include <QGridLayout>
 
 FeintMenu::FeintMenu(QWidget *parent,QString color) :
     QWidget(parent),
@@ -19,14 +20,17 @@ FeintMenu::FeintMenu(QWidget *parent,QString color) :
 
     topItemCount=0;
 
-    m_tabColor="#368afc";
-    m_boxColor="#368afc";
-    m_tabBackgroundColor="#f9f9f9";
+
+    m_tabColor="#404244";
+    m_boxColor="#f9f9f9";
+    //tab的背景色
+    m_tabBackgroundColor="#324d5c";
     m_boxBackgroundColor=color;
     setStyleSheet(tr("#basic{background:%1;}").arg(m_boxBackgroundColor));
     this->toolBox=new QToolBox;
-    baseStyle=tr("QToolBox::tab{border-top:1px solid %1;border-bottom:1px solid %1;color:%1;background:%2;font-size:14pt;}QToolBoxButton{min-height:32px;}");
+    baseStyle=tr("QToolBox::tab{border-top:1px solid %2;color:%1;font-size:14pt;}QToolBoxButton{min-height:42px;}");
     setAllColor();
+    this->toolBox->layout()->setSpacing(0);
     ui->basic->layout()->addWidget(toolBox);
 }
 
@@ -52,28 +56,32 @@ void FeintMenu::addTopItem(const QString &name, const QIcon &icon)
 
 void FeintMenu::addSubItem(int topId,const QString &name,const QIcon &icon)
 {
+
     QWidget *widget=itemList.at(topId);
     MenuButton *mb=new MenuButton(widget);
-    mb->setColor(m_boxColor);
+    mb->setColor(m_boxColor,m_tabBackgroundColor);
     mb->setText(name);
     mb->setIcon(icon);
     mb->setTopId(topId);
     mb->setId(subId++);
     mb->installEventFilter(this);
-    widget->layout()->addWidget(mb);
+    int count=widget->children().count();
+
+    ((QGridLayout*)widget->layout())->addWidget(mb,count/2,count%2);
 }
 
 void FeintMenu::finishSub(int topId)
 {
-    ((QVBoxLayout*)itemList.at(topId)->layout())->addStretch();
+
+   //   QSpacerItem *spacer=new QSpacerItem(0,20,QSizePolicy::Expanding,QSizePolicy::Expanding);
+      ((QGridLayout*)itemList.at(topId)->layout())->setRowStretch(0,0);
 }
 
 QWidget *FeintMenu::createItem()
 {
     QWidget *widget=new QWidget();
-
-    QVBoxLayout *vb=new QVBoxLayout(widget);
-    vb->setSpacing(32);
+    QGridLayout *gl=new QGridLayout(widget);
+    gl->setSpacing(24);
     return widget;
 }
 

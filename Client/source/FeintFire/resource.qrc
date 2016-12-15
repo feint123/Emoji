@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Category.png</file>
+        <file>header.png</file>
+        <file>back.png</file>
+        <file>beauty.png</file>
+        <file>delete.png</file>
+        <file>download.png</file>
+        <file>favorite.png</file>
+        <file>lights.png</file>
+        <file>link.png</file>
+        <file>search.png</file>
+        <file>set.png</file>
+        <file>success.png</file>
+        <file>warning.png</file>
+        <file>help.png</file>
+        <file>local.png</file>
+        <file>main.png</file>
+        <file>artical.png</file>
+    </qresource>
+</RCC>

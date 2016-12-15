@@ -20,7 +20,7 @@ class FeintMenu : public QWidget
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QString intro READ intro WRITE setIntro NOTIFY introChanged)
 public:
-    explicit FeintMenu(QWidget *parent = 0,QString color="#f9f9f9");
+    explicit FeintMenu(QWidget *parent = 0,QString color="#ececec");
     ~FeintMenu();
     void addTopItem(const QString &name);
     void addTopItem(const QString &name,const QIcon &icon);

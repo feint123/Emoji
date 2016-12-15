@@ -18,13 +18,34 @@ SearchLeader::SearchLeader(QWidget *parent) :
     isMenuShow=false;
 }
 
+void SearchLeader::setSettingIcon(QIcon icon)
+{
+    ui->setBtn->setIcon(icon);
+}
+
+void SearchLeader::setMenuIcon(QIcon icon)
+{
+    ui->menuBtn->setIcon(icon);
+}
+
 SearchLeader::~SearchLeader()
 {
     delete ui;
 }
 
-void SearchLeader::on_pushButton_clicked()
+
+void SearchLeader::on_menuBtn_clicked()
 {
     isMenuShow=!isMenuShow;
     emit showMenu(isMenuShow);
+}
+
+bool SearchLeader::getIsMenuShow() const
+{
+    return isMenuShow;
+}
+
+void SearchLeader::setIsMenuShow(bool value)
+{
+    isMenuShow = value;
 }

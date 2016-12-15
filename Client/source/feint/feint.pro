@@ -10,8 +10,7 @@ TARGET = feint
 TEMPLATE = lib
 CONFIG += staticlib
 
-RESOURCES += \
-    icons.qrc
+RESOURCES +=
 
 FORMS += \
     pane/menu/feintmenu.ui \
@@ -20,7 +19,8 @@ FORMS += \
     pane/showpane.ui \
     pane/toolpart.ui \
     widget/view/listview.ui \
-    pane/leader/backleader.ui
+    pane/leader/backleader.ui \
+    pane/markdown/markdown.ui
 
 HEADERS += \
     pane/menu/feintmenu.h \
@@ -38,7 +38,13 @@ HEADERS += \
     widget/view/listview.h \
     feint.h \
     widget/fscaleframe.h \
-    pane/leader/backleader.h
+    pane/leader/backleader.h \
+    pane/markdown/markdown.h \
+    pane/markdown/markdownedit.h \
+    pane/markdown/markdownhighlighter.h \
+    graphic/screenhelper.h
+
+
 
 SOURCES += \
     pane/menu/feintmenu.cpp \
@@ -55,6 +61,10 @@ SOURCES += \
     widget/view/listitem.cpp \
     widget/view/listview.cpp \
     widget/fscaleframe.cpp \
-    pane/leader/backleader.cpp
+    pane/leader/backleader.cpp \
+    pane/markdown/markdown.cpp \
+    pane/markdown/markdownedit.cpp \
+    pane/markdown/markdownhighlighter.cpp \
+    graphic/screenhelper.cpp
 
 

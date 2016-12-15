@@ -160,14 +160,14 @@ QLabel{
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="dateLab">
+         <widget class="QLabel" name="date">
           <property name="text">
            <string>时间</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="dateLab">
           <property name="text">
            <string>1900-01-01</string>
           </property>

@@ -3,6 +3,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <domain/articalinfo.h>
+#include <QDebug>
 ArticalFactory::ArticalFactory()
 {
 
@@ -26,12 +27,14 @@ void ArticalFactory::loadAritcalSuccess(QJsonDocument doc)
 {
     QJsonObject root=doc.object();
     QJsonObject data=root["data"].toObject();
+
     Artical *artical=new Artical;
     artical->setTitle(data["title"].toString());
     artical->setContent(data["content"].toString());
     QJsonObject infoJ=data["info"].toObject();
     ArticalInfo info;
     info.setName(infoJ["name"].toString());
+    qDebug()<<"ArticalFactory[loadArticalSuccess]:"<<infoJ["create_time"].toDouble();
     info.setCreateTime(QDateTime::fromMSecsSinceEpoch(infoJ["create_time"].toDouble()));
     info.setSupported(infoJ["supported"].toInt());
     info.setCollected(infoJ["collected"].toInt());

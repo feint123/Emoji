@@ -55,3 +55,6 @@ INCLUDEPATH += $$PWD/../feint
 DEPENDPATH += $$PWD/../feint
 
 macx: PRE_TARGETDEPS += $$PWD/../../../build-feint-Desktop_Qt_5_7_0_clang_64bit-Debug/libfeint.a
+
+RESOURCES += \
+    resource.qrc

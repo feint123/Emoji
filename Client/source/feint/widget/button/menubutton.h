@@ -3,6 +3,8 @@
 
 #include <QPushButton>
 
+#include <widget/fscaleframe.h>
+
 
 
 
@@ -14,7 +16,7 @@ public:
 
     int getTopId() const;
     void setTopId(int value);
-    void setColor(const QString &value);
+    void setColor(const QString &bgColor,const QString &color);
 
     QString getColor() const;
 

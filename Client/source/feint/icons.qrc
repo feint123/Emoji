@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>header.png</file>
+        <file>Category.png</file>
+        <file>back.png</file>
+        <file>set.png</file>
     </qresource>
 </RCC>

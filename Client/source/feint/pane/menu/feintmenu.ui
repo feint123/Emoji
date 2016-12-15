@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>250</width>
+    <width>252</width>
     <height>479</height>
    </rect>
   </property>
@@ -91,7 +91,7 @@
         <property name="styleSheet">
          <string notr="true">QFrame{
 	border:none;
-	background:url(:/header.png);
+	background:#1f212b;
 }
 #portrait{
 border:1px solid #fff;

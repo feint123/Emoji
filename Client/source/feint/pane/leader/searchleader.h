@@ -13,13 +13,20 @@ class SearchLeader : public QWidget
 
 public:
     explicit SearchLeader(QWidget *parent = 0);
+    void setSettingIcon(QIcon icon);
+    void setMenuIcon(QIcon icon);
+
     ~SearchLeader();
+
+    bool getIsMenuShow() const;
+    void setIsMenuShow(bool value);
 
 signals:
     void showMenu(bool);
 
 private slots:
-    void on_pushButton_clicked();
+
+    void on_menuBtn_clicked();
 
 private:
     Ui::SearchLeader *ui;

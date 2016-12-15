@@ -28,6 +28,7 @@ void ArticalArea::loadArtical(Artical *artical)
     ui->content->setText(artical->getContent());
     ui->writerLab->setText(artical->getInfo().getName());
     ui->readCountLab->setText(QString::number(artical->getInfo().getRead()));
+    ui->dateLab->setText(artical->getInfo().getCreateTime().toString("yyyy-MM-dd HH:mm"));
     if(artical->getInfo().getSupported()==1)
         ui->supportBtn->setText("取消赞");
     else
