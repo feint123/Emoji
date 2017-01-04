@@ -71,7 +71,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">QFrame{background:#fff;}</string>
+      <string notr="true"/>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -96,9 +96,12 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="text">
+       <widget class="QPushButton" name="backBtn">
+        <property name="toolTip">
          <string>返回</string>
+        </property>
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </item>
@@ -116,9 +119,32 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QLabel" name="label">
         <property name="text">
+         <string>FEINT</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="setBtn">
+        <property name="toolTip">
          <string>设置</string>
+        </property>
+        <property name="text">
+         <string/>
         </property>
        </widget>
       </item>

@@ -4,7 +4,8 @@
 #include <QJsonDocument>
 #include <QObject>
 #include <QVariant>
-#include <domain/artical.h>
+
+#include <domain/response/artical.h>
 
 
 

@@ -7,11 +7,13 @@
 #include <QMouseEvent>
 #include <QWidget>
 
+#include <util/graphic/feintsetting.h>
+
 namespace Ui {
 class ListView;
 }
 
-class ListView : public QWidget
+class ListView : public QWidget,public FeintSetting
 {
     Q_OBJECT
 public:
@@ -45,6 +47,13 @@ public:
       ListItem *item;
       void mousePressEvent(QMouseEvent *event);
       Ui::ListView *ui;
+
+      QString baseStyle;
+
+      // FeintSetting interface
+public:
+      void createDailyStyle();
+      void createDarkStyle();
 };
 
 #endif // LISTVIEW_H

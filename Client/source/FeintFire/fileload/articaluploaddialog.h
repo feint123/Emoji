@@ -2,12 +2,16 @@
 #define ARTICALUPLOADDIALOG_H
 
 #include <QDialog>
+#include <QJsonDocument>
+
+#include <pane/markdown/dialog/uploaddialog.h>
 
 namespace Ui {
 class ArticalUploadDialog;
 }
 
-class ArticalUploadDialog : public QDialog
+
+class ArticalUploadDialog : public UploadDialog
 {
     Q_OBJECT
 
@@ -20,6 +24,8 @@ public:
 
     QStringList getTypeList() const;
     void setTypeList(const QStringList &value);
+public slots:
+    void onshared(bool,QString);
 
 private slots:
     void on_quitBtn_clicked();
@@ -28,11 +34,19 @@ private slots:
 
     void on_fileBtn_clicked();
 
+    void on_upload_succcess(QJsonDocument doc);
+
 private:
     QStringList typeList;
     Ui::ArticalUploadDialog *ui;
     void changeEvent(QEvent *e);
     QString filePath;
+
+
+
+    // QWidget interface
+protected:
+    void paintEvent(QPaintEvent *event);
 };
 
 #endif // ARTICALUPLOADDIALOG_H

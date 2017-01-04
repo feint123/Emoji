@@ -71,7 +71,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background:#fff;</string>
+      <string notr="true"/>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -148,12 +148,35 @@
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="setBtn">
-        <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
+       <widget class="FToogleButton" name="fToogleButton">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>20</height>
+         </size>
         </property>
-        <property name="text">
-         <string>设置</string>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="toggleColor">
+         <string>#e1dee1</string>
+        </property>
+        <property name="toggleRect">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>0</width>
+          <height>0</height>
+         </rect>
+        </property>
+        <property name="onBgColor">
+         <string>#404244</string>
+        </property>
+        <property name="offBgColor">
+         <string>#ffffff</string>
+        </property>
+        <property name="arcRadius">
+         <number>8</number>
         </property>
        </widget>
       </item>
@@ -162,6 +185,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>FToogleButton</class>
+   <extends>QPushButton</extends>
+   <header>ftooglebutton.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

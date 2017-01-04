@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>Category.png</file>
-        <file>header.png</file>
         <file>back.png</file>
         <file>beauty.png</file>
         <file>delete.png</file>
@@ -17,5 +16,22 @@
         <file>local.png</file>
         <file>main.png</file>
         <file>artical.png</file>
+    </qresource>
+    <qresource prefix="/image/daily"/>
+    <qresource prefix="/image/dark">
+        <file>resource/image/dark/delete.png</file>
+        <file>resource/image/dark/add_file.png</file>
+        <file>resource/image/dark/sort.png</file>
+        <file>resource/image/dark/add_file_2.png</file>
+        <file>resource/image/dark/delete_2.png</file>
+        <file>resource/image/dark/save_other.png</file>
+        <file>resource/image/dark/file.png</file>
+        <file>resource/image/dark/new.png</file>
+        <file>resource/image/dark/save.png</file>
+        <file>resource/image/dark/share.png</file>
+        <file>resource/image/dark/tip.png</file>
+    </qresource>
+    <qresource prefix="/json/config">
+        <file>resource/json/setting.json</file>
     </qresource>
 </RCC>

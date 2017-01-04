@@ -3,21 +3,22 @@
 
 #include <QWidget>
 
+#include <util/graphic/feintsetting.h>
+
 namespace Ui {
 class SearchLeader;
 }
 
-class SearchLeader : public QWidget
+class SearchLeader : public QWidget,public FeintSetting
 {
     Q_OBJECT
 
 public:
     explicit SearchLeader(QWidget *parent = 0);
-    void setSettingIcon(QIcon icon);
     void setMenuIcon(QIcon icon);
 
     ~SearchLeader();
-
+    bool flag=false;
     bool getIsMenuShow() const;
     void setIsMenuShow(bool value);
 
@@ -31,6 +32,13 @@ private slots:
 private:
     Ui::SearchLeader *ui;
     bool isMenuShow;
+
+    QString baseStyle;
+
+    // FeintSetting interface
+public:
+    void createDailyStyle();
+    void createDarkStyle();
 };
 
 #endif // SEARCHLEADER_H

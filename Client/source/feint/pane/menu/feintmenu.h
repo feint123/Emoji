@@ -6,11 +6,15 @@
 #include <QUrl>
 #include <QWidget>
 #include <widget/button/menubutton.h>
+#include <QPaintEvent>
+#include <QVBoxLayout>
+#include <util/graphic/feintsetting.h>
+
 namespace Ui {
 class FeintMenu;
 }
 
-class FeintMenu : public QWidget
+class FeintMenu : public QWidget,public FeintSetting
 {
     Q_OBJECT
     Q_PROPERTY(QString boxColor READ boxColor WRITE setBoxColor NOTIFY boxColorChanged)
@@ -20,14 +24,17 @@ class FeintMenu : public QWidget
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QString intro READ intro WRITE setIntro NOTIFY introChanged)
 public:
-    explicit FeintMenu(QWidget *parent = 0,QString color="#ececec");
+
+
+    explicit FeintMenu(QWidget *parent = 0,FeintSetting::STYLE style=FeintSetting::Daily);
     ~FeintMenu();
     void addTopItem(const QString &name);
     void addTopItem(const QString &name,const QIcon &icon);
     void addSubItem(int topId,const QString &name,const QIcon &icon);
     void finishSub(int topId);
 
-
+    bool flag=false;
+    void setMenuIndex(int i);
 
     QString boxColor() const;
 
@@ -74,6 +81,8 @@ signals:
 
     void introChanged(QString intro);
 
+
+
 private:
     Ui::FeintMenu *ui;
     int topItemCount;
@@ -82,14 +91,23 @@ private:
     QString currentStyle;
     QWidget* createItem();
     QList<QWidget*> itemList;
+
+    QList<MenuButton*> menuBtnList;
+
+
     QToolBox *toolBox;
     void setAllColor();
+    void createDailyStyle();
+    void createDarkStyle();
+
+    void setSubBgColor();
+    void setMenuBtnColor();
+
     QString m_boxColor;
     QString m_boxBackgroundColor;
     QString m_tabColor;
     QString m_tabBackgroundColor;
     QString m_portrait;
-
     QString m_name;
     QString m_intro;
 };

@@ -1,14 +1,9 @@
 #include "markdownhighlighter.h"
-
+#include <QDebug>
 MarkDownHighlighter::MarkDownHighlighter(QTextDocument *parent):
     QSyntaxHighlighter(parent)
 {
     initTypeColor();
-
-
-
-
-
 }
 
 void MarkDownHighlighter::highlightBlock(const QString &text)
@@ -37,6 +32,7 @@ void MarkDownHighlighter::initTypeColor()
     typeColor[CODE]=QColor("#38ad52");
     typeColor[QUOTEBLOCK]=QColor("#404244");
     typeColor[ITALIC]=QColor("#ccc");
+
 }
 
 void MarkDownHighlighter::createTypeFormat()
@@ -45,7 +41,8 @@ void MarkDownHighlighter::createTypeFormat()
      *  语法高量的包含关系与，添加约束条件的顺序有关
      *
      */
-    headerFormat.setFontPointSize(16);
+//    headerFormat.setFontPointSize(16);
+
     //设置字体颜色
     headerFormat.setForeground(typeColor[HEADER]);
     rule.format=headerFormat;
@@ -54,7 +51,7 @@ void MarkDownHighlighter::createTypeFormat()
 
     orderListFormat.setForeground(typeColor[ORDERLIST]);
     rule.format=orderListFormat;
-    rule.pattern=QRegExp("^\\t*[1-9]+\\.\\s.*");
+    rule.pattern=QRegExp("^\\t*[0-9]+\\.\\s.*");
     highlightingRules.append(rule);
 
     unorderListFormat.setForeground(typeColor[UNORDERLIST]);
@@ -83,6 +80,11 @@ void MarkDownHighlighter::createTypeFormat()
     codeFormat.setForeground(typeColor[CODE]);
     rule.format=codeFormat;
     rule.pattern=QRegExp("^`.*`$");
+    highlightingRules.append(rule);
+
+    imgFormat.setForeground(typeColor[IMG]);
+    rule.format=imgFormat;
+    rule.pattern=QRegExp("!\\[.*\\]\\(.*\\)]");
     highlightingRules.append(rule);
 }
 

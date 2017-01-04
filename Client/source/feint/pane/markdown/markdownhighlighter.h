@@ -20,6 +20,7 @@ public:
         CODEBLOCK,
         QUOTEBLOCK,
         CODE,
+        IMG,
     };
 
     MarkDownHighlighter(QTextDocument *parent=0);
@@ -48,6 +49,8 @@ private:
     QTextCharFormat codeBlockFormat;
     QTextCharFormat quoteBlockFormat;
     QTextCharFormat codeFormat;
+    QTextCharFormat imgFormat;
+
     QHash<Type,QColor> typeColor;
 
     HighlightingRule rule;

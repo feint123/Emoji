@@ -2,7 +2,6 @@
 #include "networkhelper.h"
 #include <QJsonObject>
 #include <QJsonDocument>
-#include <domain/articalinfo.h>
 #include <QDebug>
 ArticalFactory::ArticalFactory()
 {

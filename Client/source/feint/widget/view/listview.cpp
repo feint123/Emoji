@@ -8,6 +8,9 @@ ListView::ListView(QWidget *parent) :
     ui(new Ui::ListView)
 {
     ui->setupUi(this);
+
+    baseStyle=tr("#scrollAreaWidgetContents{background:%1}");
+
     box=new QBoxLayout(QBoxLayout::TopToBottom);
     ui->scrollArea->widget()->setLayout(box);
 }
@@ -84,4 +87,14 @@ void ListView::mousePressEvent(QMouseEvent *event)
                emit this->selectItemIndex(itemList.indexOf(widget));
            }
        }
+}
+
+void ListView::createDailyStyle()
+{
+    ui->scrollAreaWidgetContents->setStyleSheet(baseStyle.arg("#f9f9f9"));
+}
+
+void ListView::createDarkStyle()
+{
+    ui->scrollAreaWidgetContents->setStyleSheet(baseStyle.arg("#404244"));
 }
