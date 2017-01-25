@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>note.png</file>
+        <file>notebook.png</file>
+        <file>setting.png</file>
+        <file>picture.png</file>
+        <file>add.png</file>
+        <file>hide.png</file>
+        <file>showed.png</file>
+        <file>notebg.jpg</file>
+        <file>out.png</file>
+        <file>screen-restore.png</file>
+        <file>zoomin.png</file>
+        <file>zoomout.png</file>
+        <file>feint.icns</file>
+    </qresource>
+    <qresource prefix="/config">
+        <file>setting.json</file>
+    </qresource>
+    <qresource prefix="/model">
+        <file>note_module.fei</file>
+        <file>notebook_module.json</file>
+    </qresource>
+</RCC>

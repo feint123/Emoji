@@ -14,10 +14,10 @@ void HighligherStyle::dark(MarkDownHighlighter *lighter)
     typeColor[MarkDownHighlighter::UNORDERLIST]=QColor("#2d631f");
     typeColor[MarkDownHighlighter::DEVIDE]=QColor("#e82121");
     typeColor[MarkDownHighlighter::CODEBLOCK]=QColor("#368afc");
-    typeColor[MarkDownHighlighter::CODE]=QColor("#38ad52");
+    typeColor[MarkDownHighlighter::CODE]=QColor("#3176ff");
     typeColor[MarkDownHighlighter::QUOTEBLOCK]=QColor("#adf05d");
     typeColor[MarkDownHighlighter::ITALIC]=QColor("#f59d49");
-    typeColor[MarkDownHighlighter::IMG]=QColor("#666");
+    typeColor[MarkDownHighlighter::IMG]=QColor("#2064db");
     lighter->setTypeColor(typeColor);
     lighter->createTypeFormat();
 }

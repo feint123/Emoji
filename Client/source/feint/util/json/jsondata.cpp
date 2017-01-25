@@ -16,13 +16,13 @@ void JsonData::deleteData(int id)
 {
     loadData();
     QJsonObject planObj=currentDoc.object();
-    QJsonArray plans=planObj["plans"].toArray();
+    QJsonArray plans=planObj[arrayName].toArray();
     for(int i=0;i<plans.count();i++){
         int pid=plans.at(i).toObject()["id"].toInt();
         if(pid==id)
             plans.removeAt(i);
     }
-    planObj["plans"]=plans;
+    planObj[arrayName]=plans;
     currentDoc.setObject(planObj);
     saveData();
 }

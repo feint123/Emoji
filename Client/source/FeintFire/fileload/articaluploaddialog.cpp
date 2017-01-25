@@ -5,11 +5,11 @@
 #include <QDebug>
 #include <util/json/objecttojson.h>
 #include <pane/markdown/html/normalmarkdowntohtml.h>
-#include <net/networkhelper.h>
 #include <QJsonObject>
 #include <QPainter>
 #include <domain/response/uploadartical.h>
 #include <util/graphic/innerdialogrect.h>
+#include <util/net/networkhelper.h>
 
 ArticalUploadDialog::ArticalUploadDialog(QWidget *parent) :
     UploadDialog(parent),

@@ -37,6 +37,7 @@ MarkDown::MarkDown(QWidget *parent, UploadDialog *uploadWidget, int miniWidth) :
     timer=new QTimer();
     connect(timer,SIGNAL(timeout()),this,SLOT(on_save_cache()));
 
+
     manager=new MarkdownManager;
 }
 
@@ -61,7 +62,6 @@ void MarkDown::on_fileBtn_clicked()
         manager->load(filePath);
         this->markdown->setText(manager->loadContent()->content());
         markdown->refreshFormat();
-        markdown->setImageBtns(manager->loadBtnList());
     }
 }
 
@@ -135,7 +135,7 @@ QString MarkDown::saveFile()
 {
     QString content=this->markdown->toPlainText();
 
-    fileDefaultPath=manager->save(fileDefaultPath,markdown->getImageBtns(),content);
+    fileDefaultPath=manager->save(fileDefaultPath,content);
     setTitle(fileDefaultPath);
     return fileDefaultPath;
 }
@@ -235,6 +235,7 @@ void MarkDown::resizeEvent(QResizeEvent *event)
                                 this->markdown->width(),
                                 ui->frame_2->height());
     ui->frame->raise();
+    this->uploadWidget->raise();
 }
 
 void MarkDown::createDailyStyle()

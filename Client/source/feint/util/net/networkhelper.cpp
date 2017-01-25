@@ -12,6 +12,13 @@ void NetworkHelper::loadSuccess(QNetworkReply *reply)
     emit jsonOk(doc);
 }
 
+void NetworkHelper::onLoadImage(QNetworkReply *reply)
+{
+    QImage image;
+    image.load(reply,"PNG");
+    emit imageOk(image);
+}
+
 
 void NetworkHelper::getJsonData(QString url, QString inputData)
 {
@@ -28,3 +35,13 @@ void NetworkHelper::getJsonData(QString url, QString inputData)
     multi->append(part);
     manager->post(request,param);
 }
+
+void NetworkHelper::imageUrl(QString url)
+{
+    QNetworkAccessManager *manager=new QNetworkAccessManager();
+    connect(manager,SIGNAL(finished(QNetworkReply*)),this,SLOT(onLoadImage(QNetworkReply*)));
+    QNetworkRequest request;
+    request.setUrl(QUrl(url));
+    manager->get(request);
+}
+

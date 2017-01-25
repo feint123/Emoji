@@ -31,7 +31,6 @@ SOURCES += \
     main/mainwindow.cpp \
     net/articalfactory.cpp \
     net/invitationfactory.cpp \
-    net/networkhelper.cpp \
     plan/plan.cpp \
     plan/plancard.cpp \
     plan/plandialog.cpp \
@@ -44,8 +43,7 @@ SOURCES += \
     user/settinghelper.cpp \
     factory/markdownfactory.cpp \
     control/menucontroller.cpp \
-    control/settingcontroller.cpp
-
+    control/settingcontroller.cpp \
 
 HEADERS  += \
     domain/request/request.h \
@@ -66,7 +64,6 @@ HEADERS  += \
     main/mainwindow.h \
     net/articalfactory.h \
     net/invitationfactory.h \
-    net/networkhelper.h \
     plan/plan.h \
     plan/plancard.h \
     plan/plandialog.h \
@@ -79,7 +76,7 @@ HEADERS  += \
     user/settinghelper.h \
     factory/markdownfactory.h \
     control/menucontroller.h \
-    control/settingcontroller.h
+    control/settingcontroller.h \
 
 FORMS    += \
     artical/articalarea.ui \

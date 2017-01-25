@@ -23,11 +23,11 @@ QJsonDocument SettingHelper::readSetting()
     }
 }
 
-void SettingHelper::saveSetting(QJsonDocument json)
+void SettingHelper::saveSetting(QJsonDocument setting)
 {
     QFile file(SettingHelper::settingPath());
     if(file.open(QIODevice::WriteOnly|QIODevice::Text)){
-        file.write(json.toJson());
+        file.write(setting.toJson());
         file.flush();
         file.close();
     }

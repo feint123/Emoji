@@ -28,10 +28,15 @@ public:
     void setTypeColor(const QHash<Type, QColor> &value);
     void createTypeFormat();
 
+public slots:
+    void setFontBaseSize(int value);
+
 protected:
     void highlightBlock(const QString &text) Q_DECL_OVERRIDE;
 
 private:
+    QTextDocument *doc;
+
     struct HighlightingRule
     {
         QRegExp pattern;
@@ -57,6 +62,11 @@ private:
     void initTypeColor();
 
     void initPartFormat();
+    void initHeaderFormat();
+
+
+
+    int fontBaseSize=13;
 
 };
 

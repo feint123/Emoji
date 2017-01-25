@@ -4,11 +4,12 @@
 #include <QDebug>
 
 #include <util/graphic/innerdialogrect.h>
-ImagePreview::ImagePreview(QWidget *parent, QSize size):
+
+ImagePreview *ImagePreview::preview=NULL;
+ImagePreview::ImagePreview(QWidget *parent):
     QFrame(parent)
 {
-    this->setWindowFlags(Qt::FramelessWindowHint);
-    this->size=size;
+    setWindowFlags(Qt::FramelessWindowHint);
 }
 
 QString ImagePreview::path() const
@@ -22,28 +23,52 @@ void ImagePreview::setPath(QString path)
     update();
 }
 
+void ImagePreview::setStore(QString store)
+{
+    m_store = store;
+}
+
 void ImagePreview::paintEvent(QPaintEvent *event)
 {
 
     int border=6;
     InnerDialogRect *inner=new InnerDialogRect(InnerDialogRect::UP);
     inner->setTri(tri);
-    inner->draw(this,deta);
-    QPixmap pix(this->path());
-    QPainter painter(this);
+    inner->draw(preview,deta);
+
+    QPainter painter(preview);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.drawPixmap(border,tri+border,
-                       this->size.width()-2*border,
-                       this->size.height()-2*border,pix);
+                       preview->size.width()-2*border,
+                       preview->size.height()-2*border,loadImage());
 
 }
 
+void ImagePreview::setSize(const QSize &value)
+{
+    size = value;
+}
+
+QPixmap ImagePreview::loadImage()
+{
+    fileUtil->setFileName(path());
+    QImage img=fileUtil->loadImage();
+    QPixmap pix=QPixmap::fromImage(img);
+    return pix;
+}
+
+void ImagePreview::setFileUtil(FileUtil *value)
+{
+    fileUtil = value;
+}
+
+
 void ImagePreview::fixSize(QSize maxSize)
 {
-    if(this->size.width()>maxSize.width()/3*2)
+    if(preview->size.width()>maxSize.width()/3*2)
     {
 
-        size.setHeight(this->size.height()*(maxSize.width()*2/3)/this->size.width());
+        size.setHeight(preview->size.height()*(maxSize.width()*2/3)/preview->size.width());
         size.setWidth(maxSize.width()*2/3);
     }
     resize(size.width(),size.height()+tri);
@@ -51,6 +76,23 @@ void ImagePreview::fixSize(QSize maxSize)
 
 void ImagePreview::fixPosition(QRect imgBtn)
 {
-    this->deta=imgBtn.width()/2;
-    this->move(imgBtn.x(),imgBtn.y()+imgBtn.height());
+    preview->deta=imgBtn.width()/2;
+    preview->move(imgBtn.x(),imgBtn.y()+imgBtn.height());
+}
+
+ImagePreview::~ImagePreview()
+{
+    preview=NULL;
+}
+
+ImagePreview *ImagePreview::getInstance(QWidget *parent)
+{
+    if(preview==NULL)
+        preview=new ImagePreview(parent);
+    return preview;
+}
+
+QString ImagePreview::store() const
+{
+    return m_store;
 }

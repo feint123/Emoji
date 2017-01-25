@@ -14,12 +14,14 @@
 
 #include <widget/frame/imagepreview.h>
 
+#include <pane/menu/basemenu.h>
 
 
-class MarkDownEdit:public QTextEdit
+
+class MarkDownEdit:public QTextEdit,public BaseMenu
 {
     Q_OBJECT
-
+    Q_PROPERTY(QString noteFile READ noteFile WRITE setNoteFile)
 public:
     enum Theme{
         DAILY,
@@ -27,39 +29,54 @@ public:
     };
 
     explicit MarkDownEdit(QWidget *parent=0);
-
     void setTheme(Theme theme);
     MarkDownToHtml *getToHtml() const;
     void refreshFormat();
     QList<MarkdownImageButton *> getImageBtns() const;
-
-    void setImageBtns(const QList<MarkdownImageButton *> &value);
-
     void clearContent();
     void setDefaultPath(const QString &value);
+    MarkDownHighlighter *getLighter() const;
 
-signals:
+    QList<Image *> getImageList();
+
+    QString noteFile() const;
+
+    QMenu *getQuickMenu() const;
+
+    void setQuickMenu(QMenu *value);
 
 private slots:
     void on_insert_image();
+
     void on_insert_url();
 
     void on_create_image(QString alt,QString url,int w,int h);
 
-    void on_insert_table();
-
     void showPreview(MarkdownImageButton *btn);
 
+    void hidePreview();
+
+public slots:
     void updateImgBtnLine();
 
-    void hidePreview();
+    void setNoteFile(QString noteFile);
+
 private:
+
+    QHash<QString,QImage> imageCache;
     MarkDownHighlighter *lighter;
+
     void initDarkTheme();
     MarkDownToHtml *toHtml;
     ImagePreview *currentImage;
 
-    void createActions();
+    QMenu *quickMenu;
+
+    MarkdownImageButton* createImageBtn(QString alt,QString path,int w,int h,int pX,int pY);
+    MarkdownImageButton* createImageBtn(int id, int px, int py);
+
+    void clearImageBtns();
+
 
     void insertImage(const QByteArray &url);
 
@@ -69,15 +86,8 @@ private:
 
     void createImageDialog();
 
-    QAction *insert_image;
-    QAction *insert_url;
-    QAction *insert_table;
-
-    void translateLanguage();
-
     void keyPressEvent(QKeyEvent *event);
 
-    void mousePressEvent(QMouseEvent *event);
 
     QPoint pixDelta;
 
@@ -85,22 +95,24 @@ private:
 
     QList<MarkdownImageButton *> imageBtns;
 
-    QList<ImagePreview *> previews;
-
     QString defaultPath;
 
+    FileUtil *fileUtil;
+
     bool textChangedLock=false;
-    // QWidget interface
+
+
+
+    QString m_noteFile;
+
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
 
-    // QWidget interface
-protected:
     void wheelEvent(QWheelEvent *event);
 
-    // QWidget interface
-protected:
     void dropEvent(QDropEvent *event);
+
+    void contextMenuEvent(QContextMenuEvent *event);
 };
 
 #endif // MARKDOWNEDIT_H

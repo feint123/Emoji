@@ -20,6 +20,7 @@ public:
     void setTopId(int value);
     void setColor(const QString &bgColor,const QString &color);
 
+
     QString getColor() const;
 
     int getId() const;

@@ -1,41 +1,24 @@
 #include "markdownimagebutton.h"
 #include <QDebug>
 #include <QPropertyAnimation>
+#include <action/imagebtnaction.h>
+#include <pane/markdown/image/imagedialog.h>
 #include <util/graphic/animationutil.h>
 MarkdownImageButton::MarkdownImageButton(QWidget *parent):
     FButton(parent)
 {
-
-}
-
-QString MarkdownImageButton::imagePath() const
-{
-    return m_imagePath;
-}
-
-QString MarkdownImageButton::imageTip() const
-{
-    return m_imageTip;
-}
-
-int MarkdownImageButton::imageWidth() const
-{
-    return m_imageWidth;
-}
-
-int MarkdownImageButton::imageHeight() const
-{
-    return m_imageHeight;
+    setWindowFlags(Qt::FramelessWindowHint);
+    createAction();
 }
 
 void MarkdownImageButton::createView()
 {
-    this->setText(this->imageTip());
+    this->setText(image->alt());
     this->setMaxShadow(15);
     this->setBorderRadius(4);
     this->setBgColor("#d3d3d3");
     this->setColor("#787878");
-    this->setIcon(QIcon(this->imagePath()));
+  //  this->setIcon(QIcon(image->tempPath()));
     this->show();
 }
 
@@ -44,51 +27,70 @@ void MarkdownImageButton::updatePosition(QRect rect)
    this->move(rect.x(),rect.y()+(rect.height()/2-this->height()/2));
 }
 
-QString MarkdownImageButton::posMark() const
+
+
+
+void MarkdownImageButton::onEmitUpdateImgInfo()
 {
-    return m_posMark;
+    emit updateImageInfo((QWidget*)this->parent(),this->image);
 }
 
-int MarkdownImageButton::anchor() const
+void MarkdownImageButton::createAction()
 {
-    return m_anchor;
+    ImageBtnAction *action=new ImageBtnAction;
+    menu=new QMenu();
+    copyImage=new QAction("复制图片",this);
+    cutImage=new QAction("剪切图片",this);
+    outImage=new QAction("导出图片",this);
+    updateImage=new QAction("修改图片信息",this);
+
+    connect(updateImage,SIGNAL(triggered(bool)),this,SLOT(onEmitUpdateImgInfo()));
+    connect(this,SIGNAL(updateImageInfo(QWidget*,Image*)),action,SLOT(updateImgInfo(QWidget*,Image*)));
+    addShortCuts();
 }
 
-void MarkdownImageButton::setImagePath(QString imagePath)
+void MarkdownImageButton::addShortCuts()
 {
-    m_imagePath = imagePath;
+
 }
 
-void MarkdownImageButton::setImageTip(QString imageTip)
+Image *MarkdownImageButton::getImage() const
 {
-    m_imageTip = imageTip;
+    return image;
 }
 
-void MarkdownImageButton::setImageWidth(int imageWidth)
+void MarkdownImageButton::setImage(Image *value)
 {
-    m_imageWidth = imageWidth;
-}
-
-void MarkdownImageButton::setImageHeight(int imageHeight)
-{
-    m_imageHeight = imageHeight;
-}
-
-
-void MarkdownImageButton::setPosMark(QString posMark)
-{
-    m_posMark = posMark;
-}
-
-void MarkdownImageButton::setAnchor(int anchor)
-{
-    m_anchor = anchor;
+    image = value;
 }
 
 void MarkdownImageButton::enterEvent(QEvent *event)
 {
     emit previewImage(this);
     setCursor(QCursor(Qt::ArrowCursor));
+}
+
+void MarkdownImageButton::contextMenuEvent(QContextMenuEvent *event)
+{
+    menu->clear();
+    menu->addAction(copyImage);
+    menu->addAction(cutImage);
+    menu->addAction(outImage);
+    menu->addSeparator();
+    menu->addAction(updateImage);
+    menu->exec(QCursor::pos());
+    event->accept();
+}
+
+void MarkdownImageButton::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    ImageDialog *frame=new ImageDialog;
+    frame->setImageFile(image->tempPath());
+    frame->resize(600,500);
+    frame->setMinimumSize(600,500);
+    frame->setWindowTitle(tr("%1 %2 x %3").
+                          arg(image->alt()).arg(image->width()).arg(image->height()));
+    frame->show();
 }
 
 void MarkdownImageButton::leaveEvent(QEvent *event)

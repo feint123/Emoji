@@ -1,71 +1,54 @@
 #ifndef MARKDOWNIMAGEBUTTON_H
 #define MARKDOWNIMAGEBUTTON_H
 
+#include <QAction>
+#include <QMenu>
 #include <fbutton.h>
+
+#include <pane/image/domain/image.h>
 
 
 
 class MarkdownImageButton:public FButton
 {
     Q_OBJECT
-    Q_PROPERTY(QString imagePath READ imagePath WRITE setImagePath)
-    Q_PROPERTY(QString imageTip READ imageTip WRITE setImageTip)
-    Q_PROPERTY(int imageWidth READ imageWidth WRITE setImageWidth)
-    Q_PROPERTY(int imageHeight READ imageHeight WRITE setImageHeight)
-    Q_PROPERTY(QString posMark READ posMark WRITE setPosMark)
-    Q_PROPERTY(int  anchor READ anchor WRITE setAnchor)
+
 public:
     MarkdownImageButton(QWidget *parent=0);
-
-    QString imagePath() const;
-    QString imageTip() const;
-
-    int imageWidth() const;
-
-    int imageHeight() const;
 
     void createView();
 
     void updatePosition(QRect rect);
 
+    void setImage(Image *value);
 
-    int lineHeight() const;
-
-    QString posMark() const;
-
-    int anchor() const;
+    Image *getImage() const;
 
 signals:
     void previewImage(MarkdownImageButton *btn);
-
+    void updateImageInfo(QWidget *parent,Image *img);
     void hideImage();
 
 public slots:
-    void setImagePath(QString imagePath);
-    void setImageTip(QString imageTip);
 
-    void setImageWidth(int imageWidth);
-
-    void setImageHeight(int imageHeight);
-
-
-    void setPosMark(QString posMark);
-
-    void setAnchor(int anchor);
+    void onEmitUpdateImgInfo();
 
 private:
-    QString m_imagePath;
-    QString m_imageTip;
-    int m_imageWidth;
-    int m_imageHeight;
 
     bool dragAction=false;
 
     QPoint oldPoint;
 
-    QString m_posMark;
+    QMenu *menu;
+    QAction *copyImage;
+    QAction *cutImage;
+    QAction *outImage;
+    QAction *updateImage;
+    void createAction();
+    void addShortCuts();
 
-    int m_anchor;
+
+    Image *image;
 
 protected:
     void mousePressEvent(QMouseEvent *event);
@@ -75,6 +58,9 @@ protected:
     void leaveEvent(QEvent *event);
     void enterEvent(QEvent *event);
 
+    void contextMenuEvent(QContextMenuEvent *event);
+
+    void mouseDoubleClickEvent(QMouseEvent *event);
 };
 
 #endif // MARKDOWNIMAGEBUTTON_H

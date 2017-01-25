@@ -4,8 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += widgets xml
-QT +=network
+QT       += widgets xml network
 TARGET = feint
 TEMPLATE = lib
 CONFIG += staticlib
@@ -23,6 +22,7 @@ FORMS += \
     pane/leader/backleader.ui \
     pane/markdown/markdown.ui \
     pane/markdown/dialog/markdownimagedialog.ui \
+    pane/markdown/image/list/imageinfodialog.ui
 
 HEADERS += \
     pane/menu/feintmenu.h \
@@ -71,9 +71,30 @@ HEADERS += \
     pane/markdown/domain/markcontent.h \
     pane/markdown/highligherstyle.h \
     util/documentutil.h \
-    util/fileutil.h
-
-
+    util/fileutil.h \
+    widget/view/gridview.h \
+    util/qvariantutil.h \
+    pane/markdown/domain/markimagesimple.h \
+    pane/menu/basemenu.h \
+    pane/markdown/markdownquick.h \
+    action/imagebtnaction.h \
+    util/dialogshowutil.h \
+    pane/markdown/image/imagedialog.h \
+    pane/markdown/image/imagecontrol.h \
+    pane/markdown/image/imageframe.h \
+    widget/frame/shorttip.h \
+    pane/image/domain/image.h \
+    action/editaction.h \
+    pane/markdown/image/imagepreviewdialog.h \
+    pane/markdown/image/list/imageitem.h \
+    pane/markdown/image/list/imageitemview.h \
+    widget/view/gridviewbeauti.h \
+    pane/markdown/image/list/imageinfodialog.h \
+    util/graphic/imageutil.h \
+    pane/markdown/markdownparahighlighter.h \
+    widget/view/listviewbeauti.h \
+    pane/markdown/dialog/list/quicklistitem.h \
+    pane/markdown/dialog/list/quicklistitemview.h
 
 SOURCES += \
     pane/menu/feintmenu.cpp \
@@ -121,8 +142,30 @@ SOURCES += \
     pane/markdown/domain/markcontent.cpp \
     pane/markdown/highligherstyle.cpp \
     util/documentutil.cpp \
-    util/fileutil.cpp
-
+    util/fileutil.cpp \
+    widget/view/gridview.cpp \
+    util/qvariantutil.cpp \
+    pane/markdown/domain/markimagesimple.cpp \
+    pane/menu/basemenu.cpp \
+    pane/markdown/markdownquick.cpp \
+    action/imagebtnaction.cpp \
+    util/dialogshowutil.cpp \
+    pane/markdown/image/imagedialog.cpp \
+    pane/markdown/image/imagecontrol.cpp \
+    pane/markdown/image/imageframe.cpp \
+    widget/frame/shorttip.cpp \
+    pane/image/domain/image.cpp \
+    action/editaction.cpp \
+    pane/markdown/image/imagepreviewdialog.cpp \
+    pane/markdown/image/list/imageitem.cpp \
+    pane/markdown/image/list/imageitemview.cpp \
+    widget/view/gridviewbeauti.cpp \
+    pane/markdown/image/list/imageinfodialog.cpp \
+    util/graphic/imageutil.cpp \
+    pane/markdown/markdownparahighlighter.cpp \
+    widget/view/listviewbeauti.cpp \
+    pane/markdown/dialog/list/quicklistitem.cpp \
+    pane/markdown/dialog/list/quicklistitemview.cpp
 
 
 macx: LIBS += -L$$PWD/../../../../../CTypeProject/QtProject/build-FButton-Desktop_Qt_5_7_0_clang_64bit-Release/ -lfeintplugin

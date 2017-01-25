@@ -9,11 +9,16 @@ EffectUtil::EffectUtil()
 
 void EffectUtil::addDropShadow(int radius, QWidget *widget)
 {
+    addDropShadow(radius,"#1f212b",widget);
+}
+
+void EffectUtil::addDropShadow(int radius, QString color, QWidget *widget)
+{
     QGraphicsDropShadowEffect *ef=new QGraphicsDropShadowEffect(widget);
     ef->setXOffset(0);
     ef->setYOffset(2);
     ef->setBlurRadius(radius);
-    ef->setColor(QColor("#ccc"));
+    ef->setColor(QColor(color));
     widget->setGraphicsEffect(ef);
 }
 

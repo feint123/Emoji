@@ -1,5 +1,7 @@
 #include "highligherstyle.h"
 #include "markdownedit.h"
+#include "markdownparahighlighter.h"
+#include "markdownquick.h"
 #include  <QDebug>
 #include <QDialog>
 #include <QTextTable>
@@ -7,20 +9,26 @@
 #include <QScrollBar>
 #include <QMimeData>
 #include <widget/button/markdownimagebutton.h>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QTextDocumentFragment>
 #include <widget/frame/imagepreview.h>
+#include <util/dialogshowutil.h>
 #include <util/documentutil.h>
+#include <pane/markdown/domain/markimagesimple.h>
+#include <util/json/jsondata.h>
+#include <util/json/objecttojson.h>
+#include <pane/menu/basemenu.h>
+#include <util/graphic/animationutil.h>
 
 MarkDownEdit::MarkDownEdit(QWidget *parent):
     QTextEdit(parent)
 {
 
+    fileUtil=new FileUtil();
     lighter=new MarkDownHighlighter(this->document());
-    this->setContextMenuPolicy(Qt::ActionsContextMenu);
-    this->verticalScrollBar()->hide();
-    connect(this,SIGNAL(textChanged()),this,SLOT(updateImgBtnLine()));
-    createActions();
 
+    connect(this,SIGNAL(textChanged()),this,SLOT(updateImgBtnLine()));
 }
 
 void MarkDownEdit::setTheme(MarkDownEdit::Theme theme)
@@ -32,66 +40,85 @@ void MarkDownEdit::setTheme(MarkDownEdit::Theme theme)
 
 void MarkDownEdit::initDarkTheme()
 {
-    this->setStyleSheet("background:#1f212b;border:none;color:#e7e9e8;font-size:13pt;");
+    this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    this->setObjectName("mark");
+
+    this->setStyleSheet("#mark{background:#1f212b;border:none;color:#e7e9e8}");
+
     HighligherStyle::dark(this->lighter);
 }
 
-void MarkDownEdit::createActions()
+void MarkDownEdit::setQuickMenu(QMenu *value)
 {
-    insert_image=new QAction(this);
-    insert_url=new QAction(this);
-    insert_table=new QAction(this);
-
-    translateLanguage();
-    this->addAction(insert_image);
-    this->addAction(insert_url);
-    this->addAction(insert_table);
-
-    connect(insert_image,SIGNAL(triggered(bool)),this,SLOT(on_insert_image()));
-    connect(insert_url,SIGNAL(triggered(bool)),this,SLOT(on_insert_url()));
-    connect(insert_table,SIGNAL(triggered(bool)),this,SLOT(on_insert_table()));
-
+    quickMenu = value;
 }
+
+QMenu *MarkDownEdit::getQuickMenu() const
+{
+    return quickMenu;
+}
+
+
+
+
 /**
  * @brief MarkDownEdit::updateImgBtnLine
  * 更新图片按钮的位置。
  */
 void MarkDownEdit::updateImgBtnLine()
 {
+    int cursorPos=this->textCursor().position();
+    int scroll=this->verticalScrollBar()->value();
     if(!textChangedLock){
-    QRegExp reg("\\[img:id=[0-9]+\\]\\s*");
-    QTextCursor textCursor=this->document()->find(reg);
-    QList<MarkdownImageButton *> tempList;
+        clearImageBtns();
+        QRegExp reg("\\!\\[[0-9]+\\]");
+        QTextCursor textCursor=this->document()->find(reg);
 
-    while(textCursor.anchor()>=0)
-    {
-        textCursor.movePosition(QTextCursor::StartOfBlock);
-
-        for(MarkdownImageButton *btn:imageBtns)
+        while(textCursor.anchor()>=0)
         {
-            if(btn->posMark()==textCursor.block().text().trimmed()){
-                btn->updatePosition(this->cursorRect(textCursor));
-                btn->setAnchor(textCursor.block().position());
-                imageBtns.removeOne(btn);
-                tempList.append(btn);
-            }
-        }
-        textCursor=this->document()->find(reg,textCursor.anchor()+textCursor.block().length());
-    }
+            this->setTextCursor(textCursor);
+            QString img=textCursor.block().text().trimmed();
 
-    for(MarkdownImageButton *btn:imageBtns)
-    {
-        QTextCursor cursor=this->textCursor();
-        cursor.setPosition(btn->anchor());
-        cursor.movePosition(QTextCursor::EndOfBlock,QTextCursor::KeepAnchor);
-        this->setTextCursor(cursor);
-        this->textCursor().removeSelectedText();
-        btn->close();
+            int id=(img.mid(2,img.length()-3)).toInt();
+
+            createImageBtn(id,this->cursorRect().x(),cursorRect().y());
+
+
+            textCursor=this->document()->find(reg,textCursor.anchor()+
+                                              textCursor.block().length());
+        }
+
     }
-    imageBtns=tempList;
-    tempList.clear();
-    }
+    QTextCursor textCursor=this->textCursor();
+    textCursor.setPosition(cursorPos);
+    this->setTextCursor(textCursor);
+    this->verticalScrollBar()->setValue(scroll);
 }
+
+void MarkDownEdit::setNoteFile(QString noteFile)
+{
+    m_noteFile = noteFile;
+}
+
+MarkDownHighlighter *MarkDownEdit::getLighter() const
+{
+    return lighter;
+}
+
+QList<Image *> MarkDownEdit::getImageList()
+{
+    QList<Image *> imageList;
+    for(MarkdownImageButton *btn:imageBtns)
+        imageList.append(btn->getImage());
+    return imageList;
+}
+
+QString MarkDownEdit::noteFile() const
+{
+    return m_noteFile;
+}
+
 
 void MarkDownEdit::insertImage(const QByteArray &url)
 {
@@ -114,74 +141,38 @@ void MarkDownEdit::insertImage(bool drag)
 
 void MarkDownEdit::createImageDialog()
 {
-    dialog=new MarkdownImageDialog(this);
+
+    dialog=MarkdownImageDialog::getInstance(this);
     dialog->setDefaultPath(this->defaultPath);
     dialog->setWindowFlags(Qt::FramelessWindowHint);
-    dialog->setGeometry(0,this->height()-dialog->height(),
-                        dialog->width(),dialog->height());
+    DialogShowUtil::show(this,dialog);
+    disconnect(dialog,SIGNAL(insertImage(QString,QString,int,int)),
+               this,SLOT(on_create_image(QString,QString,int,int)));
 
     connect(dialog,SIGNAL(insertImage(QString,QString,int,int)),
                 this,SLOT(on_create_image(QString,QString,int,int)));
+
+
 }
 
 
 
-void MarkDownEdit::translateLanguage()
-{
-    insert_image->setText(tr("插入图片"));
-    insert_url->setText(tr("插入链接"));
-    insert_table->setText(tr("插入表格"));
-}
 
 void MarkDownEdit::keyPressEvent(QKeyEvent *event)
 {
 
      QTextEdit::keyPressEvent(event);
-     if(event->key()==Qt::Key_Backspace)
-     {
-
-         for(MarkdownImageButton *btn:this->imageBtns)
-         {
-             if(btn->anchor()==this->textCursor().block().position())
-             {
-                 textChangedLock=true;
-                 DocumentUtil::remove(this,textCursor().block().position(),
-                                      textCursor().position()-textCursor().block().position());
-                 this->imageBtns.removeOne(btn);
-                 btn->close();
-             }
-         }
-         textChangedLock=false;
-     }
 
 }
 
-void MarkDownEdit::mousePressEvent(QMouseEvent *event)
-{
-    QTextEdit::mousePressEvent(event);
-
-}
 
 void MarkDownEdit::setDefaultPath(const QString &value)
 {
     defaultPath = value;
+    QStringList pathes(value);
+    fileUtil->setLocalPathList(pathes);
 }
 
-void MarkDownEdit::setImageBtns(const QList<MarkdownImageButton *> &value)
-{
-    imageBtns = value;
-    for(MarkdownImageButton *btn:value)
-    {
-        btn->setParent(this->childAt(0,0));
-        btn->createView();
-        int markWidth=btn->posMark().length()*QFontMetrics(this->font()).maxWidth();
-        if(btn->width()<markWidth)
-            btn->resize(markWidth,btn->height());
-        connect(btn,SIGNAL(previewImage(MarkdownImageButton*)),this,SLOT(showPreview(MarkdownImageButton*)));
-        connect(btn,SIGNAL(hideImage()),this,SLOT(hidePreview()));
-    }
-    this->updateImgBtnLine();
-}
 
 /**
  * @brief MarkDownEdit::clearContent
@@ -237,6 +228,20 @@ void MarkDownEdit::dropEvent(QDropEvent *event)
     qDebug()<<"MarkdownEdit[dropEvent]";
 }
 
+void MarkDownEdit::contextMenuEvent(QContextMenuEvent *event)
+{
+    QMenu *menu=new QMenu();
+
+    QAction *quick=new QAction("Markdown快捷键",this);
+    quick->setMenu(quickMenu);
+    menu->addAction(quick);
+
+    menu->addActions(getActionList());
+    menu->exec(QCursor::pos());
+
+    event->accept();
+}
+
 
 
 MarkDownToHtml *MarkDownEdit::getToHtml() const
@@ -270,7 +275,60 @@ void MarkDownEdit::on_insert_url()
 {
 
 }
+/**
+ * @brief MarkDownEdit::createImageBtn
+ * @param alt
+ * @param path
+ * @param w
+ * @param h
+ * @param pX
+ * @param pY
+ * @return
+ * 构建图片按钮
+*/
+MarkdownImageButton *MarkDownEdit::createImageBtn(QString alt, QString path, int w, int h, int pX, int pY)
+{
+     MarkdownImageButton *imgBtn=new MarkdownImageButton(this->childAt(0,0));
 
+     Image *image=new Image;
+     image->setAlt(alt);
+     image->setWidth(w);
+     image->setHeight(h);
+     image->setFile(path);
+
+     image->setTempPath(defaultPath+"/"+path+".png");
+
+     JsonData *datas=new JsonData(tr("%1/%2").arg(defaultPath).arg("images.json").toUtf8(),"images");
+     datas->addOnlyByColumn<Image>("file",QVariant::fromValue(image->file()),image);
+
+     imgBtn->setMinimumWidth(60);
+     imgBtn->setImage(image);
+     imgBtn->createView();
+     imgBtn->setGeometry(pX,pY,imgBtn->width(),imgBtn->height());
+     connect(imgBtn,SIGNAL(previewImage(MarkdownImageButton*)),this,SLOT(showPreview(MarkdownImageButton*)));
+     connect(imgBtn,SIGNAL(hideImage()),this,SLOT(hidePreview()));
+
+     this->imageBtns.append(imgBtn);
+}
+
+MarkdownImageButton *MarkDownEdit::createImageBtn(int id,int px,int py)
+{
+     JsonData *datas=new JsonData(tr("%1/%2_%3").arg(defaultPath).
+                                  arg(noteFile()).arg("img.json").toUtf8(),"images");
+
+     Image *img=datas->selectById<Image>(id);
+     if(img!=NULL)
+        createImageBtn(img->alt(),img->file(),img->width(),img->height(),px,py);
+}
+
+void MarkDownEdit::clearImageBtns()
+{
+    for(MarkdownImageButton *btn:imageBtns)
+    {
+        btn->close();
+    }
+    imageBtns.clear();
+}
 /**
  * @brief MarkDownEdit::on_create_image
  * @param alt
@@ -282,56 +340,41 @@ void MarkDownEdit::on_insert_url()
 
 void MarkDownEdit::on_create_image(QString alt, QString url, int w, int h)
 {
-    MarkdownImageButton *imgBtn=new MarkdownImageButton(this->childAt(0,0));
-    imgBtn->setImageTip(alt);
-    imgBtn->setImagePath(url);
-    imgBtn->setImageWidth(w);
-    imgBtn->setImageHeight(h);
-    imgBtn->setPosMark(tr("[img:id=%1]").arg(imageBtns.count()));
-    imgBtn->setAnchor(this->textCursor().anchor());
-    imgBtn->createView();
-    //调整图片按钮的宽度
-    int markWidth=imgBtn->posMark().length()*QFontMetrics(this->font()).maxWidth();
-    if(imgBtn->width()<markWidth)
-        imgBtn->resize(markWidth,imgBtn->height());
-    imgBtn->setGeometry(this->cursorRect().x(),this->cursorRect().y()+
-                        (this->cursorRect().height()-imgBtn->height())/2,
-                        imgBtn->width(),imgBtn->height());
-    connect(imgBtn,SIGNAL(previewImage(MarkdownImageButton*)),this,SLOT(showPreview(MarkdownImageButton*)));
-    connect(imgBtn,SIGNAL(hideImage()),this,SLOT(hidePreview()));
-    QString mark=tr("[img:id=%1]").arg(imageBtns.count());
-    while(QFontMetrics(this->font()).width(mark)<imgBtn->width())
-        mark+=" ";
-    this->imageBtns.append(imgBtn);
+
+    Image *image=new Image;
+    image->setAlt(alt);
+    image->setFile(url);
+    image->setTempPath(defaultPath+"/"+url+".png");
+    image->setWidth(w);
+    image->setHeight(h);
+    
+    JsonData *datas=new JsonData(tr("%1/%2_%3").arg(defaultPath).arg(noteFile()).arg("img.json").toUtf8(),"images");
+    int id=datas->addData<Image>(image);
+
+    QString mark=tr("![%1]").arg(id);
+    
     this->textCursor().insertText(mark+tr("\n"));
     this->textCursor().movePosition(QTextCursor::NextRow);
 }
 
 
-void MarkDownEdit::on_insert_table()
-{
-    QTextCursor cursor=this->textCursor();
-    cursor.insertTable(5,5);
-}
-
 void MarkDownEdit::showPreview(MarkdownImageButton *btn)
 {
-    for(ImagePreview *p:previews)
-        p->close();
 
-    currentImage=new ImagePreview(this,QSize(btn->imageWidth(),btn->imageHeight()));
+    currentImage=ImagePreview::getInstance(this);
+    currentImage->setSize(QSize(btn->getImage()->width(),btn->getImage()->height()));
+    currentImage->setFileUtil(fileUtil);
     currentImage->fixSize(this->size());
     currentImage->fixPosition(btn->geometry());
-    currentImage->setPath(btn->imagePath());
-    previews.append(currentImage);
+    currentImage->setPath(btn->getImage()->file());
     currentImage->show();
 
 }
 
 void MarkDownEdit::hidePreview()
 {
-    for(ImagePreview *p:previews)
-        p->close();
+    currentImage=ImagePreview::getInstance(this);
+    currentImage->close();
 }
 
 

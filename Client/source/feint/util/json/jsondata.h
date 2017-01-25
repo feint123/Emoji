@@ -8,7 +8,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QString>
-
+#include <QDebug>
 
 
 class JsonData
@@ -17,7 +17,7 @@ public:
     JsonData(const QByteArray& jsonPath="",const QByteArray& arrayName="");
 
     template<typename T>
-    void addData(T* data){
+    int addData(T* data){
         loadData();
         int currentId=1;
         QJsonObject root=currentDoc.object();
@@ -30,6 +30,25 @@ public:
         dataItem["id"]=currentId;
         QJsonArray datas=root[arrayName].toArray();
         datas.append(dataItem);
+        root[arrayName]=datas;
+        currentDoc.setObject(root);
+        saveData();
+        return currentId;
+    }
+
+    template<typename T>
+    void update(T* data, int id){
+        loadData();
+        QJsonObject root=currentDoc.object();
+        QJsonArray datas=root[arrayName].toArray();
+        for(int i=0;i<datas.count();i++)
+        {
+            if(datas.at(i).toObject()["id"].toInt()==id)
+            {
+                QJsonObject newItem=ObjectToJson::create(data).object();
+                datas[i]=newItem;
+            }
+        }
         root[arrayName]=datas;
         currentDoc.setObject(root);
         saveData();
@@ -79,6 +98,44 @@ public:
             if(datas.at(i).toObject()["id"].toInt()==id)
                 t=feint::JsonToObject::createObject<T>(datas.at(i).toObject());
         }
+        return t;
+    }
+
+    template<typename T>
+    T* selectByColumn(QByteArray column,QVariant value)
+    {
+        loadData();
+        QJsonObject root=currentDoc.object();
+        QJsonArray datas=root[arrayName].toArray();
+        T* t=NULL;
+        for(int i=datas.count()-1;i>=0;i--)
+        {
+            if(datas.at(i).toObject()[column].toVariant()==value)
+                t=feint::JsonToObject::createObject<T>(datas.at(i).toObject());
+        }
+        return t;
+    }
+
+    template<typename T>
+    T* addOnlyByColumn(QByteArray column,QVariant onlyValue,T* data)
+    {
+
+        T *t=selectByColumn<T>(column,onlyValue);
+        if(t==NULL){
+            addData<T>(data);
+        }
+    }
+
+
+
+    template<typename T>
+    T* selectFirst()
+    {
+        loadData();
+        QJsonObject root=currentDoc.object();
+        QJsonArray datas=root[arrayName].toArray();
+        T* t=NULL;
+        t=feint::JsonToObject::createObject<T>(datas.at(0).toObject());
         return t;
     }
 

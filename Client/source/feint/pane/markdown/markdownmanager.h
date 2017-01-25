@@ -6,28 +6,33 @@
 #include <pane/markdown/domain/markcontent.h>
 #include <pane/markdown/domain/markimage.h>
 
+#include <util/fileutil.h>
+
 
 
 class MarkdownManager:public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString title READ title WRITE setTitle)
 public:
     MarkdownManager();
-    QString save(QString filePath,QList<MarkdownImageButton *> btnList,QString text);
+    QString save(QString filePath, QString text);
 
     void load(QString filePath);
 
-    QList<MarkdownImageButton *> loadBtnList();
     MarkContent* loadContent();
 
+    QString title() const;
+
+public slots:
+    void setTitle(QString title);
+
 private:
-    QList<MarkImage *> turnToImage(QList<MarkdownImageButton *> btnList);
     MarkContent *turnContent(QString text,QString title);
 
-    MarkdownImageButton *turnToMarkBtn(MarkImage *img);
-
-    QList<MarkdownImageButton *> btnList;
     MarkContent *content;
+
+    QString m_title;
 };
 
 #endif // MARKDOWNMANAGER_H

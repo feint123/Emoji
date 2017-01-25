@@ -3,11 +3,13 @@
 MarkDownHighlighter::MarkDownHighlighter(QTextDocument *parent):
     QSyntaxHighlighter(parent)
 {
+    this->doc=parent;
     initTypeColor();
 }
 
 void MarkDownHighlighter::highlightBlock(const QString &text)
 {
+    createTypeFormat();
     foreach (const HighlightingRule &rule, highlightingRules) {
         QRegExp expression(rule.pattern);
         int index = expression.indexIn(text);
@@ -19,6 +21,7 @@ void MarkDownHighlighter::highlightBlock(const QString &text)
     }
 
     setCurrentBlockState(0);
+
 }
 
 void MarkDownHighlighter::initTypeColor()
@@ -41,13 +44,9 @@ void MarkDownHighlighter::createTypeFormat()
      *  语法高量的包含关系与，添加约束条件的顺序有关
      *
      */
-//    headerFormat.setFontPointSize(16);
+    highlightingRules.clear();
 
-    //设置字体颜色
-    headerFormat.setForeground(typeColor[HEADER]);
-    rule.format=headerFormat;
-    rule.pattern=QRegExp("^#{1,6}.*$");
-    highlightingRules.append(rule);
+    initHeaderFormat();
 
     orderListFormat.setForeground(typeColor[ORDERLIST]);
     rule.format=orderListFormat;
@@ -61,7 +60,7 @@ void MarkDownHighlighter::createTypeFormat()
 
     devideFormat.setForeground(typeColor[DEVIDE]);
     rule.format=devideFormat;
-    rule.pattern=QRegExp("^-{4}$");
+    rule.pattern=QRegExp("^-{4,}$");
     highlightingRules.append(rule);
 
     initPartFormat();
@@ -79,13 +78,15 @@ void MarkDownHighlighter::createTypeFormat()
 
     codeFormat.setForeground(typeColor[CODE]);
     rule.format=codeFormat;
-    rule.pattern=QRegExp("^`.*`$");
+    rule.pattern=QRegExp("`.*`");
     highlightingRules.append(rule);
 
     imgFormat.setForeground(typeColor[IMG]);
     rule.format=imgFormat;
-    rule.pattern=QRegExp("!\\[.*\\]\\(.*\\)]");
+    rule.pattern=QRegExp("\\!\\[[0-9]+\\]");
     highlightingRules.append(rule);
+
+
 }
 
 
@@ -94,21 +95,32 @@ void MarkDownHighlighter::initPartFormat()
     italicFormat.setFontItalic(true);
     italicFormat.setForeground(typeColor[ITALIC]);
     rule.format=italicFormat;
-    rule.pattern=QRegExp("\\*.*\\*");
+    rule.pattern=QRegExp("\\_((?!\\_).)*\\_");
     highlightingRules.append(rule);
 
     boldFormat.setFontWeight(QFont::Bold);
     boldFormat.setForeground(typeColor[BOLD]);
     rule.format=boldFormat;
-    rule.pattern=QRegExp("\\*\\*.*\\*\\*");
+    rule.pattern=QRegExp("\\*\\*((?!\\*).)*\\*\\*");
     highlightingRules.append(rule);
 
-    boldItalicFormat.setFontWeight(QFont::Bold);
-    boldItalicFormat.setFontItalic(true);
-    boldItalicFormat.setForeground(typeColor[ITALIC]);
-    rule.format=boldItalicFormat;
-    rule.pattern=QRegExp("^(\\*\\*.*)\\*.*\\*(.*\\*\\*)$");
-    highlightingRules.append(rule);
+}
+
+void MarkDownHighlighter::initHeaderFormat()
+{
+    for(int i=1;i<=6;i++)
+    {
+        headerFormat.setForeground(typeColor[HEADER]);
+        headerFormat.setFontPointSize(fontBaseSize*(2-1.8*(float)i/10.0));
+        rule.format=headerFormat;
+        rule.pattern=QRegExp(tr("^#{%1}.*$").arg(i));
+        highlightingRules.append(rule);
+    }
+}
+
+void MarkDownHighlighter::setFontBaseSize(int value)
+{
+    fontBaseSize = value;
 }
 
 QHash<MarkDownHighlighter::Type, QColor> MarkDownHighlighter::getTypeColor() const

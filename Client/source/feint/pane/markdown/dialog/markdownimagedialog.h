@@ -12,13 +12,22 @@ class MarkdownImageDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit MarkdownImageDialog(QWidget *parent = 0);
+
     void setImageUrl(const QByteArray &url);
     void setImage(const QImage &img);
     void setIsDrag(bool drag);
+
     ~MarkdownImageDialog();
+    static MarkdownImageDialog* getInstance(QWidget *parent);
 
     void setDefaultPath(const QString &value);
+
+    void setImgWidth(int value);
+
+    void setImgHeight(int value);
+
+    void setImgTip(QString tip);
+
 
 private slots:
     void on_imageBtn_clicked();
@@ -33,6 +42,8 @@ signals:
     void insertImage(QString alt,QString url,int w,int h);
 
 private:
+    explicit MarkdownImageDialog(QWidget *parent = 0);
+    static MarkdownImageDialog *dialog;
     Ui::MarkdownImageDialog *ui;
     int imgWidth;
     int imgHeight;

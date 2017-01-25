@@ -2,7 +2,8 @@
 
 #include <QPainter>
 
-TransFrame::TransFrame(QWidget *parent)
+TransFrame::TransFrame(QWidget *parent):
+    QFrame(parent)
 {
     setAutoFillBackground(false);
     setWindowFlags(Qt::FramelessWindowHint);
@@ -13,7 +14,7 @@ void TransFrame::paintEvent(QPaintEvent *evnet)
 {
     QPainter p(this);
     QBrush brush;
-    brush.setColor(QColor(192, 195, 196,120));
+    brush.setColor(QColor(0, 0, 0,160));
     brush.setStyle(Qt::SolidPattern);
     p.setPen(QColor(255,255,255,0));
     p.setBrush(brush);
