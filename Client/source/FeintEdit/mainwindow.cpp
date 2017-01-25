@@ -9,12 +9,14 @@
 
 #include <QDebug>
 #include <QDir>
+#include <QStandardPaths>
 
 #include <util/settinghelper.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+    initSetting();
     setWindowIcon(QIcon(":/image/feint.icns"));
     this->resize(800,1000);
     widgetStatus<<0<<0<<0<<0;
@@ -59,6 +61,21 @@ void MainWindow::on_menu_clicked(int i)
 void MainWindow::loadController()
 {
     SettingController *menu=new SettingController(this);
+}
+
+void MainWindow::initSetting()
+{
+    if(SettingHelper::hasSetting())
+       return;
+    Setting *setting=new Setting;
+    setting->setAutoSave(60);
+    setting->setCurrentBookName("");
+    setting->setCurrentNote("");
+    QDir dir(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).at(0));
+    dir.mkdir("FeintEdit");
+    setting->setWorkspacing(dir.path()+"/"+"FeintEdit");
+    setting->setFontSize(15);
+    SettingHelper::saveSetting(setting);
 }
 
 void MainWindow::resizeMarkdown(Notes *edit)

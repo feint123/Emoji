@@ -90,3 +90,11 @@ void SettingHelper::saveSetting(Setting *setting)
         file.close();
     }
 }
+
+bool SettingHelper::hasSetting()
+{
+    QFile file(tr("%1/%2").arg(QCoreApplication::applicationDirPath()).arg("setting.json"));
+    if(file.open(QIODevice::ReadOnly|QIODevice::Text))
+        return true;
+    else return false;
+}

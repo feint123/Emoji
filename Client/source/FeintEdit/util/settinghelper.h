@@ -23,6 +23,7 @@ public:
     static Setting* setting();
     static Setting* loadSetting();
     static void saveSetting(Setting *setting);
+    static bool hasSetting();
 
 };
 

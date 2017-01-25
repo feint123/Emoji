@@ -50,7 +50,7 @@ private slots:
     void on_menu_clicked(int i);
 private:
     void loadController();
-
+    void initSetting();
     void resizeMarkdown(Notes *edit);
     void resizeMenuLine(MenuLine *menu);
     void resizeSetting(SettingDialog *dialog);
