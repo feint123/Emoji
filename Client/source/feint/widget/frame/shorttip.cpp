@@ -14,6 +14,8 @@ ShortTip *ShortTip::getInstance(QWidget *parent)
         if(parent!=tip->parent())
             tip->setParent(parent);
     }
+
+
     return tip;
 }
 

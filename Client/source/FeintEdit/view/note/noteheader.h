@@ -28,11 +28,12 @@ public slots:
     void loadBooks(NoteBook* book);
 signals:
     void currentNotebookChanged(QString currentNotebook);
+    void selectOtherNoteBook();
 private:
-    FButton *notebookBtn;
+    QPushButton *notebookBtn;
     FButton *allNotesBtn;
     QString m_currentNotebook;
-     NotebookNameDialog *dialog;
+    NotebookNameDialog *dialog;
 
 
 

@@ -19,7 +19,7 @@ void ImageInfoDialog::setImage(Image *image)
     ui->nameLab->setText(image->alt());
     ui->widthLab->setText(tr("%1").arg(image->width()));
     ui->heightLab->setText(tr("%1").arg(image->height()));
-    ui->pathLab->setText(dealPath(image->tempPath()));
+    ui->pathLab->setText(dealPath(image->tempPath()+"_16x.png"));
     ui->dateLab->setText(image->insertDate().toString("yyyy--MM--dd HH:mm::ss"));
 }
 

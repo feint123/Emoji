@@ -6,22 +6,8 @@
 ListView::ListView(QWidget *parent) :
     QFrame(parent)
 {
-    setMouseTracking(true);
 
-    vScroll=new QScrollBar(this);
 
-    vScroll->setOrientation(Qt::Vertical);
-
-    vScroll->hide();
-
-    baseStyle=tr("#scrollAreaWidgetContents{background:%1}");
-
-    setSelectStyle("#focus{border:4px solid #3176ff;}");
-    setUnSelectStyle("#unFocus{border:none}");
-
-    connect(this->vScroll,SIGNAL(valueChanged(int)),this,SLOT(setScrollY(int)));
-    connect(this,SIGNAL(scrollYChanged(int)),this,SLOT(scrollContent(int)));
-    connect(this,SIGNAL(focusIndexChanged(int)),this,SLOT(changeFocus()));
 
 }
 
@@ -46,6 +32,19 @@ void ListView::setData(QList<QVariant> data)
     this->data=data;
 }
 
+void ListView::addData(QList<QVariant> data)
+{
+    this->data.clear();
+    this->data=data;
+    for(QWidget *widget:itemList)
+        widget->deleteLater();
+    itemList.clear();
+    setItem(this->item);
+    setScrollY(0);
+    setFocusIndex(0);
+    verticalLayout();
+}
+
 
 
 void ListView::setItem(ListItem* item)
@@ -58,11 +57,13 @@ void ListView::setItem(ListItem* item)
         item->getGraphic()->setMouseTracking(true);
         this->itemList.append(item->getGraphic());
         item->getGraphic()->setParent(this);
+        item->getGraphic()->show();
         if(oneItem)
         {
             setFocusIndex(0);
             oneItem=false;
         }
+
     }
 }
 
@@ -117,14 +118,18 @@ void ListView::createFocus()
 void ListView::changeFocus()
 {
     while(true){
-        if(itemList.count()>=focusIndex()+1){
-            createFocus();
+        if(itemList.count()==0){
+            break;
+        }
+        else if(itemList.count()>=focusIndex()+1){
+            if(useFocus())
+                createFocus();
             break;
         }
         else {
             setFocusIndex(focusIndex()-1);
         }
-        if(itemList.count()==0) break;
+
     }
 }
 
@@ -206,27 +211,37 @@ void ListView::verticalLayout()
     {
 
         QWidget *widget=itemList.at(i);
-        if(widget->width()>this->width()-(margin().left()+margin().right()))
-        {
-            widget->resize(this->width()-(margin().left()+margin().right()),widget->height());
-        }
+
+        widget->resize(this->width()-(margin().left()+margin().right()),widget->height());
+
         widget->setGeometry((this->width()-widget->width())/2,
                             -scrollY()+margin().top()+i*(widget->height()+spacing()),
                             widget->width(),widget->height());
+
     }
 
-    vScroll->resize(14,this->height());
+    vScroll->resize(8,this->height());
     vScroll->setGeometry(this->width()-vScroll->width(),0,vScroll->width(),vScroll->height());
     if(getContentHeight()>this->height())
     {
         canScrollShow=true;
+        if(!vScroll->isVisible())
+            vScroll->show();
         vScroll->setRange(0,getContentHeight()-this->height());
         vScroll->setPageStep(this->height());
         vScroll->raise();
-    }
-    else
-        canScrollShow=false;
 
+        if(scrollY()>getContentHeight()-this->height()){
+            m_scrollY=getContentHeight()-this->height();
+        }
+    }
+    else{
+        canScrollShow=false;
+        m_scrollY=0;
+        vScroll->setRange(0,0);
+        vScroll->setPageStep(this->height());
+        vScroll->hide();
+    }
 }
 
 int ListView::getContentHeight()
@@ -237,6 +252,32 @@ int ListView::getContentHeight()
     return contentHeight-spacing();
 }
 
+void ListView::createView()
+{
+    vScroll=new QScrollBar(this);
+
+    vScroll->setOrientation(Qt::Vertical);
+
+    vScroll->setStyleSheet(tr("QScrollBar:vertical::add-page,QScrollBar:vertical::add-page{background:%2;border-radius:4px;}"
+
+                           "QScrollBar::handle{border-radius:4px;background:%1;}"
+
+                           "QScrollBar::add-line{height:1px;width:0px;}"
+
+                           "QScrollBar::sub-line{height:0px;}"
+                           "QScrollBar:vertical{width:8px;}").arg(scrollHandle()).arg(scrollPage()));
+
+
+    baseStyle=tr("#scrollAreaWidgetContents{background:%1}");
+
+    setSelectStyle("#focus{border:4px solid #3176ff;}");
+    setUnSelectStyle("#unFocus{border:none}");
+
+    connect(this->vScroll,SIGNAL(valueChanged(int)),this,SLOT(setScrollY(int)));
+    connect(this,SIGNAL(scrollYChanged(int)),this,SLOT(scrollContent(int)));
+    connect(this,SIGNAL(focusIndexChanged(int)),this,SLOT(changeFocus()));
+}
+
 void ListView::resizeEvent(QResizeEvent *event)
 {
     verticalLayout();
@@ -244,15 +285,15 @@ void ListView::resizeEvent(QResizeEvent *event)
 
 void ListView::mouseMoveEvent(QMouseEvent *event)
 {
-    if(event->x()>(this->width()-vScroll->width()*2)&&canScrollShow)
-        vScroll->show();
-    else
-        vScroll->hide();
+//    if(event->x()>(this->width()-vScroll->width()*2)&&canScrollShow)
+//        vScroll->show();
+//    else
+//        vScroll->hide();
 }
 
 void ListView::wheelEvent(QWheelEvent *event)
 {
-    int scroll=scrollY()+event->delta();
+    int scroll=scrollY()-event->delta();
     if(scroll>vScroll->maximum()) scroll=vScroll->maximum();
     if(scroll<vScroll->minimum()) scroll=vScroll->minimum();
     if(canScrollShow)

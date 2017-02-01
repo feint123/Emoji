@@ -8,13 +8,28 @@
 #include <util/graphic/effectutil.h>
 #include <QDebug>
 #include <action/noteaction.h>
+#include <pane/markdown/image/imageframe.h>
+#include <util/appcolorhelper.h>
+#include <util/screenfit.h>
+#include <util/settinghelper.h>
+#include <domain/wordstatic.h>
 
 NoteItemView::NoteItemView(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::NoteItemView)
 {
+
     ui->setupUi(this);
-    EffectUtil::addDropShadow(16,"#000",this);
+    AppColor *color=AppColorHelper::loadColor();
+    ui->tipEdit->setStyleSheet(tr("#tipEdit{border:none;background:transparent;color:%1}")
+                               .arg(color->colorMid()));
+    ui->titleLab->setStyleSheet(tr("color:%1").arg(color->colorTop()));
+    ui->updateLab->setStyleSheet(tr("color:%1").arg(color->colorBot()));
+    EffectUtil::addDropShadow(16,AppColorHelper::noteListShadow(),this);
+
+    ScreenFit::fitFont(ui->tipEdit);
+    ScreenFit::fitFont(ui->titleLab);
+    ScreenFit::fitFont(ui->updateLab);
 }
 
 NoteItemView::~NoteItemView()
@@ -28,7 +43,14 @@ void NoteItemView::setNote(NoteTip *note)
     ui->titleLab->setText(note->title());
     ui->tipEdit->setText(note->tip());
     ui->updateLab->setText(note->updateDate().toString("yyyy-MM-dd HH:mm"));
+    if(note->image().length()>0){
+        ui->frame->setImageFile(SettingHelper::workPath(note->image()+"/"+note->image()+"_4x.png"));
+        ui->frame->scaleImage(((this->height()/2)
+                               /(float)ui->frame->height())*100);
+        ui->frame->setFixedSize(this->height()*0.5,this->height()*0.5);
 
+
+    }
 }
 
 QString NoteItemView::tip() const
@@ -80,14 +102,14 @@ void NoteItemView::onEmitInNote()
 void NoteItemView::createActions()
 {
     menu=new QMenu();
-    this->newNote=new QAction("新建笔记",this);
-    this->deleteNote=new QAction("删除笔记",this);
-    this->shareNote=new QAction("分享笔记",this);
+    this->newNote=new QAction(WordStatic::new_+WordStatic::note,this);
+    this->deleteNote=new QAction(WordStatic::del+WordStatic::note,this);
+    this->shareNote=new QAction(WordStatic::share+WordStatic::note,this);
     shareNote->setEnabled(false);
-    inNote=new QAction("导入笔记",this);
-    outNote=new QAction("导出笔记至...",this);
-    this->moveToNotebook=new QAction("移动到笔记本",this);
-    this->copyToNotebook=new QAction("复制到笔记本",this);
+    inNote=new QAction(WordStatic::in+WordStatic::note,this);
+    outNote=new QAction(WordStatic::out+WordStatic::note,this);
+    this->moveToNotebook=new QAction(WordStatic::moveTo+WordStatic::book,this);
+    this->copyToNotebook=new QAction(WordStatic::copyTo+WordStatic::book,this);
 
 
     connect(deleteNote,SIGNAL(triggered(bool)),this,SLOT(onDeleteNote()));
@@ -118,11 +140,11 @@ void NoteItemView::addShortCuts()
 
 void NoteItemView::paintEvent(QPaintEvent *event)
 {
-    int border=4;
+    int border=ScreenFit::fitToScreen(4);
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    painter.setBrush(QBrush(QColor("#1f212b")));
+    painter.setBrush(QBrush(QColor(AppColorHelper::noteList())));
     painter.setPen(Qt::transparent);
 
     painter.drawRect(QRect(0,border,

@@ -15,7 +15,7 @@ void ImagePreviewDialog::setDatas(QList<Image *> imageList)
 {
     grid=new GridView(this);
 
-    grid->setBgImage(QImage(imageList.at(0)->tempPath()));
+    grid->setBgImage(QImage(imageList.at(0)->tempPath()+"_8x.png"));
     grid->setBgFun(GridViewBeauti::imageWithPane);
     grid->setHorizontalSpacing(16);
     grid->setVerticalSpacing(16);
@@ -25,6 +25,10 @@ void ImagePreviewDialog::setDatas(QList<Image *> imageList)
     grid->setItem(new ImageItem());
     grid->setGeometry(0,0,this->width(),this->height());
     grid->show();
+
+    delete util;
+//    for(Image *img:imageList)
+//        img->deleteLater();
 }
 
 void ImagePreviewDialog::imageSelect(QVariant qvariant)
@@ -35,7 +39,7 @@ void ImagePreviewDialog::imageSelect(QVariant qvariant)
     imageView->show();
     info->show();
 
-    grid->setBgImage(QImage(image.tempPath()));
+    grid->setBgImage(QImage(image.tempPath()+"_16x.png"));
 
     grid->setPadding(QMargins(32,32+size.height(),32,32));
 

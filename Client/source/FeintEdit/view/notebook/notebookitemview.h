@@ -26,16 +26,20 @@ signals:
     void deleteNoteBook(int id);
     void outNoteBook(int id,QWidget *parent);
     void inBookAction(QWidget* parent);
+    void updateBookAction(QWidget *parent,int id);
 private slots:
     void onEmitNewBook();
     void onEmitDeleteBook();
     void onEmitOutBook();
     void onEmitInBook();
+    void onEmitUpdateBook();
+
 private:
     NoteBook *notebook;
 
     QVariant bookQ;
 
+    QImage img;
     QLabel *bookName;
 
     QLabel *noteCount;
@@ -49,6 +53,8 @@ private:
     QAction *inBook;
 
     QAction *shareBook;
+
+    QAction *updateBook;
 
     QMenu *menu;
 

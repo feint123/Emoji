@@ -76,7 +76,6 @@ HEADERS += \
     util/qvariantutil.h \
     pane/markdown/domain/markimagesimple.h \
     pane/menu/basemenu.h \
-    pane/markdown/markdownquick.h \
     action/imagebtnaction.h \
     util/dialogshowutil.h \
     pane/markdown/image/imagedialog.h \
@@ -94,7 +93,9 @@ HEADERS += \
     pane/markdown/markdownparahighlighter.h \
     widget/view/listviewbeauti.h \
     pane/markdown/dialog/list/quicklistitem.h \
-    pane/markdown/dialog/list/quicklistitemview.h
+    pane/markdown/dialog/list/quicklistitemview.h \
+    widget/basewidget.h \
+    widget/view/abstructview.h
 
 SOURCES += \
     pane/menu/feintmenu.cpp \
@@ -147,7 +148,6 @@ SOURCES += \
     util/qvariantutil.cpp \
     pane/markdown/domain/markimagesimple.cpp \
     pane/menu/basemenu.cpp \
-    pane/markdown/markdownquick.cpp \
     action/imagebtnaction.cpp \
     util/dialogshowutil.cpp \
     pane/markdown/image/imagedialog.cpp \
@@ -165,7 +165,9 @@ SOURCES += \
     pane/markdown/markdownparahighlighter.cpp \
     widget/view/listviewbeauti.cpp \
     pane/markdown/dialog/list/quicklistitem.cpp \
-    pane/markdown/dialog/list/quicklistitemview.cpp
+    pane/markdown/dialog/list/quicklistitemview.cpp \
+    widget/basewidget.cpp \
+    widget/view/abstructview.cpp
 
 
 macx: LIBS += -L$$PWD/../../../../../CTypeProject/QtProject/build-FButton-Desktop_Qt_5_7_0_clang_64bit-Release/ -lfeintplugin

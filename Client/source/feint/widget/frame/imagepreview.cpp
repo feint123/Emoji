@@ -51,16 +51,13 @@ void ImagePreview::setSize(const QSize &value)
 
 QPixmap ImagePreview::loadImage()
 {
-    fileUtil->setFileName(path());
-    QImage img=fileUtil->loadImage();
+
+    QImage img(path()+"_16x.png");
     QPixmap pix=QPixmap::fromImage(img);
     return pix;
 }
 
-void ImagePreview::setFileUtil(FileUtil *value)
-{
-    fileUtil = value;
-}
+
 
 
 void ImagePreview::fixSize(QSize maxSize)

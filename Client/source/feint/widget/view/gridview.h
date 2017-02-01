@@ -6,7 +6,7 @@
 #include <QVariant>
 #include "listitem.h"
 
-typedef void (*bg)(QPaintDevice *device,const QImage &image,const QMargins &rect);
+typedef void (*bg)(QPaintDevice *device,const QColor &color);
 class GridView:public QFrame
 {
     Q_OBJECT
@@ -17,6 +17,7 @@ class GridView:public QFrame
     Q_PROPERTY(int scroll READ scroll WRITE setScroll NOTIFY scrollChanged)
     Q_PROPERTY(bool hasFocus READ hasFocus WRITE setHasFocus)
     Q_PROPERTY(QString focusColor READ focusColor WRITE setFocusColor)
+    Q_PROPERTY(QColor bgColor READ bgColor WRITE setBgColor)
 public:
     GridView(QWidget *parent=0);
 
@@ -25,6 +26,8 @@ public:
     
     void setItem(ListItem * value);
     
+    void addData(const QList<QVariant> &data);
+
     QMargins padding() const;
     
     int spacing() const;
@@ -50,6 +53,11 @@ public slots:
     void setFocusColor(QString focusColor);
 
     void setHasFocus(bool hasFocus);
+
+    void setBgColor(QColor bgColor)
+    {
+        m_bgColor = bgColor;
+    }
 
 signals:
     void scrollChanged(int scroll);
@@ -86,6 +94,8 @@ private:
 
     void updateResize();
 
+    QColor m_bgColor;
+
 protected:
     void resizeEvent(QResizeEvent *event);
 
@@ -99,6 +109,11 @@ public:
     void setBgFun(const bg &value);
 
     void setBgImage(const QImage &value);
+
+    QColor bgColor() const
+    {
+        return m_bgColor;
+    }
 
 protected:
     void paintEvent(QPaintEvent *event);

@@ -30,7 +30,7 @@ int Setting::autoSave() const
     return m_autoSave;
 }
 
-QString Setting::currentNote() const
+QString Setting::currentNoteBook() const
 {
     return m_currentNote;
 }
@@ -65,7 +65,7 @@ void Setting::setAutoSave(int autoSave)
     m_autoSave = autoSave;
 }
 
-void Setting::setCurrentNote(QString currentNote)
+void Setting::setCurrentNoteBook(QString currentNote)
 {
     m_currentNote = currentNote;
 }

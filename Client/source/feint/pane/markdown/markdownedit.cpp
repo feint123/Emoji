@@ -1,7 +1,6 @@
 #include "highligherstyle.h"
 #include "markdownedit.h"
 #include "markdownparahighlighter.h"
-#include "markdownquick.h"
 #include  <QDebug>
 #include <QDialog>
 #include <QTextTable>
@@ -9,6 +8,7 @@
 #include <QScrollBar>
 #include <QMimeData>
 #include <widget/button/markdownimagebutton.h>
+#include <QFileSystemWatcher>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QTextDocumentFragment>
@@ -25,29 +25,35 @@ MarkDownEdit::MarkDownEdit(QWidget *parent):
     QTextEdit(parent)
 {
 
+
     fileUtil=new FileUtil();
     lighter=new MarkDownHighlighter(this->document());
 
     connect(this,SIGNAL(textChanged()),this,SLOT(updateImgBtnLine()));
 }
 
-void MarkDownEdit::setTheme(MarkDownEdit::Theme theme)
+void MarkDownEdit::setTheme()
 {
-    if(theme==Theme::DARK)
-        initDarkTheme();
-}
-
-
-void MarkDownEdit::initDarkTheme()
-{
-    this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
     this->setObjectName("mark");
 
-    this->setStyleSheet("#mark{background:#1f212b;border:none;color:#e7e9e8}");
 
-    HighligherStyle::dark(this->lighter);
+    this->setStyleSheet(tr("#mark{background:%1;border:none;color:%2}"
+
+
+                                                   "QScrollBar::handle{border-radius:4px;background:%3;}"
+
+                                                   "QScrollBar::add-line{height:1px;width:0px;}"
+
+                                                   "QScrollBar::sub-line{height:0px;}"
+                                                   "QScrollBar:vertical{width:8px;}").arg(background()).arg(color())
+                        .arg(scrollHandle()));
+
+    this->verticalScrollBar()->setStyleSheet(tr("QScrollBar:vertical::add-page,QScrollBar:vertical::add-page"
+                                                "{background:%1;border-radius:4px;}").arg(scrollPage()));
+
+    (*high)(this->lighter);
 }
+
 
 void MarkDownEdit::setQuickMenu(QMenu *value)
 {
@@ -99,6 +105,21 @@ void MarkDownEdit::updateImgBtnLine()
 void MarkDownEdit::setNoteFile(QString noteFile)
 {
     m_noteFile = noteFile;
+
+    QFileSystemWatcher *watcher=new QFileSystemWatcher(this);
+    watcher->addPath(defaultPath+"/"+noteFile+"_img.json");
+    connect(watcher,SIGNAL(fileChanged(QString)),this,SLOT(updateImgBtnLine()));
+
+}
+
+void MarkDownEdit::setQuickString(const QString &value)
+{
+    quickString = value;
+}
+
+void MarkDownEdit::setHigh(const HighLighter &value)
+{
+    high = value;
 }
 
 MarkDownHighlighter *MarkDownEdit::getLighter() const
@@ -143,15 +164,18 @@ void MarkDownEdit::createImageDialog()
 {
 
     dialog=MarkdownImageDialog::getInstance(this);
+    dialog->setFlag(MarkdownImageDialog::NEW);
     dialog->setDefaultPath(this->defaultPath);
     dialog->setWindowFlags(Qt::FramelessWindowHint);
     DialogShowUtil::show(this,dialog);
+    dialog->raise();
     disconnect(dialog,SIGNAL(insertImage(QString,QString,int,int)),
                this,SLOT(on_create_image(QString,QString,int,int)));
 
     connect(dialog,SIGNAL(insertImage(QString,QString,int,int)),
                 this,SLOT(on_create_image(QString,QString,int,int)));
 
+    hidePreview();
 
 }
 
@@ -232,7 +256,7 @@ void MarkDownEdit::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu *menu=new QMenu();
 
-    QAction *quick=new QAction("Markdown快捷键",this);
+    QAction *quick=new QAction(quickString,this);
     quick->setMenu(quickMenu);
     menu->addAction(quick);
 
@@ -286,29 +310,29 @@ void MarkDownEdit::on_insert_url()
  * @return
  * 构建图片按钮
 */
-MarkdownImageButton *MarkDownEdit::createImageBtn(QString alt, QString path, int w, int h, int pX, int pY)
+MarkdownImageButton *MarkDownEdit::createImageBtn(Image *image, int pX, int pY)
 {
      MarkdownImageButton *imgBtn=new MarkdownImageButton(this->childAt(0,0));
 
-     Image *image=new Image;
-     image->setAlt(alt);
-     image->setWidth(w);
-     image->setHeight(h);
-     image->setFile(path);
 
-     image->setTempPath(defaultPath+"/"+path+".png");
+     image->setTempPath(FileUtil::imageTempPath(defaultPath,image->file()));
 
      JsonData *datas=new JsonData(tr("%1/%2").arg(defaultPath).arg("images.json").toUtf8(),"images");
      datas->addOnlyByColumn<Image>("file",QVariant::fromValue(image->file()),image);
 
-     imgBtn->setMinimumWidth(60);
+     imgBtn->setMinimumWidth(80);
      imgBtn->setImage(image);
      imgBtn->createView();
+     imgBtn->setDefaultPath(this->defaultPath);
+     imgBtn->setNoteFile(this->noteFile());
      imgBtn->setGeometry(pX,pY,imgBtn->width(),imgBtn->height());
      connect(imgBtn,SIGNAL(previewImage(MarkdownImageButton*)),this,SLOT(showPreview(MarkdownImageButton*)));
      connect(imgBtn,SIGNAL(hideImage()),this,SLOT(hidePreview()));
 
      this->imageBtns.append(imgBtn);
+
+     delete datas;
+   //  image->deleteLater();
 }
 
 MarkdownImageButton *MarkDownEdit::createImageBtn(int id,int px,int py)
@@ -318,7 +342,10 @@ MarkdownImageButton *MarkDownEdit::createImageBtn(int id,int px,int py)
 
      Image *img=datas->selectById<Image>(id);
      if(img!=NULL)
-        createImageBtn(img->alt(),img->file(),img->width(),img->height(),px,py);
+        createImageBtn(img,px,py);
+
+     delete datas;
+    // img->deleteLater();
 }
 
 void MarkDownEdit::clearImageBtns()
@@ -344,7 +371,7 @@ void MarkDownEdit::on_create_image(QString alt, QString url, int w, int h)
     Image *image=new Image;
     image->setAlt(alt);
     image->setFile(url);
-    image->setTempPath(defaultPath+"/"+url+".png");
+    image->setTempPath(FileUtil::imageTempPath(defaultPath,url));
     image->setWidth(w);
     image->setHeight(h);
     
@@ -355,6 +382,9 @@ void MarkDownEdit::on_create_image(QString alt, QString url, int w, int h)
     
     this->textCursor().insertText(mark+tr("\n"));
     this->textCursor().movePosition(QTextCursor::NextRow);
+
+    delete datas;
+    image->deleteLater();
 }
 
 
@@ -363,10 +393,10 @@ void MarkDownEdit::showPreview(MarkdownImageButton *btn)
 
     currentImage=ImagePreview::getInstance(this);
     currentImage->setSize(QSize(btn->getImage()->width(),btn->getImage()->height()));
-    currentImage->setFileUtil(fileUtil);
+
     currentImage->fixSize(this->size());
     currentImage->fixPosition(btn->geometry());
-    currentImage->setPath(btn->getImage()->file());
+    currentImage->setPath(btn->getImage()->tempPath());
     currentImage->show();
 
 }

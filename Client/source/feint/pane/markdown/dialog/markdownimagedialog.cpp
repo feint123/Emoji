@@ -5,6 +5,8 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <QStandardPaths>
+
+#include <util/graphic/imageutil.h>
 MarkdownImageDialog *MarkdownImageDialog::dialog=NULL;
 MarkdownImageDialog::MarkdownImageDialog(QWidget *parent) :
     QDialog(parent),
@@ -47,7 +49,8 @@ MarkdownImageDialog *MarkdownImageDialog::getInstance(QWidget *parent)
 
 void MarkdownImageDialog::on_imageBtn_clicked()
 {
-    QString filePath=QFileDialog::getOpenFileName(this,"选择图片",QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).at(0),
+    QString filePath=QFileDialog::getOpenFileName(this,"选择图片",
+                                                  QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).at(0),
                                                   tr("压缩图片(*.jpg *.jpeg);;网络图片(*.png)"));
     if(filePath.length()>0)
     {
@@ -64,7 +67,7 @@ void MarkdownImageDialog::on_widthLine_textChanged(const QString &arg1)
 void MarkdownImageDialog::on_okBtn_clicked()
 {
     if(ui->altLine->text().length()==0){
-        this->setToolTip("图片替代名称不能为空");
+
         ui->altLine->setFocus();
     }else{
         QString fileName="";
@@ -76,10 +79,12 @@ void MarkdownImageDialog::on_okBtn_clicked()
         file.open(QIODevice::ReadOnly);
         fileName=QCryptographicHash::hash(file.readAll(),QCryptographicHash::Md5).toHex().constData();
         file.close();
-        file.setFileName(tr("%1/%2.png").arg(defaultPath).arg(fileName));
-        img.save(&file);
-        file.close();
-        emit insertImage(ui->altLine->text(),fileName,imgWidth,imgHeight);
+
+        saveImage(fileName);
+        if(flag==NEW)
+            emit insertImage(ui->altLine->text(),fileName,imgWidth,imgHeight);
+        if(flag==UPDATE)
+            emit updateImage(ui->altLine->text());
         this->close();
     }
 
@@ -103,6 +108,16 @@ void MarkdownImageDialog::createDialog(const QImage &img)
         ui->heightLine->setText(QString::number(imgHeight));
         ui->widthLine->setEnabled(true);
     }
+}
+
+void MarkdownImageDialog::setFlag(const FLAG &value)
+{
+    flag = value;
+}
+
+void MarkdownImageDialog::saveImage(QString imgName)
+{
+    ImageUtil::saveImage(defaultPath,imgName,this->img);
 }
 
 void MarkdownImageDialog::setDefaultPath(const QString &value)

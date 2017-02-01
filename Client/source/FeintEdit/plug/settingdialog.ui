@@ -13,6 +13,26 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QScrollBar:vertical::add-page,QScrollBar:vertical::add-page{background:#f9f9f9;border-radius:0px;}
+
+QScrollBar::handle{
+	border-radius:4px;
+	background:#c2c2c2;
+}
+
+QScrollBar::add-line{
+	height:1px;
+	width:0px;
+}
+
+QScrollBar::sub-line{
+	height:0px;
+}
+QScrollBar:vertical{
+	width:8px;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
@@ -44,8 +64,8 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-255</y>
-        <width>576</width>
+        <y>-281</y>
+        <width>583</width>
         <height>795</height>
        </rect>
       </property>
@@ -63,7 +83,7 @@
         <number>32</number>
        </property>
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="fontLab">
          <property name="font">
           <font>
            <pointsize>16</pointsize>
@@ -90,7 +110,7 @@
             <number>8</number>
            </property>
            <item>
-            <widget class="QLabel" name="label_2">
+            <widget class="QLabel" name="sizeLab">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -139,7 +159,7 @@
             <number>8</number>
            </property>
            <item>
-            <widget class="QLabel" name="label_3">
+            <widget class="QLabel" name="ffLab">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -179,7 +199,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_4">
+        <widget class="QLabel" name="fileLab">
          <property name="font">
           <font>
            <pointsize>16</pointsize>
@@ -204,7 +224,7 @@
           <number>10</number>
          </property>
          <item>
-          <widget class="QLabel" name="label_5">
+          <widget class="QLabel" name="dPlaceLab">
            <property name="text">
             <string>笔记本地默认存放位置：</string>
            </property>
@@ -263,7 +283,7 @@
           </layout>
          </item>
          <item>
-          <widget class="QLabel" name="label_6">
+          <widget class="QLabel" name="isShareImgLab">
            <property name="text">
             <string>默认是否共享笔记中的图片：</string>
            </property>
@@ -337,7 +357,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_7">
+        <widget class="QLabel" name="noteLab">
          <property name="font">
           <font>
            <pointsize>16</pointsize>
@@ -359,7 +379,7 @@
           <number>10</number>
          </property>
          <item>
-          <widget class="QLabel" name="label_8">
+          <widget class="QLabel" name="defaultSaveLab">
            <property name="text">
             <string>默认笔记保存时间：</string>
            </property>
@@ -381,7 +401,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_9">
+            <widget class="QLabel" name="secondLab">
              <property name="text">
               <string>秒</string>
              </property>

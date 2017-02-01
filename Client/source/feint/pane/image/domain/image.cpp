@@ -45,6 +45,14 @@ QDateTime Image::insertDate() const
     return m_insertDate;
 }
 
+QList<int> Image::getImageIdList(QList<Image *> imgs)
+{
+    QList<int> idList;
+    for(Image *img:imgs)
+        idList.append(img->id());
+    return idList;
+}
+
 void Image::setId(int id)
 {
     m_id = id;

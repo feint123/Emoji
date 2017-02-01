@@ -12,6 +12,13 @@ JsonData::JsonData(const QByteArray &jsonPath, const QByteArray &arrayName)
     this->arrayName=arrayName;
 }
 
+int JsonData::count()
+{
+    loadData();
+    QJsonArray array=currentDoc.object()[arrayName].toArray();
+    return array.count();
+}
+
 void JsonData::deleteData(int id)
 {
     loadData();
@@ -38,6 +45,19 @@ int JsonData::autoId()
     loadData();
      QJsonObject root=currentDoc.object();
      return root["auto_id"].toInt();
+}
+
+int JsonData::indexByColumn(QString column, QVariant value)
+{
+    loadData();
+    QJsonObject planObj=currentDoc.object();
+    QJsonArray plans=planObj[arrayName].toArray();
+    for(int i=0;i<plans.count();i++){
+        if(plans.at(i).toObject()[column].toVariant()==value){
+            return i;
+        }
+    }
+    return -1;
 }
 
 void JsonData::loadData()

@@ -16,7 +16,7 @@ class TipDialog:public QDialog
     Q_PROPERTY(int fontSize READ fontSize WRITE setFontSize)
 public:
 
-    static TipDialog *getInstance(QWidget *parent);
+    static TipDialog *getInstance(QWidget *parent=0);
     QString tip() const;
     ~TipDialog();
     int fontSize() const;
@@ -44,7 +44,6 @@ private:
 
     int m_fontSize;
 
-    QWidget *parent;
 
     QTimer *timer;
 

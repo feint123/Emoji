@@ -2,9 +2,11 @@
 
 #include <util/json/jsondata.h>
 
+#include <util/appcolorhelper.h>
 #include <util/dialogshowutil.h>
 #include <util/noteutil.h>
 #include <util/settinghelper.h>
+#include <util/timermanager.h>
 
 #include <QDebug>
 #include <QDesktopServices>
@@ -13,14 +15,20 @@
 #include <QTimer>
 
 #include <domain/notebook.h>
+#include <domain/recirclepage.h>
+#include <domain/timertag.h>
+#include <domain/wordstatic.h>
 
 #include <controller/notecontroller.h>
 
 #include <view/notebook/list/notebooknamedialog.h>
 
 #include <util/graphic/effectutil.h>
+#include <util/graphic/imageutil.h>
 
 #include <view/tipdialog.h>
+
+#include <plug/appstatic.h>
 
 NoteAction::NoteAction(QWidget *parent)
 {
@@ -30,15 +38,35 @@ NoteAction::NoteAction(QWidget *parent)
 void NoteAction::deleteNote(int id, QString notebook)
 {
     JsonData *datas=new JsonData(SettingHelper::workPath(notebook).toUtf8(),"notes");
-    if(datas->selectAll<NoteBook>().count()>1)
+    NoteTip *tip=NULL;
+    if(AppStatic::noteNum>1)
+    {
+        tip=datas->selectById<NoteTip>(id);
         datas->deleteData(id);
 
+        AppStatic::noteNum-=1;
+    }
+    delete datas;
+
+    datas=new JsonData(SettingHelper::workPath("recircles.json").toUtf8(),"recircles");
+    if(tip!=NULL)
+    {
+        RecirclePage *page=new RecirclePage;
+        page->setFileName(tip->fileName());
+        page->setName(tip->title());
+        page->setType(RecirclePage::NOTE);
+        page->setBookFile(tip->notebook());
+        datas->addOnlyByColumn<RecirclePage>("fileName",page->fileName(),page);
+    }
+    TimerManager::getInstance()->getTimer(TimerTag::tag(TimerTag::NOTE_NUM_CHANGE))->start();
 }
 
 void NoteAction::addNote()
 {
-    NoteController *controller=new NoteController;
+    NoteController *controller=new NoteController();
     controller->addNote();
+
+    TimerManager::getInstance()->getTimer(TimerTag::tag(TimerTag::NOTE_NUM_CHANGE))->start();
 }
 
 void NoteAction::moveToNotebook(NoteTip *tip, QWidget *parent)
@@ -55,18 +83,18 @@ void NoteAction::copyToNotebook(NoteTip *tip, QWidget *parent)
 
 void NoteAction::outNote(QString noteName)
 {
-    dir=QFileDialog::getSaveFileName(0,"导出笔记至...",
+    dir=QFileDialog::getSaveFileName(0,WordStatic::out+WordStatic::note,
                                           QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).at(0),
-                                     tr("FeintEdit笔记文件(*.feint)"));
+                                     tr("FeintEdit"+WordStatic::note+WordStatic::file+"(*.feint)"));
     outNote(noteName,dir);
 }
 
 void NoteAction::inNote(QString notebook)
 {
     JsonData *datas=new JsonData(SettingHelper::workPath(notebook).toUtf8(),"notes");
-    QString fileName=QFileDialog::getOpenFileName(0,"导入笔记",
+    QString fileName=QFileDialog::getOpenFileName(0,WordStatic::in+WordStatic::note,
                                                   QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).at(0),
-                                                  tr("feintEdit笔记文件(*.feint)"));
+                                                  tr("feintEdit"+WordStatic::note+WordStatic::file+"(*.feint)"));
 
     if(fileName.length()<=0)
         return;
@@ -86,6 +114,18 @@ void NoteAction::inNote(QString notebook)
     tip->setNotebook(notebook);
 
     datas->addData<NoteTip>(tip);
+
+    AppStatic::noteNum+=1;
+
+    tip->deleteLater();
+    content->deleteLater();
+    manager->deleteLater();
+    delete in;
+    delete datas;
+
+    QTimer *timer=TimerManager::getInstance()->getTimer(TimerTag::tag(TimerTag::NOTE_NUM_CHANGE));
+    if(timer!=NULL)
+        timer->start();
 }
 
 void NoteAction::outImages(QString noteName)
@@ -93,22 +133,29 @@ void NoteAction::outImages(QString noteName)
     JsonData *datas=new JsonData(SettingHelper::workPath(noteName+"_img.json").toUtf8(),"images");
     QList<Image*> images=datas->selectAll<Image>();
     QStringList imagePaths;
-    for(Image *img:images)
-        imagePaths.append(img->file()+".png");
-    QString dir=QFileDialog::getExistingDirectory(0,"导出图片至...",
+    for(Image *img:images){
+        imagePaths.append(img->file());
+        img->deleteLater();
+    }
+    QString dir=QFileDialog::getExistingDirectory(0,WordStatic::out+WordStatic::photo,
                                                   QStandardPaths::standardLocations(QStandardPaths::PicturesLocation).at(0));
     for(QString path:imagePaths)
     {
         FileUtil *fileutil=new FileUtil;
         connect(fileutil,SIGNAL(fileCopySuccess(QString)),this,SLOT(onOutImagesSuccess(QString)));
-        fileutil->copyFile(SettingHelper::workPath(path),dir+"/"+path);
+        fileutil->copyFile(FileUtil::imageTempPath(SettingHelper::workspacing(),path)+".png",dir+"/"+path+".png");
 
+        fileutil->deleteLater();
     }
+
+    delete datas;
+
 }
 
 void NoteAction::moveNote(NoteBook *noteBook)
 {
     deleteNote(tip.id(),tip.notebook());
+    AppStatic::noteNum-=1;
     copyNote(noteBook);
 }
 
@@ -121,30 +168,31 @@ void NoteAction::copyNote(NoteBook *noteBook)
     JsonData* datas=new JsonData(SettingHelper::workPath(noteBook->fileName()).toUtf8(),"notes");
     tip.setUpdateDate(QDateTime::currentDateTime());
     datas->addData<NoteTip>(&tip);
+
+    delete datas;
 }
 
 void NoteAction::onOutDirChanged(QString file)
 {
-    qDebug()<<"NoteAction:"<<file;
+
 }
 
 void NoteAction::onOutSuccess(QString path)
 {
-    createTip("成功导入笔记至目录：",path);
+    createTip(WordStatic::tip_3,path);
 
 }
 
 void NoteAction::onOutImagesSuccess(QString path)
 {
-    createTip("成功导入图片至目录：",path);
+    createTip(WordStatic::tip_4,path);
 }
 
 void NoteAction::moveNoteTo(NoteTip *tip, QWidget *parent)
 {
     this->tip=*tip;
     dialog=NotebookNameDialog::getInstance(parent);
-    EffectUtil::addDropShadow(25,dialog);
-    dialog->setWindowFlags(Qt::FramelessWindowHint);
+    EffectUtil::addDropShadow(25,AppColorHelper::noteListShadow(),dialog);
     dialog->setMaximumHeight(500);
     dialog->setTop(8);
     dialog->setBottom(8);
@@ -171,7 +219,7 @@ void NoteAction::copyFile(NoteIn *in)
     QHashIterator<QString,QImage> itera(in->getImages());
     while(itera.hasNext()){
         QImage image=itera.next().value();
-        image.save(SettingHelper::workPath(itera.key()));
+        ImageUtil::saveImage(SettingHelper::workspacing(),itera.key(),image);
     }
 
 }
@@ -198,9 +246,10 @@ void NoteAction::outNote(QString noteName, QString dir)
 
     JsonData *datas=new JsonData(SettingHelper::workPath(noteName+"_img.json").toUtf8(),"images");
     QList<Image*> images=datas->selectAll<Image>();
-    for(Image *img:images)
-        needFile.append(img->file()+".png");
-
+    for(Image *img:images){
+        needFile.append(img->file());
+        img->deleteLater();
+    }
     QString name=noteName+".feint";
     QString path=NoteUtil::createNoteFile(SettingHelper::workPath(name),noteName,
                              noteName+"_img.json",needFile,SettingHelper::workspacing());
@@ -210,5 +259,8 @@ void NoteAction::outNote(QString noteName, QString dir)
         FileUtil *fileutil=new FileUtil;
         connect(fileutil,SIGNAL(fileCopySuccess(QString)),this,SLOT(onOutSuccess(QString)));
         fileutil->copyFile(SettingHelper::workPath(name),dir);
+        fileutil->deleteLater();
     }
+
+    delete datas;
 }

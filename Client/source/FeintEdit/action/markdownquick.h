@@ -1,8 +1,9 @@
 #ifndef MARKDOWNQUICK_H
 #define MARKDOWNQUICK_H
 
-#include "markdownedit.h"
 #include <QObject>
+
+#include <pane/markdown/markdownedit.h>
 
 
 class MarkDownQuick:public QObject
@@ -11,11 +12,19 @@ class MarkDownQuick:public QObject
     Q_PROPERTY(int baseSize READ baseSize WRITE setBaseSize NOTIFY baseSizeChanged)
 
 public:
-    MarkDownQuick(MarkDownEdit *edit);
 
+    static MarkDownQuick *getInstance(MarkDownEdit *edit=0);
+    ~MarkDownQuick();
     int baseSize() const;
 
+    QList<QAction *> getActionList() const;
+
+    void setEdit(MarkDownEdit *value);
+
+    MarkDownEdit *getEdit() const;
+
 public slots:
+    void createActions();
     void addHeader1();
     void addHeader2();
     void addHeader3();
@@ -26,12 +35,14 @@ public slots:
     void addBlod();
     void addItalic();
     void addCode();
+    void addDelete();
 
     void addOrderList();
     void addUnOrderList();
     void addBlock();
 
     void insertUrl();
+    void insertImage();
 
     void zoomInEdit();
     void zoomOutEdit();
@@ -53,6 +64,7 @@ private:
     QAction *bold;
     QAction *italic;
     QAction *code;
+    QAction *del;
     QAction *orderList;
     QAction *unOrderList;
     QAction *block;
@@ -63,7 +75,6 @@ private:
 
     QList<QAction*> actionList;
 
-    void createActions();
     void addHeaders(int level);
     void zoom(bool in,int incre);
     void addShortCuts();
@@ -71,6 +82,10 @@ private:
     void addBlock(QString start);
     MarkDownEdit *edit;
     int m_baseSize;
+
+    MarkDownQuick(MarkDownEdit *edit=0);
+
+    static MarkDownQuick *quick;
 };
 
 #endif // MARKDOWNQUICK_H

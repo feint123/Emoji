@@ -22,6 +22,11 @@ class ListView : public QFrame,public FeintSetting
     Q_PROPERTY(int spacing READ spacing WRITE setSpacing)
     Q_PROPERTY(QColor bgColor READ bgColor WRITE setBgColor)
     Q_PROPERTY(QRect contentsRect READ contentsRect WRITE setContentsRect)
+
+    Q_PROPERTY(QString scrollHandle READ scrollHandle WRITE setScrollHandle)
+    Q_PROPERTY(QString scrollPage READ scrollPage WRITE setScrollPage)
+
+    Q_PROPERTY(bool useFocus READ useFocus WRITE setUseFocus)
 public:
     enum Orien{
           Horizontal,
@@ -29,10 +34,13 @@ public:
       };
       explicit ListView(QWidget * parent=0);
       ~ListView();
+
+      void createView();
       void setOrientation(Orien orien=ListView::Vertical);
 
       void setData(QList<QVariant> data);
 
+      void addData(QList<QVariant> data);
       void setItem(ListItem* item);
 
       void setBackgroundColor(QColor color);
@@ -59,6 +67,21 @@ public:
 
       void setBg(Background value);
 
+      QString scrollHandle() const
+      {
+          return m_scrollHandle;
+      }
+
+      QString scrollPage() const
+      {
+          return m_scrollPage;
+      }
+
+      bool useFocus() const
+      {
+          return m_useFocus;
+      }
+
 public slots:
       void setScrollY(int scrollY);
       void createFocus();
@@ -82,6 +105,21 @@ public slots:
 
       void scrollContent(int scroll);
       void setBgColor(QColor bgColor);
+
+      void setScrollHandle(QString scrollHandle)
+      {
+          m_scrollHandle = scrollHandle;
+      }
+
+      void setScrollPage(QString scrollPage)
+      {
+          m_scrollPage = scrollPage;
+      }
+
+      void setUseFocus(bool useFocus)
+      {
+          m_useFocus = useFocus;
+      }
 
 signals:
       void selectItemIndex(int index);
@@ -121,6 +159,8 @@ private:
 
       int getContentHeight();
 
+
+
       int m_spacing=0;
 
       bool canScrollShow=false;
@@ -128,6 +168,12 @@ private:
       QRect m_contentsRect;
 
       QColor m_bgColor;
+
+      QString m_scrollHandle;
+
+      QString m_scrollPage;
+
+      bool m_useFocus=true;
 
 protected:
       void resizeEvent(QResizeEvent *event);

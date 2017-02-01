@@ -2,29 +2,31 @@
 #include "noteeditcontroller.h"
 #include <factory/notecontrolfactory.h>
 #include <pane/markdown/markdownmanager.h>
+#include <util/notedatautil.h>
 #include <util/qvariantutil.h>
 #include <util/settinghelper.h>
+#include <util/timermanager.h>
 #include <domain/notebook.h>
+#include <domain/timertag.h>
 #include <util/json/jsondata.h>
 #include <view/note/noteitem.h>
 #include <QDebug>
 #include <QFileSystemWatcher>
 #include <QTimer>
+#include <plug/appstatic.h>
 
 NoteController::NoteController(Notes *note)
 {
-    connect(this,SIGNAL(currentNoteChanged(QString)),this,SLOT(readyLoadNote(QString)));
-
+    connect(this,SIGNAL(currentNoteChanged(QString)),this,SLOT(readyLoadNote()));
+    this->setParent(note);
     this->notes=note;
     connect(note,SIGNAL(destroyed(QObject*)),this,SLOT(deleteLater()));
-
-    ControlFloatButton *floatBtn=NoteControlFactory::create(note);
-    note->setFloatBtn(floatBtn);
-    connect(floatBtn,SIGNAL(controlClicked(int)),this,SLOT(onControlClicked(int)));
+    connect(note->getList()->getNoteH(),SIGNAL(selectOtherNoteBook()),this,SLOT(refersh()));
 
     refreshNoteList();
     connect(this,SIGNAL(noteNumChanged(int)),this,SLOT(refreshNoteList()));
-    createView();
+
+    startListenNoteNumChange();
 }
 
 NoteController::NoteController()
@@ -34,8 +36,7 @@ NoteController::NoteController()
 
 NoteController::~NoteController()
 {
-    delete timer;
-    delete editController;
+
 }
 
 QString NoteController::currentNote() const
@@ -50,13 +51,14 @@ int NoteController::noteNum() const
 
 void NoteController::setCurrentNote(QString currentNote)
 {
-    if(refreshLock)
-        saveNoteBeforeChange();
-    refreshLock=true;
-
     if (m_currentNote == currentNote)
         return;
+    if(refreshLock)
+        saveNoteBeforeChange();
+//    refreshLock=true;
+
     m_currentNote = currentNote;
+    AppStatic::currentNote=currentNote;
     emit currentNoteChanged(currentNote);
 }
 
@@ -75,48 +77,53 @@ void NoteController::onNoteSelect(QVariant note)
     setCurrentNote(tip.fileName());
 }
 
-void NoteController::onControlClicked(int i)
-{
-    switch (i) {
-    case 0:
-        addNote();
-        break;
-    default:
-        break;
-    }
-}
 /**
  * @brief NoteController::refreshNoteList
  * 更新笔记列表。
  */
 void NoteController::refreshNoteList()
 {
+
     //在笔记列表设置当前的笔记本名称
-    notes->getList()->getNoteH()->setCurrentNotebook(SettingHelper::currentBookName());
+    notes->getList()->getNoteH()->setCurrentNotebook(currentBookName());
     //从当前笔记本获取笔记列表
-    JsonData *data=new JsonData(tr("%1/%2").arg(SettingHelper::workspacing()).arg(getNoteBookFile()).toUtf8(),"notes");
-    QList<NoteTip*> noteTip=data->selectAll<NoteTip>();
-    QVariantUtil *qv=new QVariantUtil;
-    QList<QVariant> qdata=qv->turn<NoteTip>(noteTip);
-    notes->getList()->loadDate(qdata);
+
+    QList<QVariant> qDatas=NoteDataUtil::getNotesByBookFile(getNoteBookFile());
+
+    notes->getList()->loadDate(qDatas);
+
     connect(notes->getList()->getListView(),SIGNAL(selectItem(QVariant)),this,SLOT(onNoteSelect(QVariant)));
     connect(notes->getList()->getListView(),SIGNAL(scrollYChanged(int)),this,SLOT(onScrollLNoteList(int)));
-    this->notes->getList()->getListView()->setFocusIndex(focusIndex);
-    setNoteNum(noteTip.count());
-    this->notes->getList()->getListView()->setScrollY(this->currentScroll);
+
+    updateFocusIndex();
+
+    this->notes->getList()->getListView()->setFocusIndex(AppStatic::focusIndex);
+    AppStatic::focusIndex=this->notes->getList()->getListView()->focusIndex();
+
+    AppStatic::noteNum=qDatas.count();
+
+    this->notes->getList()->getListView()->setScrollY(AppStatic::noteScroll);
+
+    createView(AppStatic::focusIndex);
+
+    refreshLock=true;
 }
 
 void NoteController::loadNote()
 {
-    disconnect(loadtimer,SIGNAL(timeout()),this,SLOT(loadNote()));
-    loadtimer->stop();
+    if(loadtimer!=NULL){
+        loadtimer->stop();
+        loadtimer->deleteLater();
+        loadtimer=NULL;
+    }
     notes->createMark(currentNote());
     chooseMark(currentNote()+".fei");
     initEditController();
 }
 
-void NoteController::readyLoadNote(QString noteFile)
+void NoteController::readyLoadNote()
 {
+
     loadtimer=new QTimer(this);
     loadtimer->setInterval(50);
     connect(loadtimer,SIGNAL(timeout()),this,SLOT(loadNote()));
@@ -125,25 +132,37 @@ void NoteController::readyLoadNote(QString noteFile)
 
 void NoteController::onScrollLNoteList(int value)
 {
-    this->currentScroll=value;
+    AppStatic::noteScroll=value;
 }
 
 void NoteController::checkNoteNum()
-{
-    JsonData *data=new JsonData(tr("%1/%2").arg(SettingHelper::workspacing()).arg(getNoteBookFile()).toUtf8(),"notes");
-    QList<NoteTip*> noteTip=data->selectAll<NoteTip>();
-    setNoteNum(noteTip.count());
+{ 
+    refreshLock=false;
+    emit noteNumChanged(0);  
+    TimerManager::getInstance()->getTimer("num_change")->stop();
 }
 
-void NoteController::createView()
+void NoteController::refersh()
 {
-    JsonData *data=new JsonData(SettingHelper::workPath(this->getNoteBookFile()).toUtf8(),"notes");
+    refreshLock=false;
+    refreshNoteList();
+}
 
-    setCurrentNote(data->selectAll<NoteTip>()[0]->fileName());
-    timer=new QTimer(this);
-    timer->setInterval(1000);
+void NoteController:: createView(int i)
+{
+
+    QList<QVariant> noteTips=NoteDataUtil::getNotesByBookFile(getNoteBookFile());
+    NoteTip tip=qvariant_cast<NoteTip>(noteTips.at(i));
+
+    setCurrentNote(tip.fileName());
+}
+
+void NoteController::startListenNoteNumChange()
+{
+    TimerManager::getInstance()->addTimer(TimerTag::tag(TimerTag::NOTE_NUM_CHANGE));
+    QTimer *timer=TimerManager::getInstance()->getTimer(TimerTag::tag(TimerTag::NOTE_NUM_CHANGE));
+    timer->setInterval(10);
     connect(timer,SIGNAL(timeout()),this,SLOT(checkNoteNum()));
-    timer->start();
 }
 
 
@@ -152,7 +171,7 @@ void NoteController::chooseMark(QString path)
     notes->setVisible(true);
     MarkdownManager *manager=new MarkdownManager();
     manager->load(SettingHelper::workPath(path));
-    notes->getMark()->getEdit()->setText(
+    notes->getMark()->getEdit()->setPlainText(
                 manager->loadContent()->content());
 
     notes->getMark()->getEdit()->refreshFormat();
@@ -175,11 +194,8 @@ void NoteController::addNote()
 
     JsonData *data=new JsonData(tr("%1/%2").arg(SettingHelper::workspacing()).arg(getNoteBookFile()).toUtf8(),"notes");
     data->addData<NoteTip>(createBasicTip(name));
-//    notes->getList()->getListView()->addValue(QVariant::fromValue(*createBasicTip(name)));
-
-//    notes->getList()->getListView()->setFocusIndex(data->selectAll<NoteTip>().count());
-
-//    setCurrentNote(name);
+    AppStatic::noteNum+=1;
+    delete data;
 }
 /**
  * @brief NoteController::listWorkspacing
@@ -194,13 +210,28 @@ void NoteController::listWorkspacing()
 
 void NoteController::initEditController()
 {
-    if(editControlLock)
-        delete editController;
-    editController=new NoteEditController(currentNote(),this->getNoteBookFile(),notes->getMark()->getEdit());
+
+    editController=NoteEditController::getInstance(this);
+    editController->init(currentNote(),this->getNoteBookFile(),notes->getMark()->getEdit());
+    editController->setParent(this);
     editController->setList(notes->getList());
     editController->setTitle(notes->getMark()->getTitle());
-    editController->startEdit();
-    editControlLock=true;
+
+}
+
+QString NoteController::currentBookName()
+{
+    if(getNoteBookFile()=="&_&")
+        return "全部笔记";
+    JsonData *data=new JsonData(SettingHelper::workPath("notebooks.json").toUtf8(),"notebooks");
+
+    NoteBook *book=data->selectByColumn<NoteBook>("fileName",getNoteBookFile());
+
+    if(book==NULL)
+        return "找不到笔记";
+
+    return book->name();
+
 }
 /**
  * @brief NoteController::saveNoteBeforeChange
@@ -209,13 +240,13 @@ void NoteController::initEditController()
 void NoteController::saveNoteBeforeChange()
 {
     int focusIndex_=this->notes->getList()->getListView()->focusIndex();
-    this->notes->getList()->getListView()->setFocusIndex(focusIndex);
+    this->notes->getList()->getListView()->setFocusIndex(AppStatic::focusIndex);
     if(currentNote().length()>0){
         initEditController();
         editController->onAutoSave();
     }
     this->notes->getList()->getListView()->setFocusIndex(focusIndex_);
-    focusIndex=focusIndex_;
+    AppStatic::focusIndex=focusIndex_;
 }
 
 /**
@@ -225,14 +256,31 @@ void NoteController::saveNoteBeforeChange()
  */
 QString NoteController::getNoteBookFile()
 {
-    if(SettingHelper::currentNote().length()==0){
-        JsonData *data=new JsonData(tr("%1/notebooks.json").arg(SettingHelper::workspacing()).toUtf8(),"notebooks");
-        QString notebookName=data->selectFirst<NoteBook>()->fileName();
-        return notebookName;
+    if(AppStatic::currentBook.length()!=0){
+        return AppStatic::currentBook;
+    }
+    else if(SettingHelper::currentBook().length()!=0){
+        return SettingHelper::currentBook();
     }else
     {
-        return SettingHelper::currentNote();
+        JsonData *data=new JsonData(tr("%1/notebooks.json").arg(SettingHelper::workspacing()).toUtf8(),"notebooks");
+        NoteBook *book=data->selectFirst<NoteBook>();
+        QString notebookName=book->fileName();
+        delete data;
+        book->deleteLater();
+        return notebookName;
     }
+}
+
+void NoteController::updateFocusIndex()
+{
+    JsonData *data=new JsonData(SettingHelper::workPath(getNoteBookFile()).toUtf8(),"notes");
+    if(AppStatic::currentNote.length()<=0)
+        return;
+    int index=data->indexByColumn("fileName",AppStatic::currentNote);
+    if(index==-1)
+        return;
+    AppStatic::focusIndex=index;
 }
 
 NoteTip *NoteController::createBasicTip(QString fileName)
@@ -242,6 +290,6 @@ NoteTip *NoteController::createBasicTip(QString fileName)
     tip->setTitle("新建笔记");
     tip->setUpdateDate(QDateTime::currentDateTime());
     tip->setTip("请输入笔记内容");
-    tip->setNotebook(SettingHelper::currentNote());
+    tip->setNotebook(SettingHelper::currentBook());
     return tip;
 }

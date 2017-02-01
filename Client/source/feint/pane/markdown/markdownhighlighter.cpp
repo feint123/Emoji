@@ -65,10 +65,12 @@ void MarkDownHighlighter::createTypeFormat()
 
     initPartFormat();
 
+
     codeBlockFormat.setForeground(typeColor[CODEBLOCK]);
     rule.format=codeBlockFormat;
     rule.pattern=QRegExp("^''.*$");
     highlightingRules.append(rule);
+
 
     quoteBlockFormat.setForeground(typeColor[QUOTEBLOCK]);
     quoteBlockFormat.setFontWeight(QFont::Bold);
@@ -76,10 +78,6 @@ void MarkDownHighlighter::createTypeFormat()
     rule.pattern=QRegExp("^>.*$");
     highlightingRules.append(rule);
 
-    codeFormat.setForeground(typeColor[CODE]);
-    rule.format=codeFormat;
-    rule.pattern=QRegExp("`.*`");
-    highlightingRules.append(rule);
 
     imgFormat.setForeground(typeColor[IMG]);
     rule.format=imgFormat;
@@ -102,6 +100,18 @@ void MarkDownHighlighter::initPartFormat()
     boldFormat.setForeground(typeColor[BOLD]);
     rule.format=boldFormat;
     rule.pattern=QRegExp("\\*\\*((?!\\*).)*\\*\\*");
+    highlightingRules.append(rule);
+
+    deleteFormat.setForeground(typeColor[DELETE]);
+    deleteFormat.setFontUnderline(true);
+    deleteFormat.setFontOverline(true);
+    rule.format=deleteFormat;
+    rule.pattern=QRegExp("\\|\\|((?!(\\|\\|)).)*\\|\\|");
+    highlightingRules.append(rule);
+
+    codeFormat.setForeground(typeColor[CODE]);
+    rule.format=codeFormat;
+    rule.pattern=QRegExp("`.*`");
     highlightingRules.append(rule);
 
 }

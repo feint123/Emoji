@@ -17,7 +17,14 @@ public:
     ImageBtnAction();
 
 public slots:
-    void updateImgInfo(QWidget *parent, Image *img);
+    void updateImgInfo(QWidget *parent, Image *img, QString defaultPath);
+
+private slots:
+    void updateImgName(QString name);
+
+private:
+    int id;
+    QString defaultPath;
 };
 
 #endif // ß

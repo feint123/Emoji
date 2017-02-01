@@ -31,6 +31,11 @@ QString FileUtil::onlyName(QString mark)
     return tr("%1_%2").arg(QDateTime::currentDateTime().toMSecsSinceEpoch()).arg(mark);
 }
 
+QString FileUtil::imageTempPath(QString path, QString file)
+{
+    return tr("%1/%2/%2").arg(path).arg(file);
+}
+
 bool FileUtil::copyFile(QString fromFile, QString toFile)
 {
     char* byteTemp = new char[4096];//字节数组

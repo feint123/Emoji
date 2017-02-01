@@ -4,6 +4,7 @@
 #include "markdowntitle.h"
 
 #include <QFrame>
+#include <qfilesystemwatcher.h>
 
 #include <pane/markdown/markdownedit.h>
 
@@ -51,6 +52,8 @@ private:
     TransFrame *upFrame;
     TransFrame *downFrame;
 
+    QFileSystemWatcher *watcher;
+
     int padding;
     QMenu *menu;
     QAction *insert_image;
@@ -60,6 +63,7 @@ private:
     QAction *preImages;
     QAction *outCont;
     QAction *outImage;
+    QAction *save;
 
     void createActions();
     void addShortCuts();

@@ -24,9 +24,15 @@ public:
 
     Image *getImage() const;
 
+    QString getDefaultPath() const;
+    void setDefaultPath(const QString &value);
+
+    QString getNoteFile() const;
+    void setNoteFile(const QString &value);
+
 signals:
     void previewImage(MarkdownImageButton *btn);
-    void updateImageInfo(QWidget *parent,Image *img);
+    void updateImageInfo(QWidget *parent,Image *img,QString);
     void hideImage();
 
 public slots:
@@ -46,7 +52,8 @@ private:
     QAction *updateImage;
     void createAction();
     void addShortCuts();
-
+    QString defaultPath;
+    QString noteFile;
 
     Image *image;
 

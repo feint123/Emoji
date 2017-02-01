@@ -10,7 +10,7 @@ class GridViewBeauti
 public:
     GridViewBeauti();
 
-    static void imageWithPane(QPaintDevice *device, const QImage &bgImage, const QMargins &padding);
+    static void imageWithPane(QPaintDevice *device, const QColor &color);
 
 };
 

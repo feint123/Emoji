@@ -2,15 +2,18 @@
 
 #include <util/json/jsondata.h>
 
+#include <util/screenfit.h>
 #include <util/settinghelper.h>
 
 #include <domain/notetip.h>
+#include <domain/wordstatic.h>
 
 #include <QPainter>
 #include <QPen>
 #include <QDebug>
 
 #include <util/graphic/effectutil.h>
+#include <util/graphic/imageutil.h>
 
 #include <action/notebookaction.h>
 
@@ -20,7 +23,8 @@ NotebookItemView::NotebookItemView(QWidget *parent) :
     QFrame(parent)
 
 {
-    padding=8;
+    padding=ScreenFit::fitToScreen(16);
+    img.load(":/image/book.svg");
   //  EffectUtil::addDropShadow(4,this);
     createActions();
 
@@ -46,10 +50,14 @@ void NotebookItemView::setNotebook(NoteBook *value)
 void NotebookItemView::createView()
 {
     bookName=new QLabel(notebook->name(),this);
-    bookName->setStyleSheet("color:#666;");
+    bookName->setStyleSheet("color:#eee;");
     noteCount=new QLabel(tr("%1").arg(countNote()),this);
     noteCount->setAlignment(Qt::AlignCenter);
-    noteCount->setStyleSheet("color:#999");
+
+    noteCount->setStyleSheet("color:#999;font-size:15pt;");
+
+    ScreenFit::fitFont(noteCount);
+    ScreenFit::fitFont(bookName);
 }
 
 void NotebookItemView::onEmitNewBook()
@@ -74,14 +82,21 @@ void NotebookItemView::onEmitInBook()
     emit inBookAction(Notebooks::getInstance());
 }
 
+void NotebookItemView::onEmitUpdateBook()
+{
+    NoteBook notebook=qvariant_cast<NoteBook>(bookQ);
+    emit updateBookAction(Notebooks::getInstance(),notebook.id());
+}
+
 void NotebookItemView::createActions()
 {
     NotebookAction *action=new NotebookAction;
     menu=new QMenu();
-    newBook=new QAction("新建笔记本",this);
-    deleteBook=new QAction("删除笔记本",this);
-    outBook=new QAction("导出笔记本",this);
-    inBook=new QAction("导入笔记本",this);
+    newBook=new QAction(WordStatic::new_+WordStatic::book,this);
+    deleteBook=new QAction(WordStatic::del+WordStatic::book,this);
+    outBook=new QAction(WordStatic::out+WordStatic::book,this);
+    inBook=new QAction(WordStatic::in+WordStatic::book,this);
+    updateBook=new QAction(WordStatic::update+WordStatic::book,this);
     connect(newBook,SIGNAL(triggered(bool)),this,SLOT(onEmitNewBook()));
     connect(this,SIGNAL(newNoteBook(QWidget*)),action,SLOT(newBook(QWidget*)));
     connect(deleteBook,SIGNAL(triggered(bool)),this,SLOT(onEmitDeleteBook()));
@@ -90,6 +105,8 @@ void NotebookItemView::createActions()
     connect(this,SIGNAL(outNoteBook(int,QWidget*)),action,SLOT(outBook(int,QWidget *)));
     connect(inBook,SIGNAL(triggered(bool)),this,SLOT(onEmitInBook()));
     connect(this,SIGNAL(inBookAction(QWidget*)),action,SLOT(inBook(QWidget *)));
+    connect(updateBook,SIGNAL(triggered(bool)),this,SLOT(onEmitUpdateBook()));
+    connect(this,SIGNAL(updateBookAction(QWidget *,int)),action,SLOT(updateBook(QWidget *,int)));
 }
 
 void NotebookItemView::addShortCuts()
@@ -101,17 +118,16 @@ int NotebookItemView::countNote()
 {
     NoteBook notebook=qvariant_cast<NoteBook>(bookQ);
     JsonData *datas=new JsonData(SettingHelper::workPath(notebook.fileName()).toUtf8(),"notes");
-    return datas->selectAll<NoteTip>().count();
+    return datas->count();
 }
 
 void NotebookItemView::resizeEvent(QResizeEvent *event)
 {
-    int detaY=pagePadding*((countNote()>maxPage?maxPage:countNote())-1);
-    bookName->setGeometry(padding,this->height()/2-bookName->height()/2+detaY/2,
-                          bookName->width(),bookName->height());
+    bookName->setGeometry(padding,this->height()/2-bookName->height()/2,
+                          ScreenFit::fitToScreen(220),bookName->height());
 
-    noteCount->setGeometry(this->width()-this->height()-padding,
-                           this->height()/2-noteCount->height()/2+detaY/2,
+    noteCount->setGeometry(this->width()-this->height()-padding/2,
+                           this->height()/2-noteCount->height()/2,
                            this->height(),noteCount->height());
 }
 void NotebookItemView::contextMenuEvent(QContextMenuEvent *event)
@@ -121,6 +137,7 @@ void NotebookItemView::contextMenuEvent(QContextMenuEvent *event)
     menu->addAction(deleteBook);
     menu->addAction(outBook);
     menu->addAction(inBook);
+    menu->addAction(updateBook);
     menu->exec(QCursor::pos());
     event->accept();
 }
@@ -128,27 +145,11 @@ void NotebookItemView::contextMenuEvent(QContextMenuEvent *event)
 void NotebookItemView::paintEvent(QPaintEvent *event)
 {
 
-    int border=2;
     QPainter painter(this);
-  //  painter.setRenderHint(QPainter::Antialiasing);
-    QBrush brush;
-    brush.setColor(QColor(255, 255, 244,230));
-    brush.setStyle(Qt::SolidPattern);
-    painter.setPen(QColor(167, 167, 167,100));
-    painter.setBrush(brush);
-    int count=countNote()>maxPage?maxPage:countNote();
-    for(int i=0;i<count;i++)
-        painter.drawRect(border+(count-i-1)*pagePadding,border+i*pagePadding,
-                         this->width()-2*border-2*(count-i-1)*pagePadding,
-                         this->height()-2*border-pagePadding
-                         *(count-1));
-    QPen pen;
-    pen.setColor(QColor("#999"));
-    pen.setWidth(0.5);
-    pen.setStyle(Qt::DashLine);
-    painter.setPen(pen);
-    int dx=this->width()-2*padding-noteCount->width();
-    painter.drawLine(QPoint(dx,border),
-                     QPoint(dx,this->height()-2*border));
+    int border=ScreenFit::fitToScreen(2);
+
+    painter.drawImage(border,border,
+                      ImageUtil::fullDevice(img,QSize(this->width()-2*border,this->height()-2*border)));
+
 }
 

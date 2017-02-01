@@ -1,5 +1,7 @@
 #include "notebookstarter.h"
 
+#include <domain/wordstatic.h>
+
 NotebookStarter::NotebookStarter(QWidget *parent):
     QFrame(parent)
 {
@@ -15,7 +17,8 @@ void NotebookStarter::createView()
 {
     start=new FButton(this);
     start->setMaxShadow(14);
-    start->setText("新建笔记本，开始新的旅程");
+    //Todo: tip_1 "新建笔记本，开始新的旅程"
+    start->setText(WordStatic::tip_1);
     start->setBorderRadius(100);
     start->resize(200,200);
 }

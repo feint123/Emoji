@@ -1,15 +1,28 @@
 #include "markdownquick.h"
 #include <QDebug>
-
+#include <domain/wordstatic.h>
+MarkDownQuick *MarkDownQuick::quick=NULL;
 MarkDownQuick::MarkDownQuick(MarkDownEdit *edit)
 {
-    this->edit=edit;
-    createActions();
-    QMenu *qM=new QMenu();
-    qM->addActions(actionList);
-    edit->addActions(actionList);
-    edit->setQuickMenu(qM);
+
 }
+
+MarkDownQuick *MarkDownQuick::getInstance(MarkDownEdit *edit)
+{
+    if(quick==NULL)
+        quick=new MarkDownQuick(edit);
+    else if(edit!=NULL)
+        quick->setEdit(edit);
+
+    return quick;
+}
+
+MarkDownQuick::~MarkDownQuick()
+{
+    quick=NULL;
+}
+
+
 
 int MarkDownQuick::baseSize() const
 {
@@ -61,6 +74,11 @@ void MarkDownQuick::addCode()
     addDoubel("`");
 }
 
+void MarkDownQuick::addDelete()
+{
+    addDoubel("||");
+}
+
 void MarkDownQuick::addOrderList()
 {
     addBlock("1. ");
@@ -96,6 +114,11 @@ void MarkDownQuick::insertUrl()
 
 }
 
+void MarkDownQuick::insertImage()
+{
+    edit->on_insert_image();
+}
+
 void MarkDownQuick::zoomInEdit()
 {
     zoom(true,1);
@@ -119,24 +142,30 @@ void MarkDownQuick::setBaseSize(int baseSize)
     emit baseSizeChanged(baseSize);
 }
 
+QList<QAction *> MarkDownQuick::getActionList() const
+{
+    return actionList;
+}
+
 void MarkDownQuick::createActions()
 {
-    header1=new QAction("#标题");
-    header2=new QAction("##标题");
-    header3=new QAction("###标题");
-    header4=new QAction("####标题");
-    header5=new QAction("#####标题");
-    header6=new QAction("######标题");
-    bold=new QAction("**加粗**");
-    italic=new QAction("_斜体_");
-    code=new QAction("`代码块`");
-    devide=new QAction("----分隔线");
-    orderList=new QAction("1. 有序列表");
-    unOrderList=new QAction("- 无序列表");
-    block=new QAction("> 区块引用");
-    image=new QAction("![]插入图片");
-    zoomIn=new QAction("放大 ＋");
-    zoomOut=new QAction("缩小 －");
+    header1=new QAction("#"+WordStatic::title);
+    header2=new QAction("##"+WordStatic::title);
+    header3=new QAction("###"+WordStatic::title);
+    header4=new QAction("####"+WordStatic::title);
+    header5=new QAction("#####"+WordStatic::title);
+    header6=new QAction("######"+WordStatic::title);
+    bold=new QAction("**"+WordStatic::blod+"**");
+    italic=new QAction("_"+WordStatic::italic+"_");
+    code=new QAction("`"+WordStatic::codeBlock+"`");
+    del=new QAction("||"+WordStatic::del+"||");
+    devide=new QAction("----"+WordStatic::devide);
+    orderList=new QAction("1. "+WordStatic::orderList);
+    unOrderList=new QAction("- "+WordStatic::unOrderList);
+    block=new QAction("> "+WordStatic::block);
+    image=new QAction("![]"+WordStatic::insert+WordStatic::photo);
+    zoomIn=new QAction(WordStatic::zoomIn+" ＋");
+    zoomOut=new QAction(WordStatic::zoomOut+" －");
 
     connect(header1,SIGNAL(triggered(bool)),this,SLOT(addHeader1()));
     connect(header2,SIGNAL(triggered(bool)),this,SLOT(addHeader2()));
@@ -147,6 +176,7 @@ void MarkDownQuick::createActions()
     connect(bold,SIGNAL(triggered(bool)),this,SLOT(addBlod()));
     connect(italic,SIGNAL(triggered(bool)),this,SLOT(addItalic()));
     connect(code,SIGNAL(triggered(bool)),this,SLOT(addCode()));
+    connect(del,SIGNAL(triggered(bool)),this,SLOT(addDelete()));
     connect(devide,SIGNAL(triggered(bool)),this,SLOT(addDevide()));
     connect(orderList,SIGNAL(triggered(bool)),this,SLOT(addOrderList()));
     connect(unOrderList,SIGNAL(triggered(bool)),this,SLOT(addUnOrderList()));
@@ -155,7 +185,7 @@ void MarkDownQuick::createActions()
     connect(zoomIn,SIGNAL(triggered(bool)),this,SLOT(zoomInEdit()));
     connect(zoomOut,SIGNAL(triggered(bool)),this,SLOT(zoomOutEdit()));
     addShortCuts();
-
+    actionList.clear();
     actionList.append(header1);
     actionList.append(header2);
     actionList.append(header3);
@@ -165,6 +195,7 @@ void MarkDownQuick::createActions()
     actionList.append(bold);
     actionList.append(italic);
     actionList.append(code);
+    actionList.append(del);
     actionList.append(devide);
     actionList.append(orderList);
     actionList.append(unOrderList);
@@ -221,6 +252,7 @@ void MarkDownQuick::addShortCuts()
     bold->setShortcut(QKeySequence("Ctrl+B"));
     italic->setShortcut(QKeySequence("Ctrl+I"));
     code->setShortcut(QKeySequence("Ctrl+Shift+C"));
+    del->setShortcut(QKeySequence("Ctrl+Del"));
 
     image->setShortcut(QKeySequence("Ctrl+Shift+I"));
 
@@ -258,4 +290,14 @@ void MarkDownQuick::addBlock(QString start)
     cursor.insertText(start);
     cursor.setPosition(pos+start.length());
     edit->setTextCursor(cursor);
+}
+
+MarkDownEdit *MarkDownQuick::getEdit() const
+{
+    return edit;
+}
+
+void MarkDownQuick::setEdit(MarkDownEdit *value)
+{
+    edit = value;
 }

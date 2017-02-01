@@ -48,6 +48,7 @@ void ImageFrame::setImageFile(QString imageFile)
     image.load(imageFile);
     pix=QPixmap::fromImage(image);
     resize(image.width(),image.height());
+
 }
 
 void ImageFrame::scaleImage(int scalePercent)

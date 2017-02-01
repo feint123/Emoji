@@ -11,17 +11,19 @@
 
 #include <view/markdowntitle.h>
 
+#include <domain/notetip.h>
+
 
 
 class NoteEditController:public QObject
 {
     Q_OBJECT
 public:
-    NoteEditController(const QString &noteFile,const QString& noteBookFile,
-                       MarkDownEdit *edit);
+
     ~NoteEditController();
 
-
+    static NoteEditController* getInstance(QObject *parent=0);
+    void init(const QString &noteFile,const QString& noteBookFile,MarkDownEdit *edit);
     void setList(NoteList *value);
     void startEdit();
     void setTitle(MarkDownTitle *value);
@@ -36,8 +38,13 @@ private:
     MarkDownEdit *edit;
     MarkDownTitle *title;
     NoteList* list;
-
+    void loadImageToTip(NoteTip *tip);
+    void updateImageList();
+    void updateLastEdit(NoteTip *tip);
     QTimer *timer;
+
+    static NoteEditController *controller;
+    NoteEditController(QObject *parent);
 };
 
 #endif // NOTEEDITCONTROLLER_H

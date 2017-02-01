@@ -6,12 +6,14 @@
 
 #include <util/settinghelper.h>
 
+#include <factory/toolfactory.h>
+
 
 
 class SettingController:public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString currentNote READ currentNote WRITE setCurrentNote NOTIFY currentNoteChanged)
+    Q_PROPERTY(QString currentNote READ currentNote WRITE setCurrentBook NOTIFY currentBookChanged)
     Q_PROPERTY(QString workspace READ workspace WRITE setWorkspace NOTIFY workspaceChanged)
 
 
@@ -23,12 +25,12 @@ public:
     QString workspace() const;
 
 public slots:
-    void setCurrentNote(QString currentNote);
+    void setCurrentBook(QString currentNote);
 
     void setWorkspace(QString workspace);
 
 signals:
-    void currentNoteChanged(QString currentNote);
+    void currentBookChanged(QString currentNote);
 
     void workspaceChanged(QString workspace);
 
@@ -37,6 +39,7 @@ private slots:
     void on_currentNote_change();
     void on_workSpacing_change();
     void on_setting_change();
+
 private:
     MainWindow *main;
     MenuLine *menu;
@@ -45,8 +48,9 @@ private:
     void createNoteBooks();
     void loadFileListener();
     bool hasNotebook();
+    void createTool(ToolFactory::Model model);
     int lock=-1;
-    QString m_currentNote=SettingHelper::currentNote();
+    QString m_currentNote=SettingHelper::currentBook();
     QString m_workspace=SettingHelper::workspacing();
 };
 

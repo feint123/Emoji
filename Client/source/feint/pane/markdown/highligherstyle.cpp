@@ -18,6 +18,7 @@ void HighligherStyle::dark(MarkDownHighlighter *lighter)
     typeColor[MarkDownHighlighter::QUOTEBLOCK]=QColor("#adf05d");
     typeColor[MarkDownHighlighter::ITALIC]=QColor("#f59d49");
     typeColor[MarkDownHighlighter::IMG]=QColor("#2064db");
+    typeColor[MarkDownHighlighter::DELETE]=QColor("#de5145");
     lighter->setTypeColor(typeColor);
     lighter->createTypeFormat();
 }

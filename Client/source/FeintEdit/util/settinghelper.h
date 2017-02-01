@@ -16,7 +16,7 @@ public:
     static QString workspacing();
     static QString workPath(QString file);
     //最近一次打开的笔记本
-    static QString currentNote();
+    static QString currentBook();
     static QString currentBookName();
     static int isShareImage();
     static int autoSave();
@@ -24,6 +24,10 @@ public:
     static Setting* loadSetting();
     static void saveSetting(Setting *setting);
     static bool hasSetting();
+
+    static void initWorkspacing();
+
+    static void initBasePlug(QString name);
 
 };
 

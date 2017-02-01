@@ -191,7 +191,7 @@ void MarkDown::setCachePath(const QString &value)
 void MarkDown::createFormat()
 {
     markdown=new MarkDownEdit(this);
-    markdown->setTheme(MarkDownEdit::DARK);
+    markdown->setTheme();
     markdown->setFixedWidth(this->minimumWidth());
     markdown->setDefaultPath(this->cachePath);
     this->markdown->setFont(this->font());

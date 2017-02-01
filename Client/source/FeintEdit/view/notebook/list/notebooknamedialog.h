@@ -24,6 +24,8 @@ public:
 
     int bottom() const;
 
+    void setUserTri(bool value);
+
 public slots:
     void setTop(int top);
 
@@ -44,6 +46,10 @@ private:
     int m_top;
 
     int m_bottom;
+
+    int tri=8;
+
+    bool userTri=false;
 
 protected:
     void paintEvent(QPaintEvent *event);

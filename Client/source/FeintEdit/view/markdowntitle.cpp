@@ -1,13 +1,21 @@
 #include "markdowntitle.h"
 #include "ui_markdowntitle.h"
 
+#include <util/appcolorhelper.h>
+#include <util/screenfit.h>
+
 MarkDownTitle::MarkDownTitle(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MarkDownTitle)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::FramelessWindowHint);
+    ui->titleEdit->setStyleSheet(tr("border:none; border-bottom:2px solid #3176ff;background:%1;color:#3176ff;")
+                                 .arg(AppColorHelper::editorBg()));
     connect(ui->titleEdit,SIGNAL(textChanged(QString)),this,SLOT(setTitle(QString)));
+    ScreenFit::fitWithFont(ui->titleEdit);
+    ScreenFit::fitFont(ui->dateLab);
+    ScreenFit::fitFont(ui->label);
 }
 
 MarkDownTitle::~MarkDownTitle()

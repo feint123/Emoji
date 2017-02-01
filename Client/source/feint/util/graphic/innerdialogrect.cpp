@@ -12,7 +12,7 @@ void InnerDialogRect::draw(QWidget *parent, int delay)
     QPainter painter(parent);
     QBrush brush;
     QPen pen;
-    brush.setColor(QColor(0xee,0xee,0xee,0xcc));
+    brush.setColor(QColor(240,240,240,240));
     brush.setStyle(Qt::SolidPattern);
     pen.setColor(QColor(0x00,0x00,0x00,0x00));
     painter.setPen(pen);

@@ -8,15 +8,19 @@ TipDialog * TipDialog::tipdialog=NULL;
 TipDialog::TipDialog(QWidget *parent):
     QDialog(parent)
 {
-    this->parent=parent;
-    setWindowFlags(Qt::FramelessWindowHint);
     setAutoFillBackground(false);
+    setWindowFlags(Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_DeleteOnClose);
 }
 
 TipDialog *TipDialog::getInstance(QWidget *parent)
 {
     if(tipdialog==NULL)
         tipdialog=new TipDialog(parent);
+    else if(parent!=0&&tipdialog->parent()!=parent)
+    {
+        tipdialog->setParent(parent);
+    }
     return tipdialog;
 }
 
@@ -49,6 +53,7 @@ void TipDialog::setTip(QString tip)
 
 void TipDialog::showTip()
 {
+    QWidget *parent=(QWidget*)tipdialog->parent();
     timer=new QTimer(this);
     timer->setInterval(keep());
     connect(timer,SIGNAL(timeout()),this,SLOT(hideTip()));

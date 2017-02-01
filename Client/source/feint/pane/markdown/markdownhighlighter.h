@@ -20,6 +20,7 @@ public:
         CODEBLOCK,
         QUOTEBLOCK,
         CODE,
+        DELETE,
         IMG,
     };
 
@@ -55,6 +56,7 @@ private:
     QTextCharFormat quoteBlockFormat;
     QTextCharFormat codeFormat;
     QTextCharFormat imgFormat;
+    QTextCharFormat deleteFormat;
 
     QHash<Type,QColor> typeColor;
 

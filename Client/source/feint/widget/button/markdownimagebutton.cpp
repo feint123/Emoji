@@ -8,6 +8,7 @@ MarkdownImageButton::MarkdownImageButton(QWidget *parent):
     FButton(parent)
 {
     setWindowFlags(Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_DeleteOnClose);
     createAction();
 }
 
@@ -18,7 +19,7 @@ void MarkdownImageButton::createView()
     this->setBorderRadius(4);
     this->setBgColor("#d3d3d3");
     this->setColor("#787878");
-  //  this->setIcon(QIcon(image->tempPath()));
+    this->setIcon(QIcon(image->tempPath()+"_1x.png"));
     this->show();
 }
 
@@ -32,7 +33,7 @@ void MarkdownImageButton::updatePosition(QRect rect)
 
 void MarkdownImageButton::onEmitUpdateImgInfo()
 {
-    emit updateImageInfo((QWidget*)this->parent(),this->image);
+    emit updateImageInfo((QWidget*)this->parent(),this->image,defaultPath+"/"+noteFile+"_img.json");
 }
 
 void MarkdownImageButton::createAction()
@@ -45,13 +46,33 @@ void MarkdownImageButton::createAction()
     updateImage=new QAction("修改图片信息",this);
 
     connect(updateImage,SIGNAL(triggered(bool)),this,SLOT(onEmitUpdateImgInfo()));
-    connect(this,SIGNAL(updateImageInfo(QWidget*,Image*)),action,SLOT(updateImgInfo(QWidget*,Image*)));
+    connect(this,SIGNAL(updateImageInfo(QWidget*,Image*,QString)),action,SLOT(updateImgInfo(QWidget*,Image*,QString)));
     addShortCuts();
 }
 
 void MarkdownImageButton::addShortCuts()
 {
 
+}
+
+QString MarkdownImageButton::getNoteFile() const
+{
+    return noteFile;
+}
+
+void MarkdownImageButton::setNoteFile(const QString &value)
+{
+    noteFile = value;
+}
+
+QString MarkdownImageButton::getDefaultPath() const
+{
+    return defaultPath;
+}
+
+void MarkdownImageButton::setDefaultPath(const QString &value)
+{
+    defaultPath = value;
 }
 
 Image *MarkdownImageButton::getImage() const

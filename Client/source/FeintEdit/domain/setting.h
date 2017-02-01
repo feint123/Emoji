@@ -13,8 +13,9 @@ class Setting:public QObject
     Q_PROPERTY(QString workspacing READ workspacing WRITE setWorkspacing)
     Q_PROPERTY(int isShareImage READ isShareImage WRITE setIsShareImage)
     Q_PROPERTY(int autoSave READ autoSave WRITE setAutoSave)
-    Q_PROPERTY(QString currentNote READ currentNote WRITE setCurrentNote)
+    Q_PROPERTY(QString currentNoteBook READ currentNoteBook WRITE setCurrentNoteBook)
     Q_PROPERTY(QString currentBookName READ currentBookName WRITE setCurrentBookName)
+    Q_PROPERTY(QString currentNote READ currentNote WRITE setCurrentNote)
 
 private:
 
@@ -32,6 +33,8 @@ private:
 
     QString m_currentBookName;
 
+    QString m_currentBook;
+
 public:
     Setting();
     int fontSize() const;
@@ -43,9 +46,14 @@ public:
 
     int autoSave() const;
 
-    QString currentNote() const;
+    QString currentNoteBook() const;
 
     QString currentBookName() const;
+
+    QString currentNote() const
+    {
+        return m_currentBook;
+    }
 
 public slots:
     void setFontSize(int fontSize);
@@ -53,8 +61,12 @@ public slots:
     void setWorkspacing(QString workspacing);
     void setIsShareImage(int isShareImage);
     void setAutoSave(int autoSave);
-    void setCurrentNote(QString currentNote);
+    void setCurrentNoteBook(QString currentNoteBook);
     void setCurrentBookName(QString currentBookName);
+    void setCurrentNote(QString currentBook)
+    {
+        m_currentBook = currentBook;
+    }
 };
 
 #endif // SETTING_H

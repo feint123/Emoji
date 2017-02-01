@@ -21,13 +21,21 @@ public slots:
     void outBook(int nid, QWidget *parent);
     void inBook(QWidget *parent);
 
+    void updateBook(QWidget *parent, int id);
 
+signals:
+    void createBookSuccess();
+private slots:
+    void createBook(QString name);
+
+    void readyUpdateBook(QString name);
 private:
     QStringList getNoteFileList(QList<NoteTip*> tips);
     NoteAction *action;
 
     void inBook(QString dir,QString book);
 
+    int cid;
 
 };
 

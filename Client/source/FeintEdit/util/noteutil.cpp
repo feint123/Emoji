@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QDir>
 #include <domain/notein.h>
+#include <util/fileutil.h>
 
 NoteUtil::NoteUtil()
 {
@@ -41,7 +42,7 @@ QString NoteUtil::createNoteFile(QString name,QString noteFile, QString imageFil
 
         for(QString img:image){
             out<<QString(img);
-            out<<QImage(dir+"/"+img);
+            out<<QImage(FileUtil::imageTempPath(dir,img));
         }
     }else
         return NULL;

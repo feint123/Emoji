@@ -1,5 +1,10 @@
 #include "menulinefactory.h"
 
+#include <util/appcolorhelper.h>
+#include <util/screenfit.h>
+
+#include <domain/wordstatic.h>
+
 MenuLineFactory::MenuLineFactory()
 {
 
@@ -7,12 +12,15 @@ MenuLineFactory::MenuLineFactory()
 
 MenuLine *MenuLineFactory::create(QWidget *parent)
 {
-    MenuLine *line=new MenuLine(parent);
-    line->setBgColor("#404244");
-    line->addItem(QIcon(":/image/note.png"),QString("笔记"));
-    line->addItem(QIcon(":/image/notebook.png"),QString("笔记本"));
+    MenuLine *line=MenuLine::getInstance(parent);
+    line->setBgColor(AppColorHelper::menuBg());
+    line->setCheckColor(AppColorHelper::menuCheck());
+    line->addItem(":/image/note_normal.png",WordStatic::note);
+    line->addItem(":/image/notebook_normal.png",WordStatic::book);
 //    line->addItem(QIcon(":/image/picture.png"),QString("图片集"));
-    line->addItem(QIcon(":/image/setting.png"),QString("设置"));
+    line->addItem(":/image/setting_normal.png",WordStatic::setting);
+    line->createView(0);
     line->resize(54,80);
+    ScreenFit::fit(line);
     return line;
 }

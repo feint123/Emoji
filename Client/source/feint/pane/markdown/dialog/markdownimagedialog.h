@@ -13,6 +13,10 @@ class MarkdownImageDialog : public QDialog
 
 public:
 
+    enum FLAG{
+        NEW,
+        UPDATE
+    };
     void setImageUrl(const QByteArray &url);
     void setImage(const QImage &img);
     void setIsDrag(bool drag);
@@ -28,6 +32,9 @@ public:
 
     void setImgTip(QString tip);
 
+    void saveImage(QString imgName);
+
+    void setFlag(const FLAG &value);
 
 private slots:
     void on_imageBtn_clicked();
@@ -40,6 +47,7 @@ private slots:
 
 signals:
     void insertImage(QString alt,QString url,int w,int h);
+    void updateImage(QString alt);
 
 private:
     explicit MarkdownImageDialog(QWidget *parent = 0);
@@ -49,6 +57,8 @@ private:
     int imgHeight;
     void createDialog(QString filePath);
     void createDialog(const QImage &image);
+
+    FLAG flag=NEW;
     QImage img;
     QString defaultPath;
     bool drag=true;

@@ -10,6 +10,8 @@
 #include <QVariant>
 #include <plug/settingdialog.h>
 #include <view/note/notes.h>
+#include <view/tool/notebooktool.h>
+
 
 class MainWindow : public QMainWindow
 {
@@ -33,24 +35,33 @@ public:
 
     int current() const;
     void removeUnusedWidget(int used);
-
+    void removeWidget(int id);
     Notebooks *getNotebooks() const;
 
     void setNotebooks(Notebooks *value);
 
+    QDialog *getTool() const;
+
+    void setTool(QDialog *value);
+
 public slots:
     void setCurrent(int current);
-
+    void on_menu_clicked(int i);
 signals:
     void currentChanged(int current);
 
 protected:
     void resizeEvent(QResizeEvent *event);
 private slots:
-    void on_menu_clicked(int i);
+
 private:
     void loadController();
     void initSetting();
+    void initColor();
+    void initHigh();
+
+    void initStatic();
+
     void resizeMarkdown(Notes *edit);
     void resizeMenuLine(MenuLine *menu);
     void resizeSetting(SettingDialog *dialog);
@@ -60,10 +71,17 @@ private:
     MenuLine *menu;
     SettingDialog *setting;
     Notebooks *notebooks;
+    QDialog *tool=NULL;
     int m_current=-1;
 
     QList<int> widgetStatus;
     QList<QWidget *> widgets;
+
+
+
+    // QWidget interface
+protected:
+    void closeEvent(QCloseEvent *event);
 };
 
 #endif // MAINWINDOW_H

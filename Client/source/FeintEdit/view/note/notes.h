@@ -27,10 +27,6 @@ public:
 
     MarkDownPlace *getMark() const;
 
-    ControlFloatButton *getFloatBtn() const;
-
-    void setFloatBtn(ControlFloatButton *value);
-
     void setMark(MarkDownPlace *value);
 
     void createMark(QString noteFile="");
@@ -38,11 +34,11 @@ public:
 
 private:
     static Notes *notes;
+    QDialog *tool;
     NoteList *list;
     MarkDownEdit *edit;
     QFrame *editArea;
     MarkDownPlace *mark;
-    ControlFloatButton *floatBtn;
     void createView();
     QString m_currentNote;
     Notes(QWidget *parent=0);
@@ -51,6 +47,9 @@ private:
 protected:
     void resizeEvent(QResizeEvent *event);
 
+public:
+    bool eventFilter(QObject *watched, QEvent *event);
+    void setTool(QDialog *value);
 };
 
 #endif // NOTES_H

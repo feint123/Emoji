@@ -21,6 +21,8 @@ public:
 
     static QString onlyName(QString mark);
 
+    static QString imageTempPath(QString path, QString file);
+
     bool copyFile(QString fromFile,QString toFile);
 
 signals:

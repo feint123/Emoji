@@ -35,8 +35,21 @@ void GridView::setItem(ListItem *value)
         item->updateItem(itemValue);
         item->getGraphic()->setParent(this);
         item->getGraphic()->installEventFilter(this);
+        item->getGraphic()->show();
         itemList.append(item->getGraphic());
     }
+}
+
+void GridView::addData(const QList<QVariant> &data)
+{
+    this->valueList.clear();
+    this->valueList=data;
+    for(QWidget *widget:itemList)
+        widget->deleteLater();
+    itemList.clear();
+    setItem(this->item);
+    setScroll(0);
+    updateResize();
 }
 
 QMargins GridView::padding() const
@@ -142,7 +155,7 @@ void GridView::setBgFun(const bg &value)
 
 void GridView::paintEvent(QPaintEvent *event)
 {
-    (*bgFun)(this,bgImage,padding());
+    (*bgFun)(this,bgColor());
 
 }
 
@@ -161,18 +174,23 @@ void GridView::updateResize()
 {
     hScrollBar->setGeometry(0,this->height()-hScrollBar->height(),this->width(),16);
 
+    scrollView(scroll());
+
     int contentWidth=detaX+(lastWidth+padding().right()+scroll());
+
     if(contentWidth>this->width())
     {
         hScrollBar->show();
         hScrollBar->setRange(0,contentWidth-this->width());
         hScrollBar->setPageStep(this->width());
+        if(scroll()>contentWidth-this->width())
+            m_scroll=contentWidth-this->width();
     }
     else{
         hScrollBar->hide();
         setScroll(0);
     }
-    scrollView(scroll());
+//    scrollView(scroll());
 
     update();
 }

@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>140</height>
+    <height>144</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>0</width>
-    <height>140</height>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>16777215</width>
-    <height>144</height>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,7 @@
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">color:#f9f9f9;</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>TextLabel</string>
@@ -57,16 +57,31 @@
        <property name="maximumSize">
         <size>
          <width>16777215</width>
-         <height>80</height>
+         <height>16777215</height>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">#tipEdit{border:none;background:transparent;color:#eee}</string>
+        <string notr="true"/>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustToContents</enum>
+       </property>
+       <property name="autoFormatting">
+        <set>QTextEdit::AutoNone</set>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QFrame" name="frame">
+      <widget class="ImageFrame" name="frame">
+       <property name="minimumSize">
+        <size>
+         <width>10</width>
+         <height>0</height>
+        </size>
+       </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
        </property>
@@ -80,7 +95,7 @@
    <item>
     <widget class="QLabel" name="updateLab">
      <property name="styleSheet">
-      <string notr="true">color:#aaa;</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>TextLabel</string>
@@ -89,6 +104,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ImageFrame</class>
+   <extends>QFrame</extends>
+   <header>pane/markdown/image/imageframe.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

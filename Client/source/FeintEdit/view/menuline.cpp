@@ -2,61 +2,60 @@
 
 #include <QPainter>
 #include <QDebug>
+
+#include <util/appcolorhelper.h>
+#include <util/screenfit.h>
+MenuLine *MenuLine::line=NULL;
+MenuLine *MenuLine::getInstance(QWidget *parent)
+{
+    if(line==NULL)
+        line=new MenuLine(parent);
+    return line;
+}
+
+MenuLine::~MenuLine()
+{
+    line=NULL;
+}
+
 MenuLine::MenuLine(QWidget *parent):
-    QFrame(parent)
+    AbstractTabBar(parent)
 {
     setAutoFillBackground(false);
     setWindowFlags(Qt::FramelessWindowHint);
-
+    setAttribute(Qt::WA_TranslucentBackground);
 }
 
-void MenuLine::addItem(const QIcon &icon, const QString tip)
+void MenuLine::addItem(const QString icon, const QString tip)
 {
-    MenuButton *item=new MenuButton(this);
-    item->setIcon(icon);
-    item->setToolTip(tip);
-    item->setIconSize(QSize(24,24));
-    item->setColor(bgColor(),"");
-    item->setCheckColor("#39ae53");
-    item->setId(itemList.count());
-    item->installEventFilter(this);
-    itemList.append(item);
+    QPushButton *item=new QPushButton(this);
 
+    item->setToolTip(tip);
+
+    item->setStyleSheet(tr("QPushButton{border-image:url(%1);}").arg(icon));
+
+    addTab(item);
 }
 
 void MenuLine::setClickItem(int i)
-{
-    for(int a=0;a<itemList.count();a++)
-    {
-
-        if(a==i){
-            itemList.at(i)->setState(true);
-            emit menuClick(i);
-        }else
-            itemList.at(a)->setState(false);
-    }
+{ 
+    dealCheck(btnList.at(i));
 }
 
-bool MenuLine::eventFilter(QObject *watched, QEvent *event)
-{
-    if(event->type()==QEvent::MouseButtonPress)
-    {
-        MenuButton *mb=(MenuButton*)watched;
-        mb->setState(true);
-        for(MenuButton *btn:itemList)
-        {
-            if(btn!=mb)
-            {
-                btn->setState(false);
-            }
-        }
-        emit menuClick(((MenuButton*)watched)->getId());
-    }
-}
 
 QString MenuLine::bgColor() const
 {
     return m_bgColor;
+}
+
+QString MenuLine::checkColor() const
+{
+    return m_checkColor;
+}
+
+QRect MenuLine::checkRect() const
+{
+    return m_checkRect;
 }
 
 void MenuLine::setBgColor(QString bgColor)
@@ -65,14 +64,34 @@ void MenuLine::setBgColor(QString bgColor)
     update();
 }
 
+void MenuLine::setCheckColor(QString checkColor)
+{
+    m_checkColor = checkColor;
+}
+
+void MenuLine::setCheckRect(QRect checkRect)
+{
+    if (m_checkRect == checkRect)
+        return;
+
+    m_checkRect = checkRect;
+    update();
+    emit checkRectChanged(checkRect);
+}
+
 
 
 void MenuLine::resizeEvent(QResizeEvent *event)
 {
-    for(MenuButton *btn:itemList)
+    int i=0;
+    for(QPushButton *btn:btnList)
     {
-        btn->setGeometry(0,btn->getId()*this->width(),this->width(),this->width());
+        btn->setGeometry(0,i*this->width(),this->width(),this->width());
+        i++;
     }
+
+    setCheckRect(QRect(checkButton->x(),checkButton->y(),
+                 checkButton->width(),checkButton->height()));
 }
 
 void MenuLine::paintEvent(QPaintEvent *event)
@@ -86,4 +105,25 @@ void MenuLine::paintEvent(QPaintEvent *event)
     painter.setBrush(brush);
     painter.setPen(pen);
     painter.drawRect(0,0,this->width(),this->height());
+    painter.setBrush(QBrush(QColor(checkColor())));
+    painter.drawRect(checkRect());
+}
+
+QPropertyAnimation *MenuLine::createAnim()
+{
+    QPropertyAnimation *anim=new QPropertyAnimation(this,"checkRect");
+    anim->setStartValue(QRect(checkButton->x(),checkButton->y(),
+                                      checkButton->width(),checkButton->height()));
+    return anim;
+}
+
+void MenuLine::startAnim(QPropertyAnimation *anim)
+{
+
+    anim->setEndValue(QRect(checkButton->x(),checkButton->y(),
+                            checkButton->width(),checkButton->height()));
+    anim->setDuration(300);
+    anim->setEasingCurve(QEasingCurve::InOutCirc);
+    if(checkButton->isVisible())
+        anim->start();
 }

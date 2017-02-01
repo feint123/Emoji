@@ -52,8 +52,48 @@ SOURCES += \
     view/notebook/list/notebooknamedialog.cpp \
     view/notebook/list/notebooknameitem.cpp \
     util/noteutil.cpp \
-    domain/notein.cpp
-
+    domain/notein.cpp \
+    util/notedatautil.cpp \
+    util/timermanager.cpp \
+    domain/timertag.cpp \
+    domain/appcolor.cpp \
+    util/appcolorhelper.cpp \
+    domain/highlighter.cpp \
+    util/highlighterhelper.cpp \
+    util/plughelper.cpp \
+    plug/highlighterstyle.cpp \
+    view/recircle/recircleitem.cpp \
+    view/recircle/recircleitemview.cpp \
+    view/recircle/recircle.cpp \
+    domain/recirclepage.cpp \
+    plug/appstatic.cpp \
+    view/tool/notebooktool.cpp \
+    factory/toolfactory.cpp \
+    view/tool/notetool.cpp \
+    view/tool/basetool.cpp \
+    view/recircle/recircleheader.cpp \
+    domain/appmessage.cpp \
+    domain/lastedit.cpp \
+    view/recircle/lastedititem.cpp \
+    view/recircle/lastedititemview.cpp \
+    util/screenfit.cpp \
+    domain/wordstatic.cpp \
+    action/markdownquick.cpp \
+    view/feintbutton.cpp \
+    domain/word.cpp \
+    util/wordhelper.cpp \
+    view/abstracttabbar.cpp \
+    view/pulldownlist/pulldownlist.cpp \
+    view/pulldownlist/listframe.cpp \
+    view/pulldownlist/fwidget.cpp \
+    view/pulldownlist/pulldownlistitem.cpp \
+    view/pulldownlist/widgetcreator.cpp \
+    test/pulldowntest.cpp \
+    test/flabelwidget.cpp \
+    view/note/markpull/markpulldown.cpp \
+    view/note/markpull/markitem.cpp \
+    view/note/markpull/markfactory.cpp \
+    view/note/markpull/markdownhotkey.cpp
 
 HEADERS  += \
     action/notebookaction.h \
@@ -93,8 +133,48 @@ HEADERS  += \
     view/notebook/list/notebooknamedialog.h \
     view/notebook/list/notebooknameitem.h \
     util/noteutil.h \
-    domain/notein.h
-
+    domain/notein.h \
+    util/notedatautil.h \
+    util/timermanager.h \
+    domain/timertag.h \
+    domain/appcolor.h \
+    util/appcolorhelper.h \
+    domain/highlighter.h \
+    util/highlighterhelper.h \
+    util/plughelper.h \
+    plug/highlighterstyle.h \
+    view/recircle/recircleitem.h \
+    view/recircle/recircleitemview.h \
+    view/recircle/recircle.h \
+    domain/recirclepage.h \
+    plug/appstatic.h \
+    view/tool/notebooktool.h \
+    factory/toolfactory.h \
+    view/tool/notetool.h \
+    view/tool/basetool.h \
+    view/recircle/recircleheader.h \
+    domain/appmessage.h \
+    domain/lastedit.h \
+    view/recircle/lastedititem.h \
+    view/recircle/lastedititemview.h \
+    util/screenfit.h \
+    domain/wordstatic.h \
+    action/markdownquick.h \
+    view/feintbutton.h \
+    domain/word.h \
+    util/wordhelper.h \
+    view/abstracttabbar.h \
+    view/pulldownlist/pulldownlist.h \
+    view/pulldownlist/listframe.h \
+    view/pulldownlist/fwidget.h \
+    view/pulldownlist/pulldownlistitem.h \
+    view/pulldownlist/widgetcreator.h \
+    test/pulldowntest.h \
+    test/flabelwidget.h \
+    view/note/markpull/markpulldown.h \
+    view/note/markpull/markitem.h \
+    view/note/markpull/markfactory.h \
+    view/note/markpull/markdownhotkey.h
 
 macx: LIBS += -L$$PWD/../build-FButton-Desktop_Qt_5_7_0_clang_64bit-Release/ -lfeintplugin
 
@@ -120,9 +200,13 @@ FORMS += \
     plug/settingdialog.ui \
     view/note/noteitemview.ui \
     view/notebook/notebookdialog.ui \
-    view/markdowntitle.ui
+    view/markdowntitle.ui \
+    view/tool/notebooktool.ui \
+    view/tool/notetool.ui \
+    view/recircle/recircleheader.ui
 
 DISTFILES += \
-    setting.json
+    setting.json \
+    resource/recircle.png
 
 

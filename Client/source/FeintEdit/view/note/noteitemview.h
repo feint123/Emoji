@@ -10,6 +10,8 @@
 
 #include <pane/menu/basemenu.h>
 
+#include <pane/markdown/image/imageframe.h>
+
 namespace Ui {
 class NoteItemView;
 }
@@ -50,7 +52,6 @@ signals:
 private:
     Ui::NoteItemView *ui;
     QVariant noteq;
-
     // QWidget interface
     QString m_tip;
 

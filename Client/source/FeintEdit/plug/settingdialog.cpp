@@ -3,6 +3,7 @@
 
 #include <view/tipdialog.h>
 
+#include <util/screenfit.h>
 #include <util/settinghelper.h>
 
 #include <QFileDialog>
@@ -69,6 +70,26 @@ void SettingDialog::createView()
     ui->fontComboBox->setCurrentText(setting->fontFamily());
     ui->defaultPathEdit->setText(setting->workspacing());
     ui->spinBox_2->setValue(setting->autoSave());
+
+    ScreenFit::fitFont(ui->defaultSaveLab);
+    ScreenFit::fitFont(ui->dPlaceLab);
+    ScreenFit::fitFont(ui->ffLab);
+    ScreenFit::fitFont(ui->fileLab);
+    ScreenFit::fitFont(ui->fontLab);
+    ScreenFit::fitFont(ui->isShareImgLab);
+    ScreenFit::fitFont(ui->noteLab);
+    ScreenFit::fitFont(ui->sizeLab);
+    ScreenFit::fitFont(ui->shareImgLab);
+    ScreenFit::fitFont(ui->secondLab);
+    ScreenFit::fitWithFont(ui->cancelBtn);
+    ScreenFit::fitWithFont(ui->defaultPathBtn);
+    ScreenFit::fitWithFont(ui->defaultPathEdit);
+    ScreenFit::fitWithFont(ui->fontComboBox);
+    ScreenFit::fitWithFont(ui->fToogleButton);
+    ScreenFit::fitWithFont(ui->resetBtn);
+    ScreenFit::fitWithFont(ui->submitBtn);
+    ScreenFit::fitWithFont(ui->spinBox);
+    ScreenFit::fitWithFont(ui->spinBox_2);
 }
 
 void SettingDialog::setToggled(FToogleButton *tog, bool checked)
@@ -80,6 +101,6 @@ void SettingDialog::setToggled(FToogleButton *tog, bool checked)
 
 void SettingDialog::on_defaultPathBtn_clicked()
 {
-    QString fileDir=QFileDialog::getExistingDirectory(this,"默认工作空间",QDir::currentPath());
+    QString fileDir=QFileDialog::getExistingDirectory(this,"Default Workspacing",QDir::currentPath());
     ui->defaultPathEdit->setText(fileDir);
 }

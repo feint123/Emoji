@@ -10,7 +10,7 @@ class QVariantUtil
 public:
     QVariantUtil();
     template<typename T>
-    QList<QVariant> turn(QList<T*> tList){
+    static QList<QVariant> turn(QList<T*> tList){
         QList<QVariant> list;
         for(T* t:tList)
         {
@@ -19,6 +19,8 @@ public:
         }
         return list;
     }
+
+    static QList<QVariant> turnString(QStringList sList);
 };
 
 #endif // QVARIANTUTIL_H

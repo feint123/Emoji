@@ -86,6 +86,9 @@ public:
         return tList;
     }
 
+    int count();
+
+
     template<typename T>
     T* selectById(int id)
     {
@@ -117,6 +120,23 @@ public:
     }
 
     template<typename T>
+    QList<T*> selectAllByColumn(QByteArray column,QVariant value)
+    {
+        loadData();
+        QList<T*> tList;
+        QJsonObject root=currentDoc.object();
+        QJsonArray datas=root[arrayName].toArray();
+        T* t=NULL;
+        for(int i=datas.count()-1;i>=0;i--)
+        {
+            if(datas.at(i).toObject()[column].toVariant()==value){
+                t=feint::JsonToObject::createObject<T>(datas.at(i).toObject());
+                tList.append(t);
+            }
+        }
+        return tList;
+    }
+    template<typename T>
     T* addOnlyByColumn(QByteArray column,QVariant onlyValue,T* data)
     {
 
@@ -143,7 +163,26 @@ public:
     QByteArray data();
     int autoId();
 
+    template<typename T>
+    QList<T*> sort(QString column)
+    {
+        QList<T*> tList;
+        return tList;
+    }
+
+    int indexByColumn(QString column,QVariant value);
+
+    template<typename T>
+    QList<T*> desc(QList<T*> list){
+        QList<T*> tList;
+        for(int i=0;i<list.count();i++){
+           tList.append(list.at(list.count()-i-1));
+        }
+        return tList;
+    }
+
 private:
+
     QByteArray jsonPath;
     QByteArray arrayName;
     QJsonDocument currentDoc;

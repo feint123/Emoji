@@ -39,6 +39,7 @@ protected:
     // QObject interface
 public:
     bool eventFilter(QObject *watched, QEvent *event);
+
 };
 
 #endif // CONTROLFLOATBUTTON_H

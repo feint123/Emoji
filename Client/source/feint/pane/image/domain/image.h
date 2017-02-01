@@ -57,6 +57,8 @@ public:
 
     QDateTime insertDate() const;
 
+    static QList<int> getImageIdList(QList<Image* > imgs);
+
 public slots:
     void setId(int id);
 

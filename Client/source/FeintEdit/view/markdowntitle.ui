@@ -84,7 +84,7 @@
       <enum>Qt::ClickFocus</enum>
      </property>
      <property name="styleSheet">
-      <string notr="true">border:none; border-bottom:2px solid #3176ff;background:#1f212b;color:#3176ff;</string>
+      <string notr="true"/>
      </property>
     </widget>
    </item>

@@ -7,6 +7,11 @@
 #include <view/note/notelist.h>
 
 #include <util/editloader.h>
+#include <util/screenfit.h>
+
+#include <graphic/screenhelper.h>
+
+#include <view/tool/notetool.h>
 
 Notes *Notes::notes=NULL;
 Notes::Notes(QWidget *parent):
@@ -15,12 +20,6 @@ Notes::Notes(QWidget *parent):
     createView();
 }
 
-
-
-void Notes::setFloatBtn(ControlFloatButton *value)
-{
-    floatBtn = value;
-}
 
 void Notes::setMark(MarkDownPlace *value)
 {
@@ -32,23 +31,24 @@ void Notes::createMark(QString noteFile)
     if(hasMark)
         delete mark;
     mark=new MarkDownPlace(this);
-    mark->setPadding(42);
+    mark->setPadding(ScreenFit::fitToScreen(42));
     mark->setNoteFile(noteFile);
     this->setMark(mark);
-    mark->setGeometry(this->list->width(),0,
-                            this->width()-this->list->width(),this->height());
+    mark->setGeometry(this->list->width(),tool->height(),
+                            this->width()-this->list->width()
+                      ,this->height()-tool->height());
+    mark->installEventFilter(this);
     mark->show();
-    if(hasMark)
-        floatBtn->raise();
+    ((NoteTool*)tool)->createMarkPull();
     hasMark=true;
 
 }
 
-
-ControlFloatButton *Notes::getFloatBtn() const
+void Notes::setTool(QDialog *value)
 {
-    return floatBtn;
+    tool = value;
 }
+
 
 MarkDownPlace *Notes::getMark() const
 {
@@ -77,9 +77,12 @@ Notes::~Notes()
 
 void Notes::createView()
 {
+    setAttribute(Qt::WA_DeleteOnClose);
+    setWindowFlags(Qt::FramelessWindowHint);
     list=NoteList::getInstance(this);
-    list->setFixedWidth(280);
+    list->setMinimumWidth(ScreenHelper::getScreenSize().width()/6);
 
+    list->installEventFilter(this);
 
    // edit= mark->getEdit();
 }
@@ -88,15 +91,30 @@ void Notes::resizeEvent(QResizeEvent *event)
 {
 
 
-    this->list->setGeometry(0,0,this->list->width(),this->height());
+    this->list->setGeometry(0,0,this->width()/5,this->height());
 
-    this->mark->setGeometry(this->list->width(),0,
-                            this->width()-this->list->width(),this->height());
+    this->tool->setGeometry(list->width(),0,this->width()-list->width(),tool->height());
 
-    this->floatBtn->setGeometry(this->width()-2*floatBtn->width(),
-                                this->height()-floatBtn->width()-floatBtn->height(),
-                                floatBtn->width(),
-                                floatBtn->height());
+    this->mark->setGeometry(this->list->width(),tool->height(),
+                            this->width()-this->list->width(),
+                            this->height()-tool->height());
+
+
+    NotebookNameDialog *dialog=NotebookNameDialog::getInstance();
+
+    if(dialog!=NULL&&dialog->isVisible())
+       dialog->close();
+}
+
+bool Notes::eventFilter(QObject *watched, QEvent *event)
+{
+    if(event->type()==QEvent::MouseButtonPress){
+        NotebookNameDialog *dialog=NotebookNameDialog::getInstance();
+
+        if(dialog!=NULL&&dialog->isVisible())
+           dialog->close();
+    }
+
 }
 
 

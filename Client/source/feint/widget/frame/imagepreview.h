@@ -22,8 +22,6 @@ public:
     static ImagePreview* getInstance(QWidget *parent=0);
     QString store() const;
 
-    void setFileUtil(FileUtil *value);
-
     void setSize(const QSize &value);
 
 public slots:
@@ -41,7 +39,7 @@ private:
     QString m_store;
     ImagePreview(QWidget* parent=0);
     static ImagePreview* preview;
-    FileUtil *fileUtil;
+
 };
 
 #endif // IMAGEPREVIEW_H

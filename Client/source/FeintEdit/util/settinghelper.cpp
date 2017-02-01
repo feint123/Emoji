@@ -1,3 +1,4 @@
+#include "plughelper.h"
 #include "settinghelper.h"
 
 #include <QCoreApplication>
@@ -31,9 +32,9 @@ QString SettingHelper::workPath(QString file)
     return tr("%1/%2").arg(workspacing()).arg(file);
 }
 
-QString SettingHelper::currentNote()
+QString SettingHelper::currentBook()
 {
-    return setting()->currentNote();
+    return setting()->currentNoteBook();
 }
 
 QString SettingHelper::currentBookName()
@@ -59,42 +60,43 @@ Setting *SettingHelper::setting()
 
 Setting *SettingHelper::loadSetting()
 {
-    QJsonDocument doc;
-    QFile file(tr("%1/%2").arg(QCoreApplication::applicationDirPath()).arg("setting.json"));
-    if(file.open(QIODevice::ReadOnly|QIODevice::Text))
-    {
-        doc=QJsonDocument::fromJson(file.readAll());
-    }
-    else{
-        file.setFileName(":/config/setting.json");
-        if(file.open(QIODevice::ReadOnly|QIODevice::Text))
-        {
-            doc=QJsonDocument::fromJson(file.readAll());
-
-        }
-    }
-    file.close();
-
-    return feint::JsonToObject::createObject<Setting>(doc.object());
+    return PlugHelper::loadPlug<Setting>(tr("%1/%2")
+                                .arg(QCoreApplication::applicationDirPath())
+                                .arg("setting.json").toUtf8());
 
 }
 
 void SettingHelper::saveSetting(Setting *setting)
 {
-    QFile file(tr("%1/%2").arg(QCoreApplication::applicationDirPath()).arg("setting.json"));
-    if(file.open(QIODevice::WriteOnly|QIODevice::Text))
-    {
-        QJsonDocument doc=ObjectToJson::create(setting);
-        file.write(doc.toJson());
-        file.flush();
-        file.close();
-    }
+    PlugHelper::savePlug(tr("%1/%2")
+                                .arg(QCoreApplication::applicationDirPath())
+                                .arg("setting.json").toUtf8(),setting);
 }
 
 bool SettingHelper::hasSetting()
 {
-    QFile file(tr("%1/%2").arg(QCoreApplication::applicationDirPath()).arg("setting.json"));
-    if(file.open(QIODevice::ReadOnly|QIODevice::Text))
-        return true;
-    else return false;
+    return PlugHelper::hasPlug(tr("%1/%2")
+                                .arg(QCoreApplication::applicationDirPath())
+                               .arg("setting.json").toUtf8());
+}
+
+void SettingHelper::initWorkspacing()
+{
+
+    initBasePlug("notebooks");
+    initBasePlug("recircles");
+    initBasePlug("lastedits");
+
+}
+
+void SettingHelper::initBasePlug(QString name)
+{
+    QFile file(SettingHelper::workPath(name+".json"));
+    if(!file.exists())
+    {
+        file.open(QFile::WriteOnly);
+        file.write(name.toUtf8());
+        file.close();
+    }
+
 }

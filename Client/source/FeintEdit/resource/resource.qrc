@@ -7,15 +7,40 @@
         <file>add.png</file>
         <file>hide.png</file>
         <file>showed.png</file>
-        <file>notebg.jpg</file>
         <file>out.png</file>
         <file>screen-restore.png</file>
         <file>zoomin.png</file>
         <file>zoomout.png</file>
         <file>feint.icns</file>
+        <file>book.png</file>
+        <file>recicle.png</file>
+        <file>rbook.png</file>
+        <file>rnote.png</file>
+        <file>restore.png</file>
+        <file>restore_hover.png</file>
+        <file>tool_btn_click.png</file>
+        <file>tool_btn_normal.png</file>
+        <file>cnote_normal.svg</file>
+        <file>rnote.svg</file>
+        <file>rbook.svg</file>
+        <file>tool_bar.svg</file>
+        <file>recircle.svg</file>
+        <file>lastedit.png</file>
+        <file>line_1.png</file>
+        <file>book.svg</file>
+        <file>note_normal.png</file>
+        <file>note_checked.png</file>
+        <file>notebook_normal.png</file>
+        <file>setting_checked.png</file>
+        <file>setting_normal.png</file>
+        <file>notebook_checked.png</file>
+        <file>down_btn.png</file>
+        <file>down_btn_pressed.png</file>
+        <file>delete_mark.png</file>
     </qresource>
     <qresource prefix="/config">
         <file>setting.json</file>
+        <file>word.json</file>
     </qresource>
     <qresource prefix="/model">
         <file>note_module.fei</file>
