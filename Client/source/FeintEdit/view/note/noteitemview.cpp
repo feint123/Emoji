@@ -12,7 +12,9 @@
 #include <util/appcolorhelper.h>
 #include <util/screenfit.h>
 #include <util/settinghelper.h>
+#include <util/stringutil.h>
 #include <domain/wordstatic.h>
+#include <plug/appstatic.h>
 
 NoteItemView::NoteItemView(QWidget *parent) :
     QFrame(parent),
@@ -40,14 +42,16 @@ NoteItemView::~NoteItemView()
 void NoteItemView::setNote(NoteTip *note)
 {
     noteq=QVariant::fromValue(*note);
-    ui->titleLab->setText(note->title());
+    ui->titleLab->setText(StringUtil::fitToLength(note->title(),AppStatic::maxTitleLength));
+    ui->titleLab->setToolTip(note->title());
     ui->tipEdit->setText(note->tip());
     ui->updateLab->setText(note->updateDate().toString("yyyy-MM-dd HH:mm"));
     if(note->image().length()>0){
         ui->frame->setImageFile(SettingHelper::workPath(note->image()+"/"+note->image()+"_4x.png"));
-        ui->frame->scaleImage(((this->height()/2)
+        ui->frame->scaleImage(((ScreenFit::fitToScreen(this->height())/2)
                                /(float)ui->frame->height())*100);
-        ui->frame->setFixedSize(this->height()*0.5,this->height()*0.5);
+        ui->frame->setFixedSize(ScreenFit::fitToScreen(this->height())*0.5,
+                                ScreenFit::fitToScreen(this->height())*0.5);
 
 
     }
@@ -84,13 +88,13 @@ void NoteItemView::onDeleteNote()
 void NoteItemView::onEmitMoveNote()
 {
     NoteTip tip=qvariant_cast<NoteTip>(noteq);
-    emit moveNoteAction(&tip,Notes::getInstance());
+    emit moveNoteAction(&tip);
 }
 
 void NoteItemView::onEmitCopyNote()
 {
     NoteTip tip=qvariant_cast<NoteTip>(noteq);
-    emit copyNoteAction(&tip,Notes::getInstance());
+    emit copyNoteAction(&tip);
 }
 
 void NoteItemView::onEmitInNote()
@@ -121,10 +125,10 @@ void NoteItemView::createActions()
     connect(copyToNotebook,SIGNAL(triggered(bool)),this,SLOT(onEmitCopyNote()));
     connect(inNote,SIGNAL(triggered(bool)),this,SLOT(onEmitInNote()));
     connect(this,SIGNAL(inNoteAction(QString)),action,SLOT(inNote(QString)));
-    connect(this,SIGNAL(moveNoteAction(NoteTip*,QWidget*)),
-            action,SLOT(moveToNotebook(NoteTip*,QWidget*)));
-    connect(this,SIGNAL(copyNoteAction(NoteTip*,QWidget*)),
-            action,SLOT(copyToNotebook(NoteTip*,QWidget*)));
+    connect(this,SIGNAL(moveNoteAction(NoteTip*)),
+            action,SLOT(moveToNotebook(NoteTip*)));
+    connect(this,SIGNAL(copyNoteAction(NoteTip*)),
+            action,SLOT(copyToNotebook(NoteTip*)));
 
 }
 

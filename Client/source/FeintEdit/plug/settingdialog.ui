@@ -64,9 +64,9 @@ QScrollBar:vertical{
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-281</y>
+        <y>-186</y>
         <width>583</width>
-        <height>795</height>
+        <height>700</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -172,7 +172,14 @@ QScrollBar:vertical{
             </widget>
            </item>
            <item>
-            <widget class="QFontComboBox" name="fontComboBox"/>
+            <widget class="QFontComboBox" name="fontComboBox">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
            </item>
            <item>
             <spacer name="horizontalSpacer_2">
@@ -240,7 +247,7 @@ QScrollBar:vertical{
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>28</height>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
@@ -256,7 +263,7 @@ QScrollBar:vertical{
              <property name="minimumSize">
               <size>
                <width>56</width>
-               <height>28</height>
+               <height>0</height>
               </size>
              </property>
              <property name="text">
@@ -269,71 +276,6 @@ QScrollBar:vertical{
            </item>
            <item>
             <spacer name="horizontalSpacer_3">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QLabel" name="isShareImgLab">
-           <property name="text">
-            <string>默认是否共享笔记中的图片：</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
-           <property name="spacing">
-            <number>8</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="FToogleButton" name="fToogleButton">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>24</height>
-              </size>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
-             <property name="toggleColor">
-              <string>#d3d3d3</string>
-             </property>
-             <property name="onBgColor">
-              <string>#3176ff</string>
-             </property>
-             <property name="offBgColor">
-              <string>#ececec</string>
-             </property>
-             <property name="arcRadius">
-              <number>12</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="shareImgLab">
-             <property name="text">
-              <string>是</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_4">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
@@ -449,7 +391,7 @@ QScrollBar:vertical{
              <property name="minimumSize">
               <size>
                <width>100</width>
-               <height>28</height>
+               <height>0</height>
               </size>
              </property>
              <property name="text">
@@ -468,7 +410,7 @@ QScrollBar:vertical{
              <property name="minimumSize">
               <size>
                <width>100</width>
-               <height>28</height>
+               <height>0</height>
               </size>
              </property>
              <property name="text">
@@ -573,11 +515,6 @@ QScrollBar:vertical{
    <class>FButton</class>
    <extends>QPushButton</extends>
    <header>fbutton.h</header>
-  </customwidget>
-  <customwidget>
-   <class>FToogleButton</class>
-   <extends>QPushButton</extends>
-   <header>ftooglebutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

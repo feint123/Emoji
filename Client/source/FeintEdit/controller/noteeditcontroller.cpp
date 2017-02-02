@@ -54,7 +54,7 @@ void NoteEditController::onEditChange()
     NoteItemView *view=(NoteItemView*)(list->getListView()->getCurrentWidget());
 
     QString tip=edit->toPlainText().remove("\n");
-    view->setTip(tip.length()>43?(tip.mid(0,40)+"..."):tip);
+    view->setTip(tip.length()>AppStatic::maxTipWordNum?(tip.mid(0,AppStatic::maxTipWordNum-3)+"..."):tip);
 }
 
 void NoteEditController::onTitleChange(QString title)

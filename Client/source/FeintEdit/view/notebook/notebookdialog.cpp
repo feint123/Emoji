@@ -21,6 +21,7 @@ NotebookDialog::NotebookDialog(QWidget *parent) :
     ui(new Ui::NotebookDialog)
 {
     ui->setupUi(this); 
+    setAttribute(Qt::WA_DeleteOnClose);
     EffectUtil::addDropShadow(25,this);
     ScreenFit::fitFont(ui->label);
     ScreenFit::fitWithFont(ui->cancelBtn);
@@ -35,8 +36,10 @@ NotebookDialog::NotebookDialog(QWidget *parent) :
 
 NotebookDialog *NotebookDialog::getInstance(QWidget *parent)
 {
-    if(dialog==NULL)
+    if(dialog==NULL){
         dialog=new NotebookDialog(parent);
+        ScreenFit::fit(dialog);
+    }
     else if(dialog->parent()!=parent&&parent!=0)
         dialog->setParent(parent);
 

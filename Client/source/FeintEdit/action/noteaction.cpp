@@ -5,6 +5,7 @@
 #include <util/appcolorhelper.h>
 #include <util/dialogshowutil.h>
 #include <util/noteutil.h>
+#include <util/screenfit.h>
 #include <util/settinghelper.h>
 #include <util/timermanager.h>
 
@@ -30,12 +31,14 @@
 
 #include <plug/appstatic.h>
 
+#include <factory/booknamefactory.h>
+
 NoteAction::NoteAction(QWidget *parent)
 {
     this->parent=parent;
 }
 
-void NoteAction::deleteNote(int id, QString notebook)
+void NoteAction::deleteNote(int id, QString notebook, bool move)
 {
     JsonData *datas=new JsonData(SettingHelper::workPath(notebook).toUtf8(),"notes");
     NoteTip *tip=NULL;
@@ -49,7 +52,7 @@ void NoteAction::deleteNote(int id, QString notebook)
     delete datas;
 
     datas=new JsonData(SettingHelper::workPath("recircles.json").toUtf8(),"recircles");
-    if(tip!=NULL)
+    if(tip!=NULL&&!move)
     {
         RecirclePage *page=new RecirclePage;
         page->setFileName(tip->fileName());
@@ -69,15 +72,15 @@ void NoteAction::addNote()
     TimerManager::getInstance()->getTimer(TimerTag::tag(TimerTag::NOTE_NUM_CHANGE))->start();
 }
 
-void NoteAction::moveToNotebook(NoteTip *tip, QWidget *parent)
+void NoteAction::moveToNotebook(NoteTip *tip)
 {
-    moveNoteTo(tip,parent);
+    moveNoteTo(tip,WordStatic::moveTo+WordStatic::book+"("+tip->title()+")");
     connect(dialog,SIGNAL(bookClicked(NoteBook*)),this,SLOT(moveNote(NoteBook*)));
 }
 
-void NoteAction::copyToNotebook(NoteTip *tip, QWidget *parent)
+void NoteAction::copyToNotebook(NoteTip *tip)
 {
-    moveNoteTo(tip,parent);
+    moveNoteTo(tip,WordStatic::copyTo+WordStatic::book+"("+tip->title()+")");
     connect(dialog,SIGNAL(bookClicked(NoteBook*)),this,SLOT(copyNote(NoteBook*)));
 }
 
@@ -154,7 +157,7 @@ void NoteAction::outImages(QString noteName)
 
 void NoteAction::moveNote(NoteBook *noteBook)
 {
-    deleteNote(tip.id(),tip.notebook());
+    deleteNote(tip.id(),tip.notebook(),true);
     AppStatic::noteNum-=1;
     copyNote(noteBook);
 }
@@ -167,7 +170,7 @@ void NoteAction::copyNote(NoteBook *noteBook)
     tip.setNotebook(noteBook->fileName());
     JsonData* datas=new JsonData(SettingHelper::workPath(noteBook->fileName()).toUtf8(),"notes");
     tip.setUpdateDate(QDateTime::currentDateTime());
-    datas->addData<NoteTip>(&tip);
+    datas->addOnlyByColumn<NoteTip>("fileName",tip.fileName(),&tip);
 
     delete datas;
 }
@@ -188,18 +191,13 @@ void NoteAction::onOutImagesSuccess(QString path)
     createTip(WordStatic::tip_4,path);
 }
 
-void NoteAction::moveNoteTo(NoteTip *tip, QWidget *parent)
+void NoteAction::moveNoteTo(NoteTip *tip, QString title)
 {
+
     this->tip=*tip;
-    dialog=NotebookNameDialog::getInstance(parent);
-    EffectUtil::addDropShadow(25,AppColorHelper::noteListShadow(),dialog);
-    dialog->setMaximumHeight(500);
-    dialog->setTop(8);
-    dialog->setBottom(8);
-    dialog->createList();
-    dialog->resize(400,dialog->getHeight());
+    dialog=BookNameFactory::create(title);
     dialog->raise();
-    DialogShowUtil::show(parent,dialog);
+    DialogShowUtil::showPopUp(QCursor::pos(),dialog,8);
 
 }
 
@@ -233,6 +231,11 @@ void NoteAction::createTip(QString desc, QString path)
     tip->resize(tip->width(),60);
     tip->raise();
     tip->showTip();
+}
+
+void NoteAction::deleteNote(int id, QString notebook)
+{
+    deleteNote(id,notebook,false);
 }
 
 void NoteAction::setParent(QWidget *value)

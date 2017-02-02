@@ -28,6 +28,10 @@ public:
     //纪录笔记本界面通知栏所在的选项卡位置
     static int recircleIndex;
 
+    static int maxTipWordNum;
+
+    static int maxTitleLength;
+
 };
 
 #endif // APPSTATIC_H

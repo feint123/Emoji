@@ -4,6 +4,7 @@
 
 #include <util/screenfit.h>
 #include <util/settinghelper.h>
+#include <util/stringutil.h>
 
 #include <domain/notetip.h>
 #include <domain/wordstatic.h>
@@ -18,6 +19,8 @@
 #include <action/notebookaction.h>
 
 #include <view/notebooks.h>
+
+#include <plug/appstatic.h>
 
 NotebookItemView::NotebookItemView(QWidget *parent) :
     QFrame(parent)
@@ -49,7 +52,8 @@ void NotebookItemView::setNotebook(NoteBook *value)
 
 void NotebookItemView::createView()
 {
-    bookName=new QLabel(notebook->name(),this);
+    bookName=new QLabel(StringUtil::fitToLength(notebook->name(),AppStatic::maxTitleLength),this);
+    bookName->setToolTip(notebook->name());
     bookName->setStyleSheet("color:#eee;");
     noteCount=new QLabel(tr("%1").arg(countNote()),this);
     noteCount->setAlignment(Qt::AlignCenter);

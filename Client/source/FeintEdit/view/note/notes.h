@@ -48,7 +48,6 @@ protected:
     void resizeEvent(QResizeEvent *event);
 
 public:
-    bool eventFilter(QObject *watched, QEvent *event);
     void setTool(QDialog *value);
 };
 

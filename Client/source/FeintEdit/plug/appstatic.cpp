@@ -8,7 +8,7 @@ int AppStatic::bookNum=0;
 int AppStatic::noteNum=0;
 QString AppStatic::currentNote="";
 QString AppStatic::currentBook="";
-int AppStatic::toolHeight=54;
+int AppStatic::toolHeight=48;
 
 int AppStatic::maxLastEdit=7;
 int AppStatic::lastEdit=0;
@@ -16,6 +16,9 @@ int AppStatic::recircleIndex=0;
 int AppStatic::standardScreenWidth=1600;
 
 int AppStatic::standardBtnHeight=24;
+
+int AppStatic::maxTipWordNum=64;
+int AppStatic::maxTitleLength=12;
 AppStatic::AppStatic()
 {
 

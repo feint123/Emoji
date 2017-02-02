@@ -21,10 +21,10 @@ public:
     void copyFile(NoteIn *in);
     void createTip(QString desc,QString path);
 public slots:
-    void deleteNote(int id,QString notebook);
+    void deleteNote(int id, QString notebook);
     void addNote();
-    void moveToNotebook(NoteTip *tip, QWidget *parent);
-    void copyToNotebook(NoteTip *tip, QWidget *parent);
+    void moveToNotebook(NoteTip *tip);
+    void copyToNotebook(NoteTip *tip);
     void outNote(QString noteName);
     void inNote(QString notebook);
     void outImages(QString noteName);
@@ -38,9 +38,9 @@ private:
     NoteTip tip;
     NotebookNameDialog *dialog;
     QString dir;
-    void moveNoteTo(NoteTip *tip, QWidget *parent);
+    void moveNoteTo(NoteTip *tip, QString title);
 
-
+    void deleteNote(int id, QString notebook,bool move);
     QWidget *parent;
 };
 

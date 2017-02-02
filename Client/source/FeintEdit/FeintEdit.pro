@@ -93,7 +93,9 @@ SOURCES += \
     view/note/markpull/markpulldown.cpp \
     view/note/markpull/markitem.cpp \
     view/note/markpull/markfactory.cpp \
-    view/note/markpull/markdownhotkey.cpp
+    view/note/markpull/markdownhotkey.cpp \
+    factory/booknamefactory.cpp \
+    util/stringutil.cpp
 
 HEADERS  += \
     action/notebookaction.h \
@@ -174,7 +176,9 @@ HEADERS  += \
     view/note/markpull/markpulldown.h \
     view/note/markpull/markitem.h \
     view/note/markpull/markfactory.h \
-    view/note/markpull/markdownhotkey.h
+    view/note/markpull/markdownhotkey.h \
+    factory/booknamefactory.h \
+    util/stringutil.h
 
 macx: LIBS += -L$$PWD/../build-FButton-Desktop_Qt_5_7_0_clang_64bit-Release/ -lfeintplugin
 

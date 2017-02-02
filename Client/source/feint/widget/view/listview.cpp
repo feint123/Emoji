@@ -135,8 +135,8 @@ void ListView::changeFocus()
 
 void ListView::setFocusIndex(int focusIndex)
 {
-    if(m_focusIndex==focusIndex)
-        return;
+//    if(m_focusIndex==focusIndex)
+//        return;
     m_focusIndex = focusIndex;
     emit focusIndexChanged(focusIndex);
 }
@@ -200,9 +200,39 @@ void ListView::setBgColor(QColor bgColor)
     m_bgColor = bgColor;
 }
 
+void ListView::setScrollHandle(QString scrollHandle)
+{
+    m_scrollHandle = scrollHandle;
+}
+
+void ListView::setScrollPage(QString scrollPage)
+{
+    m_scrollPage = scrollPage;
+}
+
+void ListView::setUseFocus(bool useFocus)
+{
+    m_useFocus = useFocus;
+}
+
 void ListView::setBg(Background value)
 {
     bg = value;
+}
+
+QString ListView::scrollHandle() const
+{
+    return m_scrollHandle;
+}
+
+QString ListView::scrollPage() const
+{
+    return m_scrollPage;
+}
+
+bool ListView::useFocus() const
+{
+    return m_useFocus;
 }
 
 void ListView::verticalLayout()
@@ -258,7 +288,7 @@ void ListView::createView()
 
     vScroll->setOrientation(Qt::Vertical);
 
-    vScroll->setStyleSheet(tr("QScrollBar:vertical::add-page,QScrollBar:vertical::add-page{background:%2;border-radius:4px;}"
+    vScroll->setStyleSheet(tr("QScrollBar:vertical::add-page{background:%2;}"
 
                            "QScrollBar::handle{border-radius:4px;background:%1;}"
 
@@ -320,11 +350,12 @@ bool ListView::eventFilter(QObject *watched, QEvent *event)
             if(event->type()==QEvent::MouseButtonPress)
             {
 
-                setFocusIndex(i);
-
-                emit this->selectItem(this->data.at(i));
-
-                emit this->selectItemIndex(i);
+                QMouseEvent *mE=(QMouseEvent *)event;
+                if(mE->buttons()&Qt::LeftButton){
+                    setFocusIndex(i);
+                    emit this->selectItem(this->data.at(i));
+                    emit this->selectItemIndex(i);
+                }
             }
             if(event->type()==QEvent::MouseButtonDblClick)
             {

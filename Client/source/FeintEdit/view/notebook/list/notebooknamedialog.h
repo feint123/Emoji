@@ -2,6 +2,7 @@
 #define NOTEBOOKNAMEDIALOG_H
 
 #include <QFrame>
+#include <QLabel>
 
 #include <widget/view/listview.h>
 
@@ -26,6 +27,9 @@ public:
 
     void setUserTri(bool value);
 
+    QString getTitle() const;
+    void setTitle(const QString &title);
+
 public slots:
     void setTop(int top);
 
@@ -41,10 +45,10 @@ private:
     NotebookNameDialog(QWidget *parent);
     static NotebookNameDialog * dialog;
     int preHeight;
-
+    QLabel *title;
     // QWidget interface
     int m_top;
-
+    QString m_title;
     int m_bottom;
 
     int tri=8;

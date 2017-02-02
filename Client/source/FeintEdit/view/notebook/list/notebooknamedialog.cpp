@@ -7,20 +7,39 @@
 #include <util/qvariantutil.h>
 #include <util/screenfit.h>
 #include <util/settinghelper.h>
+#include <util/stringutil.h>
 
 #include <util/graphic/effectutil.h>
 #include <util/graphic/innerdialogrect.h>
 
 #include <qpainter.h>
+
+#include <plug/appstatic.h>
 NotebookNameDialog *NotebookNameDialog::dialog=NULL;
 NotebookNameDialog::NotebookNameDialog(QWidget *parent):
     QFrame(parent)
 {
     //setAutoFillBackground(true);
-    setWindowFlags(Qt::FramelessWindowHint);
+    title=new QLabel(this);
+    title->setStyleSheet(tr("QLabel{color:%1;border:2px solid %1;"
+                            "border-left:none;border-top:none;border-right:none;}").arg(AppColorHelper::colorBot()));
+    title->setAlignment(Qt::AlignCenter);
+    ScreenFit::fitFont(title);
     setAttribute(Qt::WA_TranslucentBackground);
     setAttribute(Qt::WA_DeleteOnClose);
 
+}
+
+QString NotebookNameDialog::getTitle() const
+{
+    return m_title;
+}
+
+void NotebookNameDialog::setTitle(const QString &title)
+{
+    m_title = title;
+    this->title->setText(StringUtil::fitToLength(title,AppStatic::maxTitleLength));
+    this->title->setToolTip(title);
 }
 
 void NotebookNameDialog::setUserTri(bool value)
@@ -33,20 +52,23 @@ void NotebookNameDialog::paintEvent(QPaintEvent *event)
 
     if(userTri){
         InnerDialogRect *rect=new InnerDialogRect(InnerDialogRect::UP);
-        rect->setTri(tri);
-        rect->draw(this,this->width()/3);
+        rect->setTri(ScreenFit::fitToScreen(tri));
+        rect->draw(this,ScreenFit::fitToScreen(tri));
     }else{
         QPainter painter(this);
         painter.setRenderHint(QPainter::Antialiasing);
         painter.setBrush(QBrush(QColor(240,240,240,240)));
         painter.setPen(QColor(0,0,0,0));
-        painter.drawRoundRect(0,0,this->width(),this->height(),5,5);
+        painter.drawRoundRect(0,0,this->width(),this->height()
+                              ,ScreenFit::fitToScreen(5),ScreenFit::fitToScreen(5));
     }
 }
 
 void NotebookNameDialog::resizeEvent(QResizeEvent *event)
 {
-    list->setGeometry(0,top()+tri,this->width(),this->height()-(top()+bottom()));
+    title->resize(this->width()*0.8,title->height());
+    title->setGeometry((this->width()-title->width())/2,top()+tri,title->width(),title->height());
+    list->setGeometry(0,top()+tri+title->height(),this->width(),this->height()-(top()+bottom())-title->height());
 }
 
 int NotebookNameDialog::getHeight()
@@ -66,11 +88,11 @@ void NotebookNameDialog::createList()
     preHeight=itemValues.count()*ScreenFit::fitToScreen(24)
             +ScreenFit::fitToScreen(top())
             +ScreenFit::fitToScreen(bottom())
-            +ScreenFit::fitToScreen(tri);
+            +ScreenFit::fitToScreen(tri)+title->height();
 
-    list->setUnSelectStyle("#noFocus{background:transparent;color:#444;padding-left:16px;}"
+    list->setUnSelectStyle("#noFocus{background:transparent;color:#444}"
                            "#noFocus:hover{background:#3176ff;color:#eee}");
-    list->setSelectStyle("#focus{background:transparent;color:#444;padding-left:16px;}"
+    list->setSelectStyle("#focus{background:transparent;color:#444}"
                          "#focus:hover{background:#3176ff;color:#eee}");
     list->setData(itemValues);
     list->setItem(new NotebookNameItem());

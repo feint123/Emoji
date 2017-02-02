@@ -8,12 +8,15 @@
 #include <util/timermanager.h>
 #include <domain/notebook.h>
 #include <domain/timertag.h>
+#include <domain/wordstatic.h>
 #include <util/json/jsondata.h>
 #include <view/note/noteitem.h>
 #include <QDebug>
 #include <QFileSystemWatcher>
 #include <QTimer>
 #include <plug/appstatic.h>
+#include <action/noteaction.h>
+#include <widget/frame/shorttip.h>
 
 NoteController::NoteController(Notes *note)
 {
@@ -23,7 +26,8 @@ NoteController::NoteController(Notes *note)
     connect(note,SIGNAL(destroyed(QObject*)),this,SLOT(deleteLater()));
     connect(note->getList()->getNoteH(),SIGNAL(selectOtherNoteBook()),this,SLOT(refersh()));
 
-    refreshNoteList();
+    initNoteList();
+
     connect(this,SIGNAL(noteNumChanged(int)),this,SLOT(refreshNoteList()));
 
     startListenNoteNumChange();
@@ -56,7 +60,8 @@ void NoteController::setCurrentNote(QString currentNote)
     if(refreshLock)
         saveNoteBeforeChange();
 //    refreshLock=true;
-
+    lookedNote.append(currentNote);
+    lookedNum++;
     m_currentNote = currentNote;
     AppStatic::currentNote=currentNote;
     emit currentNoteChanged(currentNote);
@@ -92,9 +97,6 @@ void NoteController::refreshNoteList()
 
     notes->getList()->loadDate(qDatas);
 
-    connect(notes->getList()->getListView(),SIGNAL(selectItem(QVariant)),this,SLOT(onNoteSelect(QVariant)));
-    connect(notes->getList()->getListView(),SIGNAL(scrollYChanged(int)),this,SLOT(onScrollLNoteList(int)));
-
     updateFocusIndex();
 
     this->notes->getList()->getListView()->setFocusIndex(AppStatic::focusIndex);
@@ -117,7 +119,13 @@ void NoteController::loadNote()
         loadtimer=NULL;
     }
     notes->createMark(currentNote());
-    chooseMark(currentNote()+".fei");
+    if(!chooseMark(currentNote()+".fei")){
+
+        JsonData *data=new JsonData(SettingHelper::workPath(AppStatic::currentBook).toUtf8(),"notes");
+        data->deleteData(data->selectByColumn<NoteTip>("fileName",currentNote())->id());
+        setCurrentNote(lookedNote.at(--lookedNum));
+        return;
+    }
     initEditController();
 }
 
@@ -125,7 +133,7 @@ void NoteController::readyLoadNote()
 {
 
     loadtimer=new QTimer(this);
-    loadtimer->setInterval(50);
+    loadtimer->setInterval(10);
     connect(loadtimer,SIGNAL(timeout()),this,SLOT(loadNote()));
     loadtimer->start();
 }
@@ -166,17 +174,20 @@ void NoteController::startListenNoteNumChange()
 }
 
 
-void NoteController::chooseMark(QString path)
+bool NoteController::chooseMark(QString path)
 {
     notes->setVisible(true);
     MarkdownManager *manager=new MarkdownManager();
     manager->load(SettingHelper::workPath(path));
+    if(manager->loadContent()==NULL)
+        return false;
     notes->getMark()->getEdit()->setPlainText(
                 manager->loadContent()->content());
 
     notes->getMark()->getEdit()->refreshFormat();
     notes->getMark()->getTitle()->setTitle(manager->loadContent()->title());
     notes->getMark()->getTitle()->setCreateDate(manager->loadContent()->date().toString("yyyy-MM-dd"));
+    return true;
 }
 /**
  * @brief NoteController::addNote
@@ -184,6 +195,7 @@ void NoteController::chooseMark(QString path)
  */
 void NoteController::addNote()
 {
+
     MarkdownManager *manager=new MarkdownManager();
     manager->load(":/model/note_module.fei");
     QString name=FileUtil::onlyName("note");
@@ -219,16 +231,24 @@ void NoteController::initEditController()
 
 }
 
+void NoteController::initNoteList()
+{
+    connect(notes->getList()->getListView(),SIGNAL(selectItem(QVariant)),this,SLOT(onNoteSelect(QVariant)));
+    connect(notes->getList()->getListView(),SIGNAL(scrollYChanged(int)),this,SLOT(onScrollLNoteList(int)));
+
+    refreshNoteList();
+}
+
 QString NoteController::currentBookName()
 {
     if(getNoteBookFile()=="&_&")
-        return "全部笔记";
+        return WordStatic::all+WordStatic::note;
     JsonData *data=new JsonData(SettingHelper::workPath("notebooks.json").toUtf8(),"notebooks");
 
     NoteBook *book=data->selectByColumn<NoteBook>("fileName",getNoteBookFile());
 
     if(book==NULL)
-        return "找不到笔记";
+        return "-|_|-";
 
     return book->name();
 
@@ -285,11 +305,13 @@ void NoteController::updateFocusIndex()
 
 NoteTip *NoteController::createBasicTip(QString fileName)
 {
+    MarkdownManager *manager=new MarkdownManager();
+    manager->load(":/model/note_module.fei");
     NoteTip *tip=new NoteTip;
     tip->setFileName(fileName);
-    tip->setTitle("新建笔记");
+    tip->setTitle(manager->loadContent()->title());
     tip->setUpdateDate(QDateTime::currentDateTime());
-    tip->setTip("请输入笔记内容");
-    tip->setNotebook(SettingHelper::currentBook());
+    tip->setTip(manager->loadContent()->content());
+    tip->setNotebook(getNoteBookFile());
     return tip;
 }

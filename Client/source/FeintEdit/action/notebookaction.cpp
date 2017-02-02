@@ -34,7 +34,7 @@ NotebookAction::NotebookAction(QWidget *parent)
 void NotebookAction::newBook(QWidget *parent)
 {
     NotebookDialog *dialog=NotebookDialog::getInstance(parent);
-    ScreenFit::fit(dialog);
+
     dialog->setTitle(WordStatic::new_+WordStatic::book);
     dialog->setWindowFlags(Qt::FramelessWindowHint);
     connect(dialog,SIGNAL(ready(QString)),this,SLOT(createBook(QString)));

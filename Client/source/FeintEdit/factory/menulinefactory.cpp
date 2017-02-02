@@ -5,6 +5,8 @@
 
 #include <domain/wordstatic.h>
 
+#include <plug/appstatic.h>
+
 MenuLineFactory::MenuLineFactory()
 {
 
@@ -20,7 +22,7 @@ MenuLine *MenuLineFactory::create(QWidget *parent)
 //    line->addItem(QIcon(":/image/picture.png"),QString("图片集"));
     line->addItem(":/image/setting_normal.png",WordStatic::setting);
     line->createView(0);
-    line->resize(54,80);
+    line->resize(AppStatic::toolHeight,80);
     ScreenFit::fit(line);
     return line;
 }

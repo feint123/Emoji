@@ -1,3 +1,4 @@
+#include "appstatic.h"
 #include "settingdialog.h"
 #include "ui_settingdialog.h"
 
@@ -5,8 +6,11 @@
 
 #include <util/screenfit.h>
 #include <util/settinghelper.h>
+#include <util/wordhelper.h>
 
 #include <QFileDialog>
+
+#include <domain/wordstatic.h>
 
 SettingDialog::SettingDialog(QWidget *parent) :
     QDialog(parent),
@@ -28,10 +32,10 @@ SettingDialog::~SettingDialog()
  */
 void SettingDialog::on_fToogleButton_toggled(bool checked)
 {
-    if(checked)
-        ui->shareImgLab->setText("开");
-    else
-        ui->shareImgLab->setText("关");
+//    if(checked)
+//        ui->shareImgLab->setText("开");
+//    else
+//        ui->shareImgLab->setText("关");
 }
 
 /**
@@ -43,7 +47,7 @@ void SettingDialog::on_submitBtn_clicked()
     Setting *setting=SettingHelper::loadSetting();
     setting->setFontFamily(ui->fontComboBox->currentText());
     setting->setFontSize(ui->spinBox->value());
-    setting->setIsShareImage(ui->fToogleButton->isChecked());
+ //   setting->setIsShareImage(ui->fToogleButton->isChecked());
     setting->setWorkspacing(ui->defaultPathEdit->text());
     setting->setAutoSave(ui->spinBox_2->value());
     SettingHelper::saveSetting(setting);
@@ -55,17 +59,17 @@ void SettingDialog::on_submitBtn_clicked()
 TipDialog *SettingDialog::createTip()
 {
     TipDialog *tip=TipDialog::getInstance(this);
-    tip->setFontSize(SettingHelper::fontSize()+5);
-    tip->setTip("设置修改成功(—_-)");
+    tip->setFontSize(ScreenFit::fitToScreen(SettingHelper::fontSize()+2));
+    tip->setTip(WordStatic::tip_8);
     tip->setKeep(3500);
-    tip->resize(tip->width(),60);
+    tip->resize(tip->width(),ScreenFit::fitToScreen(60));
     return tip;
 }
 
 void SettingDialog::createView()
 {
     Setting *setting=SettingHelper::setting();
-    setToggled(ui->fToogleButton,setting->isShareImage()==1?true:false);
+ //   setToggled(ui->fToogleButton,setting->isShareImage()==1?true:false);
     ui->spinBox->setValue(setting->fontSize());
     ui->fontComboBox->setCurrentText(setting->fontFamily());
     ui->defaultPathEdit->setText(setting->workspacing());
@@ -76,16 +80,20 @@ void SettingDialog::createView()
     ScreenFit::fitFont(ui->ffLab);
     ScreenFit::fitFont(ui->fileLab);
     ScreenFit::fitFont(ui->fontLab);
-    ScreenFit::fitFont(ui->isShareImgLab);
     ScreenFit::fitFont(ui->noteLab);
     ScreenFit::fitFont(ui->sizeLab);
-    ScreenFit::fitFont(ui->shareImgLab);
     ScreenFit::fitFont(ui->secondLab);
+    ui->spinBox->setFixedHeight(ScreenFit::fitToScreen(AppStatic::standardBtnHeight));
+    ui->spinBox_2->setFixedHeight(ScreenFit::fitToScreen(AppStatic::standardBtnHeight));
+    ui->fontComboBox->setFixedHeight(ScreenFit::fitToScreen(AppStatic::standardBtnHeight));
+    ui->cancelBtn->setFixedHeight(ScreenFit::fitToScreen(AppStatic::standardBtnHeight));
+    ui->submitBtn->setFixedHeight(ScreenFit::fitToScreen(AppStatic::standardBtnHeight));
+    ui->defaultPathBtn->setFixedHeight(ScreenFit::fitToScreen(AppStatic::standardBtnHeight));
+    ui->defaultPathEdit->setFixedHeight(ScreenFit::fitToScreen(AppStatic::standardBtnHeight));
     ScreenFit::fitWithFont(ui->cancelBtn);
     ScreenFit::fitWithFont(ui->defaultPathBtn);
     ScreenFit::fitWithFont(ui->defaultPathEdit);
     ScreenFit::fitWithFont(ui->fontComboBox);
-    ScreenFit::fitWithFont(ui->fToogleButton);
     ScreenFit::fitWithFont(ui->resetBtn);
     ScreenFit::fitWithFont(ui->submitBtn);
     ScreenFit::fitWithFont(ui->spinBox);

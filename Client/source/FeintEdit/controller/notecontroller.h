@@ -49,10 +49,12 @@ private slots:
 private:
     void createView(int i);
     void startListenNoteNumChange();
-    void chooseMark(QString path);
+    bool chooseMark(QString path);
 
     void listWorkspacing();
     void initEditController();
+
+    void initNoteList();
 
     Notes *notes;
     NoteEditController *editController;
@@ -73,6 +75,9 @@ private:
 
     NoteTip * createBasicTip(QString fileName);
     int m_noteNum;
+
+    QList<QString> lookedNote;
+    int lookedNum=-1;
 };
 
 #endif // NOTECONTROLLER_H

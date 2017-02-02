@@ -14,8 +14,7 @@ void InnerDialogRect::draw(QWidget *parent, int delay)
     QPen pen;
     brush.setColor(QColor(240,240,240,240));
     brush.setStyle(Qt::SolidPattern);
-    pen.setColor(QColor(0x00,0x00,0x00,0x00));
-    painter.setPen(pen);
+    painter.setPen(Qt::transparent);
     painter.setBrush(brush);
     painter.setRenderHint(QPainter::Antialiasing);
     this->parent=parent;
@@ -53,16 +52,12 @@ void InnerDialogRect::drawRight(QPainter *painter)
 void InnerDialogRect::drawUp(QPainter *painter)
 {
     QPainterPath path;
-    path.moveTo(0,tri);
-    path.lineTo(delay,tri);
-    path.lineTo(delay+tri*3/2,0);
+    path.moveTo(delay,tri);
+    path.lineTo(delay+tri,0);
     path.lineTo(delay+2*tri,tri);
-    path.lineTo(parent->width(),tri);
-    path.lineTo(parent->width(),parent->height());
-    path.lineTo(0,parent->height());
-    path.lineTo(0,tri);
-
+    path.lineTo(delay,tri);
     painter->drawPath(path);
+    painter->drawRoundRect(0,tri,parent->width(),parent->height()-tri,5,5);
 }
 
 void InnerDialogRect::drawDown(QPainter *painter)

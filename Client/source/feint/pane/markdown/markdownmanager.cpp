@@ -36,8 +36,13 @@ QString MarkdownManager::save(QString filePath, QString text)
 
 void MarkdownManager::load(QString filePath)
 {
-    MarkContent *content;
+    MarkContent *content=NULL;
     QFile file(filePath);
+    if(!file.exists())
+    {
+        this->content=content;
+        return;
+    }
     if(file.open(QIODevice::ReadOnly|QIODevice::Text))
         content=feint::JsonToObject::createObject<MarkContent>(QJsonDocument::fromJson(file.readAll()).object());
 

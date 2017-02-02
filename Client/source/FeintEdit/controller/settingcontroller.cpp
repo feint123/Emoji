@@ -201,7 +201,7 @@ void SettingController::createTool(ToolFactory::Model model)
 
     QDialog *tool=ToolFactory::createTool(main,model);
 
-    tool->setGeometry(0,0,main->width(),ScreenFit::fitToScreen(54));
+    tool->setGeometry(0,0,main->width(),ScreenFit::fitToScreen(AppStatic::toolHeight));
 
     main->setTool(tool);
 

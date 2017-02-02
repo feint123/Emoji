@@ -5,6 +5,7 @@
 #include <util/appcolorhelper.h>
 #include <util/screenfit.h>
 #include <util/settinghelper.h>
+#include <util/stringutil.h>
 
 #include <QDebug>
 
@@ -19,6 +20,8 @@
 #include <action/noteaction.h>
 
 #include <widget/frame/shorttip.h>
+
+#include <plug/appstatic.h>
 
 RecircleItemView::RecircleItemView(QWidget *parent):
     QFrame(parent)
@@ -40,7 +43,8 @@ void RecircleItemView::setPage(RecirclePage *page)
         img.load(":/image/rbook.svg");
     if(page->type()==RecirclePage::NOTE)
         img.load(":/image/rnote.svg");
-    lab->setText(title);
+    lab->setText(StringUtil::fitToLength(title,AppStatic::maxTitleLength));
+    lab->setToolTip(title);
     lab->setStyleSheet(tr("color:%1;font-size:%2pt")
                        .arg(AppColorHelper::colorBot())
                        .arg(ScreenFit::fitToScreen(16)));

@@ -19,6 +19,6 @@ void LastEditItem::updateItem(QVariant item)
     LastEdit edit=qvariant_cast<LastEdit>(item);
     LastEditItemView *view=new LastEditItemView();
     view->setLastEdit(&edit);
-    view->resize(200,ScreenFit::fitToScreen(AppStatic::toolHeight*2));
+    view->resize(200,ScreenFit::fitToScreen(AppStatic::toolHeight*2.3));
     setGraphic(view);
 }

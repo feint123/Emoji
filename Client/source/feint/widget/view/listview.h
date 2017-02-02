@@ -67,20 +67,11 @@ public:
 
       void setBg(Background value);
 
-      QString scrollHandle() const
-      {
-          return m_scrollHandle;
-      }
+      QString scrollHandle() const;
 
-      QString scrollPage() const
-      {
-          return m_scrollPage;
-      }
+      QString scrollPage() const;
 
-      bool useFocus() const
-      {
-          return m_useFocus;
-      }
+      bool useFocus() const;
 
 public slots:
       void setScrollY(int scrollY);
@@ -106,20 +97,11 @@ public slots:
       void scrollContent(int scroll);
       void setBgColor(QColor bgColor);
 
-      void setScrollHandle(QString scrollHandle)
-      {
-          m_scrollHandle = scrollHandle;
-      }
+      void setScrollHandle(QString scrollHandle);
 
-      void setScrollPage(QString scrollPage)
-      {
-          m_scrollPage = scrollPage;
-      }
+      void setScrollPage(QString scrollPage);
 
-      void setUseFocus(bool useFocus)
-      {
-          m_useFocus = useFocus;
-      }
+      void setUseFocus(bool useFocus);
 
 signals:
       void selectItemIndex(int index);
@@ -153,14 +135,6 @@ private:
 
       QMargins m_margin=QMargins(0,0,0,0);
 
-      void horizontalLayout();
-
-      void verticalLayout();
-
-      int getContentHeight();
-
-
-
       int m_spacing=0;
 
       bool canScrollShow=false;
@@ -174,6 +148,12 @@ private:
       QString m_scrollPage;
 
       bool m_useFocus=true;
+
+      void horizontalLayout();
+
+      void verticalLayout();
+
+      int getContentHeight();
 
 protected:
       void resizeEvent(QResizeEvent *event);

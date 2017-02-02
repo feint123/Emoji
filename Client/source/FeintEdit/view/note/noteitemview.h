@@ -45,8 +45,8 @@ public slots:
 
 signals:
     void deleteNoteAction(int id,QString notebook);
-    void moveNoteAction(NoteTip *tip,QWidget *parent);
-    void copyNoteAction(NoteTip *tip,QWidget *parent);
+    void moveNoteAction(NoteTip *tip);
+    void copyNoteAction(NoteTip *tip);
     void inNoteAction(QString notebook);
 
 private:

@@ -1,5 +1,7 @@
 #include "notetip.h"
 
+#include <plug/appstatic.h>
+
 NoteTip::NoteTip()
 {
 
@@ -53,7 +55,8 @@ void NoteTip::setImage(QString image)
 void NoteTip::setTip(QString tip)
 {
     QString _tip=tip.remove("\n");
-    tip=_tip.length()>43?(_tip.mid(0,40)+"..."):_tip;
+    _tip=_tip.remove("\t");
+    tip=_tip.length()>AppStatic::maxTipWordNum?(_tip.mid(0,AppStatic::maxTipWordNum-3)+"..."):_tip;
     m_tip = tip;
 }
 

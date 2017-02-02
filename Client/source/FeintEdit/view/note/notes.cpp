@@ -106,15 +106,4 @@ void Notes::resizeEvent(QResizeEvent *event)
        dialog->close();
 }
 
-bool Notes::eventFilter(QObject *watched, QEvent *event)
-{
-    if(event->type()==QEvent::MouseButtonPress){
-        NotebookNameDialog *dialog=NotebookNameDialog::getInstance();
-
-        if(dialog!=NULL&&dialog->isVisible())
-           dialog->close();
-    }
-
-}
-
 

@@ -12,10 +12,12 @@
 #include <util/noteutil.h>
 #include <util/screenfit.h>
 #include <util/settinghelper.h>
+#include <util/stringutil.h>
 #include <QDebug>
 #include <domain/setting.h>
 #include <domain/wordstatic.h>
 #include <plug/appstatic.h>
+#include <factory/booknamefactory.h>
 
 NoteHeader::NoteHeader(QWidget *parent):
     QFrame(parent)
@@ -32,13 +34,14 @@ QString NoteHeader::currentNotebook() const
 
 void NoteHeader::createView()
 {
-    notebookBtn=new QPushButton(this);
-    notebookBtn->setText(currentNotebook());
+    notebookBtn=new QPushButton();
+    notebookBtn->setText(StringUtil::fitToLength(currentNotebook(),AppStatic::maxTitleLength));
+    notebookBtn->setToolTip(currentNotebook());
     notebookBtn->setMinimumWidth(100);
     notebookBtn->setStyleSheet(tr("QPushButton{border:1px solid #f9f9f9;"
                                   "border-radius:5px;color:white;padding:2px 8px;}"
                                      "QPushButton:pressed{background:%1;border:none;}").arg(AppColorHelper::menuBg()));
-    allNotesBtn =new FButton(this);
+    allNotesBtn =new FButton();
     allNotesBtn->setText(WordStatic::all+WordStatic::note);
     allNotesBtn->setObjectName("all");
 
@@ -46,7 +49,8 @@ void NoteHeader::createView()
     allNotesBtn->setBorderRadius(ScreenFit::fitToScreen(5));
     allNotesBtn->setStyleSheet(allNotesBtn->styleSheet()+"#all{padding:4px 8px;}");
     QHBoxLayout *vb=new QHBoxLayout;
-
+    notebookBtn->setFixedHeight(ScreenFit::fitToScreen(AppStatic::standardBtnHeight));
+    allNotesBtn->setFixedHeight(ScreenFit::fitToScreen(AppStatic::standardBtnHeight));
     ScreenFit::fitWithFont(notebookBtn);
     ScreenFit::fitWithFont(allNotesBtn);
 
@@ -71,27 +75,19 @@ void NoteHeader::setCurrentNotebook(QString currentNotebook)
 
 void NoteHeader::setNotebookText(QString book)
 {
-    notebookBtn->setText(book);
+    notebookBtn->setText(StringUtil::fitToLength(book,AppStatic::maxTitleLength));
+    notebookBtn->setToolTip(book);
 }
 
 void NoteHeader::showAllBooks()
 {
-
-    QWidget *p=(QWidget *)this->parent();
-    dialog=NotebookNameDialog::getInstance((QWidget*)this->parent());
-
-    EffectUtil::addDropShadow(25,AppColorHelper::noteListShadow(),dialog);
-    dialog->setUserTri(true);
-    dialog->setMaximumHeight(500);
-    dialog->setTop(8);
-    dialog->setBottom(8);
-    dialog->createList();
-    dialog->resize(p->width(),dialog->getHeight());
+    QWidget *p=(QWidget*)this->parent();
+    dialog=BookNameFactory::create(WordStatic::book);
     dialog->raise();
     if(dialog->isVisible())
         dialog->deleteLater();
     else
-        DialogShowUtil::show((QWidget*)this->parent(),dialog,this->height());
+        DialogShowUtil::showPopUp(QCursor::pos(),dialog,ScreenFit::fitToScreen(8));
     connect(dialog,SIGNAL(bookClicked(NoteBook*)),this,SLOT(loadBooks(NoteBook*)));
 }
 

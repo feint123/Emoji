@@ -27,6 +27,7 @@ private:
     static NoteList *list;
     ListView *listView;
     NoteHeader *noteH;
+    void createList();
     bool init=false;
     // QWidget interface
 protected:

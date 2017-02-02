@@ -7,6 +7,7 @@
 #include <util/appcolorhelper.h>
 #include <util/screenfit.h>
 #include <util/settinghelper.h>
+#include <util/stringutil.h>
 #include <graphic/screenhelper.h>
 #include <plug/appstatic.h>
 #include <util/json/jsondata.h>
@@ -26,9 +27,10 @@ void LastEditItemView::setLastEdit(LastEdit *edit)
     id=edit->id();
     file=edit->file();
     bookFile=edit->bookFile();
-    title->setText(edit->title());
+    title->setText(StringUtil::fitToLength(edit->title(),AppStatic::maxTitleLength));
+    title->setToolTip(edit->title());
     content->setText(edit->tip());
-    QString format="yyyy年MM月dd日 HH:mm:ss";
+    QString format="yyyy/MM/dd HH:mm:ss";
     data->setText(edit->updateDate().toString(format));
     hasNote=checkhasNote(file,bookFile);
 }
